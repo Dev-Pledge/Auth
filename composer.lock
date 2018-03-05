@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "ea16cf4e11c01098b3fe2374af74262e",
+    "content-hash": "9479e759e3a088d4e636b4d600715a50",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -2021,12 +2021,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/eaglewu/swoole-ide-helper.git",
-                "reference": "2f9177b4694b90b64a244e09daadf89e5bf88ad0"
+                "reference": "bbee1dd9f7f879b930ea4ab07ca95f7a4df72efa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/eaglewu/swoole-ide-helper/zipball/2f9177b4694b90b64a244e09daadf89e5bf88ad0",
-                "reference": "2f9177b4694b90b64a244e09daadf89e5bf88ad0",
+                "url": "https://api.github.com/repos/eaglewu/swoole-ide-helper/zipball/bbee1dd9f7f879b930ea4ab07ca95f7a4df72efa",
+                "reference": "bbee1dd9f7f879b930ea4ab07ca95f7a4df72efa",
                 "shasum": ""
             },
             "type": "library",
@@ -2043,7 +2043,7 @@
                 }
             ],
             "description": "Swoole 在IDE下自动识别类、函数、宏，自动补全函数名",
-            "time": "2018-02-05 05:06:02"
+            "time": "2018-02-26T05:38:44+00:00"
         }
     ],
     "aliases": [],
@@ -2054,7 +2054,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.5.0"
+        "php": ">=7.2.0"
     },
     "platform-dev": []
 }
