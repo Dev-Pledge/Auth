@@ -3,6 +3,7 @@ version: "3.5"
 services:
 
   auth:
+    container_name: dev_pledge_auth
     build:
       context: .
       dockerfile: auth.dockerfile
