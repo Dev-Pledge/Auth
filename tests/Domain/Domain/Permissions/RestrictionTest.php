@@ -45,6 +45,9 @@ class RestrictionTest extends TestCase
 
         $r->addValue(4);
         $this->assertEquals([1, 3, 2, 4], $r->getValues());
+
+        $this->assertTrue($r->hasValue(4));
+        $this->assertFalse($r->hasValue(5));
     }
 
 }
