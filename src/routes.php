@@ -35,15 +35,19 @@ $app->group( '', function () use ( $app ) {
 
 } )->add( $jwtMiddleware );
 
-$app->group( '', function () use ( $app, $jwtRefreshMiddleware ) {
+$app->group( '', function () use ( $app, $jwtRefreshMiddleware, $jwtExistsMiddleware ) {
 
-	$app->group( '/auth', function () use ( $app, $jwtRefreshMiddleware ) {
+	$app->group( '/auth', function () use ( $app, $jwtRefreshMiddleware, $jwtExistsMiddleware ) {
 
 		$app->post( '/login', AuthController::class . ':login' );
 
 		$app
 			->post( '/refresh', AuthController::class . ':refresh' )
 			->add( $jwtRefreshMiddleware );
+
+		$app
+			->get( '/payload', AuthController::class . ':outputTokenPayload' )
+			->add( $jwtExistsMiddleware );
 
 	} );
 
