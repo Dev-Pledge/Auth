@@ -3,6 +3,7 @@
 namespace DevPledge\Application\Security\JWT;
 
 
+use Base64Url\Base64Url;
 use TomWright\JSON\Exception\JSONDecodeException;
 use TomWright\JSON\Exception\JSONEncodeException;
 use TomWright\JSON\JSON;
@@ -43,8 +44,13 @@ class JWT
      * @param int $timeToLive
      * @param int $timeToRefresh
      */
-    public function __construct(string $secret, string $algorithm, JSON $json, $timeToLive = 3600, $timeToRefresh = 7200)
-    {
+    public function __construct(
+        string $secret,
+        string $algorithm,
+        JSON $json,
+        $timeToLive = 3600,
+        $timeToRefresh = 7200
+    ) {
         $this
             ->setSecret($secret)
             ->setAlgorithm($algorithm)
@@ -132,14 +138,14 @@ class JWT
      */
     public function generate(\stdClass $data): string
     {
-        $header = (object) [
+        $header = (object)[
             'alg' => $this->getAlgorithm(),
             'typ' => 'JWT',
         ];
 
         $now = time();
 
-        $payload = (object) [
+        $payload = (object)[
             'ttl' => $now + $this->timeToLive,
             'ttr' => $now + $this->timeToRefresh,
             'data' => $data,
@@ -227,7 +233,7 @@ class JWT
      */
     private function checkTimeToRefresh(\stdClass $payload)
     {
-        if (! is_numeric($payload->ttr ?? null)) {
+        if (!is_numeric($payload->ttr ?? null)) {
             // Invalid token signature
             throw new InvalidTokenException('Missing or invalid TTR');
         }
@@ -246,7 +252,7 @@ class JWT
      */
     private function decodeTokenPart(string $base64Part): object
     {
-        $jsonPart = base64_decode($base64Part);
+        $jsonPart = Base64Url::decode($base64Part);
         try {
             $part = $this->json->decode($jsonPart);
         } catch (JSONDecodeException $e) {
@@ -263,7 +269,7 @@ class JWT
     private function encodeTokenPart(object $part): string
     {
         $jsonPart = $this->json->encode($part);
-        $base64Part = base64_encode($jsonPart);
+        $base64Part = Base64Url::encode($jsonPart);
         return $base64Part;
     }
 

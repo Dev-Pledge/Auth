@@ -93,4 +93,21 @@ For example, the following permissions...
 		}
 	}
 }
+```
 
+## Routes
+
+### `POST` - `/auth/login`
+
+Logs a user in.
+
+Use the username `tom` and the password `password` for now. 
+
+```
+{
+    "username": "tom",
+    "password": "password"
+}
+```
+
+The response will contain the JWT token.
