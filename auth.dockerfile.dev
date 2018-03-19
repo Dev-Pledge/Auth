@@ -2,4 +2,3 @@ FROM devpledge/phpfpm-swoole:latest
 
 WORKDIR /var/www
 
-COPY ./ /var/www
