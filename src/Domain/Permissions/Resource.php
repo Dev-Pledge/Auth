@@ -31,7 +31,7 @@ class Resource implements JsonSerializable
      * @param Action[] $actions
      * @return Resource
      */
-    public function setActions(array $actions): Resource
+    public function setActions(array $actions): self
     {
         $this->actions = $actions;
         return $this;
@@ -41,7 +41,7 @@ class Resource implements JsonSerializable
      * @param Action $action
      * @return Resource
      */
-    public function addAction(Action $action): Resource
+    public function addAction(Action $action): self
     {
         $this->actions[] = $action;
         return $this;
@@ -51,7 +51,7 @@ class Resource implements JsonSerializable
      * @param string $name
      * @return Resource
      */
-    public function setName(string $name): Resource
+    public function setName(string $name): self
     {
         $this->name = $name;
         return $this;
