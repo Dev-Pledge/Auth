@@ -83,6 +83,22 @@ class AuthController
     }
 
     /**
+     * @param Request $request
+     * @param Response $response
+     *
+     * @return Response
+     */
+    public function outputTokenPayload(Request $request, Response $response)
+    {
+        /**
+         * @var Token $token
+         */
+        $token = $request->getAttribute(Token::class);
+
+        return $response->withJson(['payload' => $token->getData()]);
+    }
+
+    /**
      * Generates a permissions object that gives access to all
      * actions on all known resources.
      *

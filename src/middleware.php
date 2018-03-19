@@ -11,7 +11,7 @@ use DevPledge\Application\Security\JWT\Token;
 $container = $app->getContainer();
 
 $jwtMiddleware = function (Request $request, Response $response, callable $next) use ($container) {
-    if (! $request->hasHeader('Authorization')) {
+    if (!$request->hasHeader('Authorization')) {
         return $response->withJson(['error' => 'Missing Authorization header'], 403);
     }
 
@@ -33,7 +33,7 @@ $jwtMiddleware = function (Request $request, Response $response, callable $next)
                 break;
             }
         }
-        if (! $found) {
+        if (!$found) {
             throw new \Exception('Missing access token in Authorization header');
         }
     } catch (\Exception $e) {
@@ -48,7 +48,7 @@ $jwtMiddleware = function (Request $request, Response $response, callable $next)
 };
 
 $jwtRefreshMiddleware = function (Request $request, Response $response, callable $next) use ($container) {
-    if (! $request->hasHeader('Authorization')) {
+    if (!$request->hasHeader('Authorization')) {
         return $response->withJson(['error' => 'Missing Authorization header'], 403);
     }
 
@@ -70,7 +70,44 @@ $jwtRefreshMiddleware = function (Request $request, Response $response, callable
                 break;
             }
         }
-        if (! $found) {
+        if (!$found) {
+            throw new \Exception('Missing access token in Authorization header');
+        }
+    } catch (\Exception $e) {
+        return $response->withJson(['error' => $e->getMessage()], 403);
+    }
+
+    $request = $request->withAttribute(Token::class, $token);
+
+    $response = $next($request, $response);
+
+    return $response;
+};
+
+$jwtExistsMiddleware = function (Request $request, Response $response, callable $next) use ($container) {
+    if (!$request->hasHeader('Authorization')) {
+        return $response->withJson(['error' => 'Missing Authorization header'], 403);
+    }
+
+    $token = null;
+    $headers = $request->getHeader('Authorization');
+    try {
+        $found = false;
+        foreach ($headers as $h) {
+            if (mb_strpos($h, 'Bearer ') === 0) {
+                $accessToken = substr($h, 7);
+                if (mb_strlen($accessToken) > 0) {
+                    $found = true;
+                    /**
+                     * @var JWT $jwt
+                     */
+                    $jwt = $container->get(JWT::class);
+                    $token = $jwt->verify($accessToken, false, false);
+                }
+                break;
+            }
+        }
+        if (!$found) {
             throw new \Exception('Missing access token in Authorization header');
         }
     } catch (\Exception $e) {
