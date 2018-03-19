@@ -27,8 +27,9 @@ class AddHandler extends Base {
 	 *
 	 * @param App $app
 	 * @param $handlerName
+	 * @param \Closure $handlerFunction
 	 */
-	public function __construct( App & $app, $handlerName, \Closure $handlerFunction ) {
+	public function __construct( App $app, $handlerName, \Closure $handlerFunction ) {
 		parent::__construct( $app );
 		$this->setHandlerName( $handlerName )
 		     ->setHandlerFunction( $handlerFunction );

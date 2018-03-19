@@ -22,7 +22,7 @@ abstract class Base {
 	 *
 	 * @param App $app
 	 */
-	public function __construct( App & $app ) {
+	public function __construct( App $app ) {
 		$this->setApp( $app );
 	}
 
