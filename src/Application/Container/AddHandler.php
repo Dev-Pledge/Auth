@@ -2,8 +2,6 @@
 
 namespace DevPledge\Application\Container;
 
-
-use Slim\App;
 use Slim\Container;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -12,7 +10,7 @@ use Slim\Http\Response;
  * Class AddHandler
  * @package DevPledge\Container
  */
-class AddHandler extends Base {
+class AddHandler extends ContainerBase {
 	/**
 	 * @var string
 	 */
@@ -25,20 +23,19 @@ class AddHandler extends Base {
 	/**
 	 * AddHandler constructor.
 	 *
-	 * @param App $app
 	 * @param $handlerName
 	 * @param \Closure $handlerFunction
 	 */
-	public function __construct( App $app, $handlerName, \Closure $handlerFunction ) {
-		parent::__construct( $app );
+	public function __construct( $handlerName, \Closure $handlerFunction ) {
 		$this->setHandlerName( $handlerName )
-		     ->setHandlerFunction( $handlerFunction );
+		     ->setHandlerFunction( $handlerFunction )
+		     ->do();
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getHandlerName(): string {
+	protected function getHandlerName(): string {
 		return $this->handlerName;
 	}
 
@@ -47,7 +44,7 @@ class AddHandler extends Base {
 	 *
 	 * @return AddHandler
 	 */
-	public function setHandlerName( string $handlerName ): AddHandler {
+	protected function setHandlerName( string $handlerName ): AddHandler {
 		$this->handlerName = $handlerName;
 
 		return $this;
@@ -56,7 +53,7 @@ class AddHandler extends Base {
 	/**
 	 * @return \Closure
 	 */
-	public function getHandlerFunction(): \Closure {
+	protected function getHandlerFunction(): \Closure {
 		return $this->handlerFunction;
 	}
 
@@ -65,20 +62,28 @@ class AddHandler extends Base {
 	 *
 	 * @return $this
 	 */
-	public function setHandlerFunction( \Closure $handlerFunction ) {
+	protected function setHandlerFunction( \Closure $handlerFunction ) {
 		$this->handlerFunction = $handlerFunction;
 
 		return $this;
 	}
 
-	public function do() {
-		$appContainer = $this->getApp()->getContainer();
+	protected function do() {
+		$this->addContainerHandler();
+	}
 
+	/**
+	 * @return $this
+	 */
+	protected function addContainerHandler() {
+		$appContainer                            = $this->getApp()->getContainer();
 		$appContainer[ $this->getHandlerName() ] = function ( Container $container ) {
 			return function ( Request $request, Response $response ) use ( $container ) {
 				return call_user_func_array( $this->getHandlerFunction(), array( $request, $response, $container ) );
 			};
 		};
+
+		return $this;
 	}
 
 }

@@ -6,7 +6,6 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 
 $addHandler = new AddHandler(
-	$app,
 	'notFoundHandler',
 	function ( Request $request, Response $response, Container $container ) {
 		$data                    = new stdClass();
@@ -19,5 +18,3 @@ $addHandler = new AddHandler(
 
 		return $response->withJson( $data )->withStatus( 404 );
 	} );
-
-$addHandler->do();
