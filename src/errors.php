@@ -1,12 +1,11 @@
 <?php
 
-use DevPledge\Application\Container\AddHandler;
+use DevPledge\Application\Container\AddNotFoundHandler;
 use Slim\Container;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-$addHandler = new AddHandler(
-	'notFoundHandler',
+$addHandler = new AddNotFoundHandler(
 	function ( Request $request, Response $response, Container $container ) {
 		$data                    = new stdClass();
 		$data->error             = 'Not Found';
@@ -17,4 +16,5 @@ $addHandler = new AddHandler(
 		$data->sentParams        = $request->getParams();
 
 		return $response->withJson( $data )->withStatus( 404 );
-	} );
+	}
+);
