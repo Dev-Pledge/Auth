@@ -32,6 +32,7 @@ $error_handler->registerShutdownFunction();
  */
 $settings = require __DIR__ . '/../src/settings.php';
 $app      = new \Slim\App( $settings );
+
 ContainerBase::setApp( $app );
 
 require __DIR__ . '/../src/errors.php';
