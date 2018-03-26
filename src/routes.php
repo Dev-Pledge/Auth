@@ -1,5 +1,6 @@
 <?php
 
+use DevPledge\Framework\RouteGroups\OrganisationRouteGroup;
 use DevPledge\Integrations\Middleware\JWT\Authorise;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -26,15 +27,17 @@ $app->group( '', function () use ( $app ) {
 
 } );
 
-$app->group( '', function () use ( $app ) {
-
-	$app->group( '/organisation', function () use ( $app ) {
-
-		$app->get( '/{id}', OrganisationController::class . ':getOrganisation' );
-
-	} );
-
-} )->add( new Authorise() );
+//$app->group( '', function () use ( $app ) {
+//
+//	$app->group( '/organisation', function () use ( $app ) {
+//
+//		$app->get( '/{id}', OrganisationController::class . ':getOrganisation' );
+//
+//	} );
+//
+//} )->add( new Authorise() );
+$testGroup = new OrganisationRouteGroup();
+$testGroup();
 
 $app->group( '', function () use ( $app, $jwtRefreshMiddleware, $jwtExistsMiddleware ) {
 
@@ -42,12 +45,10 @@ $app->group( '', function () use ( $app, $jwtRefreshMiddleware, $jwtExistsMiddle
 
 		$app->post( '/login', AuthController::class . ':login' );
 
-		$app
-			->post( '/refresh', AuthController::class . ':refresh' )
+		$app->post( '/refresh', AuthController::class . ':refresh' )
 			->add( new Authorise() );
 
-		$app
-			->get( '/payload', AuthController::class . ':outputTokenPayload' )
+		$app->get( '/payload', AuthController::class . ':outputTokenPayload' )
 			->add( new Authorise() );
 
 	} );
