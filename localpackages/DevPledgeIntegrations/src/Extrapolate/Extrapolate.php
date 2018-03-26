@@ -13,6 +13,9 @@ namespace DevPledge\Integrations\Extrapolate;
  * @package DevPledge\Integrations\Extrapolate
  */
 class Extrapolate {
+	/**
+	 * @param AbstractExtrapolate[] $extrapolations
+	 */
 	public static function extrapolate( array $extrapolations ) {
 		if ( count( $extrapolations ) ) {
 			foreach ( $extrapolations as $ext ) {
