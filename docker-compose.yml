@@ -16,7 +16,7 @@ services:
       - .sentryenv
     volumes:
       - .:/var/www
-      - ./logs:/var/log:cached
+      - ./logs:/var/log
     expose:
       - 9000
       - 9501
