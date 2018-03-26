@@ -1,5 +1,6 @@
 <?php
 
+use DevPledge\Integrations\Middleware\JWT\Authorise;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use DevPledge\Framework\Controller\Auth\AuthController;
@@ -33,7 +34,7 @@ $app->group( '', function () use ( $app ) {
 
 	} );
 
-} )->add( $jwtMiddleware );
+} )->add( new Authorise() );
 
 $app->group( '', function () use ( $app, $jwtRefreshMiddleware, $jwtExistsMiddleware ) {
 
@@ -43,11 +44,11 @@ $app->group( '', function () use ( $app, $jwtRefreshMiddleware, $jwtExistsMiddle
 
 		$app
 			->post( '/refresh', AuthController::class . ':refresh' )
-			->add( $jwtRefreshMiddleware );
+			->add( new Authorise() );
 
 		$app
 			->get( '/payload', AuthController::class . ':outputTokenPayload' )
-			->add( $jwtExistsMiddleware );
+			->add( new Authorise() );
 
 	} );
 

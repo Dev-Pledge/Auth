@@ -31,8 +31,15 @@
   },
   "require-dev": {
     "phpunit/phpunit": ">=4.8 < 6.0",
-    "eaglewu/swoole-ide-helper": "dev-master"
+    "eaglewu/swoole-ide-helper": "dev-master",
+    "dev-pledge/slim-integrations": "@dev"
   },
+  "repositories": [
+    {
+      "type": "path",
+      "url": "./localpackages/DevPledgeIntegrations"
+    }
+  ],
   "autoload-dev": {
     "psr-4": {
       "\\Tests\\": "tests/"

@@ -10,11 +10,12 @@ services:
     environment:
       docker: "true"
       production: "false"
+      ENVIRONMENT: "development"
     env_file:
     #create a .sentryenv with SENTRY_DSN=...
       - .sentryenv
     volumes:
-      - .:/var/www:cached
+      - .:/var/www
       - ./logs:/var/log:cached
     expose:
       - 9000

@@ -1,6 +1,12 @@
 <?php
 
-use DevPledge\Container\ContainerBase;
+use DevPledge\Integrations\ControllerDependency\ExtrapolateControllerDependencies;
+use DevPledge\Integrations\Extrapolate\Extrapolate;
+use DevPledge\Integrations\FactoryDependency\ExtrapolateFactoryDependencies;
+use DevPledge\Integrations\Integrations;
+use DevPledge\Integrations\RepositoryDependency\ExtrapolateRepositoryDependencies;
+use DevPledge\Integrations\ServiceProvider\ExtrapolateServices;
+
 
 if ( PHP_SAPI == 'cli-server' ) {
 	// To help the built-in PHP dev server, check if the request was actually for
@@ -21,11 +27,8 @@ require __DIR__ . '/../dotenv.php';
 /**
  * SENTRY SET UP
  */
-$client        = new Raven_Client( getenv( 'SENTRY_DSN' ) );
-$error_handler = new Raven_ErrorHandler( $client );
-$error_handler->registerExceptionHandler();
-$error_handler->registerErrorHandler();
-$error_handler->registerShutdownFunction();
+Integrations::setSentry( new Raven_Client( getenv( 'SENTRY_DSN' ) ) );
+
 
 /**
  * Instantiate the app
@@ -33,19 +36,18 @@ $error_handler->registerShutdownFunction();
 $settings = require __DIR__ . '/../src/settings.php';
 $app      = new \Slim\App( $settings );
 
-ContainerBase::setApp( $app );
+Integrations::setApp( $app );
 
-require __DIR__ . '/../src/errors.php';
+Integrations::addExtrapolations( [
+	new ExtrapolateServices( __DIR__ . '/../src/Framework/ServicesDependencies', "DevPledge\\Framework\\ServicesDependencies" ),
+	new ExtrapolateRepositoryDependencies( __DIR__ . '/../src/Framework/RepositoryDependencies', "DevPledge\\Framework\\RepositoryDependencies" ),
+	new ExtrapolateControllerDependencies( __DIR__ . '/../src/Framework/ControllerDependencies', "DevPledge\\Framework\\ControllerDependencies" ),
+	new ExtrapolateFactoryDependencies( __DIR__ . '/../src/Framework/FactoryDependencies', "DevPledge\\Framework\\FactoryDependencies" ),
+] );
 
-/**
- * Set up dependencies
- */
-require __DIR__ . '/../src/dependencies.php';
+Integrations::addCommonServices();
+Integrations::addCommonHandlers();
 
-/**
- * Register middleware
- */
-require __DIR__ . '/../src/middleware.php';
 
 /**
  * Register routes

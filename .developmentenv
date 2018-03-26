@@ -1,5 +1,5 @@
 MYSQL_HOST=mysql-db
-MYSQL_DB=devpledge
+MYSQL_DB=auth
 MYSQL_USER=root
 MYSQL_PASSWORD=test_pass
 SWOOLE_PORT=9501

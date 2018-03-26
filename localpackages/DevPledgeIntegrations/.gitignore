@@ -5,4 +5,4 @@
 /.idea/*
 /data/*
 /.sentryenv
-/dev_vendor/
+/Makefile
