@@ -4,7 +4,6 @@ namespace DevPledge\Integrations\Route;
 
 use DevPledge\Integrations\AbstractAppAccess;
 use DevPledge\Integrations\Middleware\AbstractMiddleware;
-use function foo\func;
 
 /**
  * Class AbstractRouteGroup
@@ -33,24 +32,25 @@ abstract class AbstractRouteGroup extends AbstractAppAccess {
 
 
 	final public function __invoke() {
-		$app   = $this->getApp();
-		$that  = $this;
-		$group = $app->group( '', function () use ( $app, $that ) {
-			$app->group( $that->getPattern(),
-				function () use ( $that ) {
+		$app  = $this->getApp();
+		$that = $this;
 
-					$that->setRoutesOnGroup();
+		return function () use ( $app, $that ) {
+			$group = $app->group( '', function () use ( $app, $that ) {
+				$app->group( $that->getPattern(),
+					function () use ( $that ) {
+						$that->setRoutesOnGroup();
+					}
+				);
+			} );
 
+			if ( $middleware = $that->getMiddleware() ) {
+				foreach ( $middleware as $ware ) {
+					$group->add( $ware );
 				}
-			);
-		} );
 
-		if ( $middleware = $this->getMiddleware() ) {
-			foreach ( $middleware as $ware ) {
-				$group->add( $ware );
 			}
-
-		}
+		};
 	}
 
 	abstract protected function setRoutesOnGroup();

@@ -2,6 +2,8 @@
 
 use DevPledge\Framework\RouteGroups\OrganisationRouteGroup;
 use DevPledge\Integrations\Middleware\JWT\Authorise;
+use DevPledge\Integrations\Middleware\JWT\Present;
+use DevPledge\Integrations\Middleware\JWT\Refresh;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use DevPledge\Framework\Controller\Auth\AuthController;
@@ -46,10 +48,10 @@ $app->group( '', function () use ( $app, $jwtRefreshMiddleware, $jwtExistsMiddle
 		$app->post( '/login', AuthController::class . ':login' );
 
 		$app->post( '/refresh', AuthController::class . ':refresh' )
-			->add( new Authorise() );
+			->add( new Refresh() );
 
 		$app->get( '/payload', AuthController::class . ':outputTokenPayload' )
-			->add( new Authorise() );
+			->add( new Present() );
 
 	} );
 
