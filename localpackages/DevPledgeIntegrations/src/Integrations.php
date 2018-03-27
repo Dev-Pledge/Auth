@@ -18,14 +18,17 @@ use DevPledge\Integrations\ServiceProvider\Services\JSONService;
 use DevPledge\Integrations\ServiceProvider\Services\JWTService;
 use DevPledge\Integrations\ServiceProvider\Services\LoggerService;
 use DevPledge\Integrations\ServiceProvider\Services\PHPRendererService;
-use PHPUnit\Runner\Exception;
 use Slim\App;
 
 /**
  * Class Integrations
  * @package DevPledge\Integrations
  */
-class Integrations extends AbstractAppAccess {
+class Integrations {
+
+	static public function setApp( App $app ) {
+		AbstractAppAccess::setApp( $app );
+	}
 
 	static public function setSentry( \Raven_Client $client ) {
 		Sentry::setSentry( $client );
@@ -51,9 +54,5 @@ class Integrations extends AbstractAppAccess {
 	 */
 	static public function addExtrapolations( array $extrapolations ) {
 		Extrapolate::extrapolate( $extrapolations );
-	}
-
-	static public function run() {
-		static::$app->run();
 	}
 }

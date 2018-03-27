@@ -17,10 +17,6 @@ abstract class AbstractRouteGroup extends AbstractAppAccess {
 	 * @var AbstractMiddleware[]
 	 */
 	protected $middleware;
-	/**
-	 * @var string
-	 */
-	protected $rootPattern = '';
 
 	/**
 	 * AbstractRouteGroup constructor.
@@ -39,20 +35,22 @@ abstract class AbstractRouteGroup extends AbstractAppAccess {
 		$app  = $this->getApp();
 		$that = $this;
 
-		$group = $app->group( $this->getRootPattern(), function () use ( $app, $that ) {
-			$app->group( $that->getPattern(),
-				function () use ( $that ) {
-					$that->setRoutesOnGroup();
+		return function () use ( $app, $that ) {
+			$group = $app->group( '', function () use ( $app, $that ) {
+				$app->group( $that->getPattern(),
+					function () use ( $that ) {
+						$that->setRoutesOnGroup();
+					}
+				);
+			} );
+
+			if ( $middleware = $that->getMiddleware() ) {
+				foreach ( $middleware as $ware ) {
+					$group->add( $ware );
 				}
-			);
-		} );
 
-		if ( $middleware = $that->getMiddleware() ) {
-			foreach ( $middleware as $ware ) {
-				$group->add( $ware );
 			}
-		}
-
+		};
 	}
 
 	abstract protected function setRoutesOnGroup();
@@ -99,23 +97,5 @@ abstract class AbstractRouteGroup extends AbstractAppAccess {
 	 */
 	public function getMiddleware() {
 		return isset( $this->middleware ) ? $this->middleware : false;
-	}
-
-	/**
-	 * @param string $rootPattern
-	 *
-	 * @return AbstractRouteGroup
-	 */
-	public function setRootPattern( string $rootPattern ): AbstractRouteGroup {
-		$this->rootPattern = $rootPattern;
-
-		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getRootPattern(): string {
-		return $this->rootPattern;
 	}
 }
