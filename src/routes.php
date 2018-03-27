@@ -38,20 +38,21 @@ $app->group( '', function () use ( $app ) {
 //	} );
 //
 //} )->add( new Authorise() );
+$testGroup = new OrganisationRouteGroup();
+$testGroup();
 
-//
-//$app->group( '', function () use ( $app, $jwtRefreshMiddleware, $jwtExistsMiddleware ) {
-//
-//	$app->group( '/auth', function () use ( $app, $jwtRefreshMiddleware, $jwtExistsMiddleware ) {
-//
-//		$app->post( '/login', AuthController::class . ':login' );
-//
-//		$app->post( '/refresh', AuthController::class . ':refresh' )
-//			->add( new Refresh() );
-//
-//		$app->get( '/payload', AuthController::class . ':outputTokenPayload' )
-//			->add( new Present() );
-//
-//	} );
-//
-//} );
+$app->group( '', function () use ( $app, $jwtRefreshMiddleware, $jwtExistsMiddleware ) {
+
+	$app->group( '/auth', function () use ( $app, $jwtRefreshMiddleware, $jwtExistsMiddleware ) {
+
+		$app->post( '/login', AuthController::class . ':login' );
+
+		$app->post( '/refresh', AuthController::class . ':refresh' )
+			->add( new Refresh() );
+
+		$app->get( '/payload', AuthController::class . ':outputTokenPayload' )
+			->add( new Present() );
+
+	} );
+
+} );

@@ -37,7 +37,7 @@
   "repositories": [
     {
       "type": "path",
-      "url": "./local_packages/DevPledgeIntegrations"
+      "url": "./localpackages/DevPledgeIntegrations"
     }
   ],
   "autoload-dev": {
