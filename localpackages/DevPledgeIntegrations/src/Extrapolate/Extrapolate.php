@@ -14,13 +14,13 @@ namespace DevPledge\Integrations\Extrapolate;
  */
 class Extrapolate {
 	/**
-	 * @param AbstractExtrapolate[] $extrapolations
+	 * @param AbstractExtrapolateForContainer[] $extrapolations
 	 */
 	public static function extrapolate( array $extrapolations ) {
 		if ( count( $extrapolations ) ) {
 			foreach ( $extrapolations as $ext ) {
 				if ( $ext instanceof AbstractExtrapolate ) {
-					call_user_func_array( $ext, array() );
+					call_user_func( $ext );
 				}
 			}
 		}

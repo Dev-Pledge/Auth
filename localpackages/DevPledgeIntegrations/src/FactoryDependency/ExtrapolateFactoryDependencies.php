@@ -3,13 +3,13 @@
 namespace DevPledge\Integrations\FactoryDependency;
 
 use DevPledge\Integrations\Container\AbstractContainerCallable;
-use DevPledge\Integrations\Extrapolate\AbstractExtrapolate;
+use DevPledge\Integrations\Extrapolate\AbstractExtrapolateForContainer;
 
 /**
  * Class ExtrapolateFactoryDependencies
  * @package DevPledge\Integrations\FactoryDependency
  */
-class ExtrapolateFactoryDependencies extends AbstractExtrapolate {
+class ExtrapolateFactoryDependencies extends AbstractExtrapolateForContainer {
 	/**
 	 * @param AbstractContainerCallable $callable
 	 */

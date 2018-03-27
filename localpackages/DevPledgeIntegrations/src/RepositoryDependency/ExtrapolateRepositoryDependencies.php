@@ -3,13 +3,13 @@
 namespace DevPledge\Integrations\RepositoryDependency;
 
 use DevPledge\Integrations\Container\AbstractContainerCallable;
-use DevPledge\Integrations\Extrapolate\AbstractExtrapolate;
+use DevPledge\Integrations\Extrapolate\AbstractExtrapolateForContainer;
 
 /**
  * Class ExtrapolateRepositoryDependencies
  * @package DevPledge\Integrations\RepositoryDependency
  */
-class ExtrapolateRepositoryDependencies extends AbstractExtrapolate {
+class ExtrapolateRepositoryDependencies extends AbstractExtrapolateForContainer {
 	/**
 	 * @param AbstractContainerCallable $callable
 	 */

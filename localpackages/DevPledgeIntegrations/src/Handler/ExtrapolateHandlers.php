@@ -11,13 +11,13 @@ namespace DevPledge\Integrations\Handler;
 
 use DevPledge\Integrations\Container\AbstractContainerCallable;
 use DevPledge\Integrations\Container\AddCallable;
-use DevPledge\Integrations\Extrapolate\AbstractExtrapolate;
+use DevPledge\Integrations\Extrapolate\AbstractExtrapolateForContainer;
 
 /**
  * Class ExtrapolateHandlers
  * @package DevPledge\Integrations\Handler
  */
-class ExtrapolateHandlers extends AbstractExtrapolate {
+class ExtrapolateHandlers extends AbstractExtrapolateForContainer {
 	/**
 	 * ExtrapolateHandlers constructor.
 	 *

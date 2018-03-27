@@ -4,13 +4,13 @@ namespace DevPledge\Integrations\ControllerDependency;
 
 
 use DevPledge\Integrations\Container\AbstractContainerCallable;
-use DevPledge\Integrations\Extrapolate\AbstractExtrapolate;
+use DevPledge\Integrations\Extrapolate\AbstractExtrapolateForContainer;
 
 /**
  * Class ExtrapolateControllerDependencies
  * @package DevPledge\Integrations\ControllerDependency
  */
-class ExtrapolateControllerDependencies extends AbstractExtrapolate {
+class ExtrapolateControllerDependencies extends AbstractExtrapolateForContainer {
 	/**
 	 * @param AbstractContainerCallable $callable
 	 */
