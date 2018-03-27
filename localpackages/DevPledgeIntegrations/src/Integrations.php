@@ -18,8 +18,7 @@ use DevPledge\Integrations\ServiceProvider\Services\JSONService;
 use DevPledge\Integrations\ServiceProvider\Services\JWTService;
 use DevPledge\Integrations\ServiceProvider\Services\LoggerService;
 use DevPledge\Integrations\ServiceProvider\Services\PHPRendererService;
-use PHPUnit\Runner\Exception;
-use Slim\App;
+
 
 /**
  * Class Integrations
