@@ -24,7 +24,7 @@ class AuthRouteGroup extends AbstractRouteGroup {
 		parent::__construct( '/auth' );
 	}
 
-	protected function setRoutesOnGroup() {
+	protected function callableInGroup(){
 		$app = $this->getApp();
 		$app->post( '/login', AuthController::class . ':login' );
 
@@ -34,4 +34,6 @@ class AuthRouteGroup extends AbstractRouteGroup {
 		$app->get( '/payload', AuthController::class . ':outputTokenPayload' )
 		    ->add( new Present() );
 	}
+
+
 }

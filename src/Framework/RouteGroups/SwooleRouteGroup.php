@@ -15,8 +15,8 @@ class SwooleRouteGroup extends AbstractRouteGroup {
 		parent::__construct( '/swooletest' );
 	}
 
-	protected function setRoutesOnGroup() {
-		$this->getApp()->get( '', function () use ( $app ) {
+	protected function callableInGroup() {
+		$this->getApp()->get( '', function (){
 
 			shell_exec( 'php /var/www/swooletest.php > /dev/null 2>/dev/null &' );
 

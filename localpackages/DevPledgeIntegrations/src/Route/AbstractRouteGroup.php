@@ -42,7 +42,7 @@ abstract class AbstractRouteGroup extends AbstractAppAccess {
 		$group = $app->group( $this->getRootPattern(), function () use ( $app, $that ) {
 			$app->group( $that->getPattern(),
 				function () use ( $that ) {
-					$that->setRoutesOnGroup();
+					$that->callableInGroup();
 				}
 			);
 		} );
@@ -55,7 +55,7 @@ abstract class AbstractRouteGroup extends AbstractAppAccess {
 
 	}
 
-	abstract protected function setRoutesOnGroup();
+	abstract protected function callableInGroup();
 
 	/**
 	 * @param string $pattern
