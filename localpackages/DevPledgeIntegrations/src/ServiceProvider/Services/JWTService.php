@@ -4,6 +4,7 @@ namespace DevPledge\Integrations\ServiceProvider\Services;
 
 use DevPledge\Integrations\Security\JWT\JWT;
 use DevPledge\Integrations\ServiceProvider\AbstractService;
+use DevPledge\Integrations\Setting\Settings\JWTSettings;
 use Slim\Container;
 use TomWright\JSON\JSON;
 
@@ -27,12 +28,13 @@ class JWTService extends AbstractService {
 	 * @throws \Interop\Container\Exception\ContainerException
 	 */
 	public function __invoke( Container $container ) {
-		$secret    = $container->get( 'settings' )['security']['jwt']['secret'];
-		$algorithm = $container->get( 'settings' )['security']['jwt']['algorithm'];
-		$jwt       = new JWT( $secret, $algorithm, $container->get( JSON::class ) );
+		$settings  = JWTSettings::getSetting();
+		$secret    = $settings->getSecret();
+		$algorithm = $settings->getAlgorithm();
+		$jwt       = new JWT( $secret, $algorithm, JSONService::getService() );
 
-		$ttl = $container->get( 'settings' )['security']['jwt']['ttl'] ?? null;
-		$ttr = $container->get( 'settings' )['security']['jwt']['ttr'] ?? null;
+		$ttl = $settings->getTimeToLive();
+		$ttr = $settings->getTimeToRefresh();
 
 		if ( $ttl !== null ) {
 			$jwt->setTimeToLive( $ttl );

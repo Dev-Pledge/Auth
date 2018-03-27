@@ -12,23 +12,23 @@ use DevPledge\Framework\Controller\OrganisationController;
 
 // Routes
 
-//$app->get('/[{name}]', function (Request $request, Response $response, array $args) {
-//    // Sample log message
-//    $this->logger->info("Slim-Skeleton '/' route");
+$app->get('/[{name}]', function (Request $request, Response $response, array $args) {
+    // Sample log message
+    $this->logger->info("Slim-Skeleton '/' route");
+
+    // Render index view
+    return $this->renderer->render($response, 'index.phtml', $args);
+});
+
+//$app->group( '', function () use ( $app ) {
 //
-//    // Render index view
-//    return $this->renderer->render($response, 'index.phtml', $args);
-//});
-
-$app->group( '', function () use ( $app ) {
-
-	$app->get( '/swooletest', function () use ( $app ) {
-
-		shell_exec( 'php /var/www/swooletest.php > /dev/null 2>/dev/null &' );
-
-	} );
-
-} );
+//	$app->get( '/swooletest', function () use ( $app ) {
+//
+//		shell_exec( 'php /var/www/swooletest.php > /dev/null 2>/dev/null &' );
+//
+//	} );
+//
+//} );
 
 //$app->group( '', function () use ( $app ) {
 //

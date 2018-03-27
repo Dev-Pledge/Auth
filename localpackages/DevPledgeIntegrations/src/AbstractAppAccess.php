@@ -22,8 +22,10 @@ abstract class AbstractAppAccess {
 
 	/**
 	 * @param App $app
+	 *
+	 * @return App
 	 */
-	public static function setApp( App $app ): void {
-		static::$app = $app;
+	public static function setApp( App $app ): App {
+		return static::$app = $app;
 	}
 }

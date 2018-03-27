@@ -18,6 +18,10 @@ use DevPledge\Integrations\ServiceProvider\Services\JSONService;
 use DevPledge\Integrations\ServiceProvider\Services\JWTService;
 use DevPledge\Integrations\ServiceProvider\Services\LoggerService;
 use DevPledge\Integrations\ServiceProvider\Services\PHPRendererService;
+use DevPledge\Integrations\Setting\Settings;
+use DevPledge\Integrations\Setting\Settings\JWTSettings;
+use DevPledge\Integrations\Setting\Settings\MysqlSettings;
+use Slim\App;
 
 
 /**
@@ -25,12 +29,30 @@ use DevPledge\Integrations\ServiceProvider\Services\PHPRendererService;
  * @package DevPledge\Integrations
  */
 class Integrations extends AbstractAppAccess {
+	/**
+	 * @param array $container
+	 *
+	 * @return App
+	 */
+	static public function initApplication( $container = [] ) {
 
-	static public function setSentry( \Raven_Client $client ) {
-		Sentry::setSentry( $client );
+		$settings = new Settings();
+		$settings->addInitialSetting( $container );
+
+		return static::setApp( new App( $settings ) );
 	}
 
-	static public function addCommonServices() {
+	/**
+	 * @param \Raven_Client $client
+	 *
+	 * @return \Raven_Client
+	 */
+	static public function setSentry( \Raven_Client $client ): \Raven_Client {
+		return Sentry::setSentry( $client );
+	}
+
+
+	static public function addCommonServices(): void {
 		$serviceAdder = new AddService();
 		$serviceAdder->addService( new LoggerService() )
 		             ->addService( new PHPRendererService() )
@@ -39,7 +61,7 @@ class Integrations extends AbstractAppAccess {
 		             ->addService( new JWTService() );
 	}
 
-	static public function addCommonHandlers() {
+	static public function addCommonHandlers():void {
 		$handlerAdder = new AddHandler();
 		$handlerAdder->addHandler( new NotFoundHandler() )
 		             ->addHandler( new NotAllowedHandler() );
@@ -52,7 +74,31 @@ class Integrations extends AbstractAppAccess {
 		Extrapolate::extrapolate( $extrapolations );
 	}
 
+
+	static public function addCommonSettings() {
+		$container = static::$app->getContainer();
+		/**
+		 * @var $settings Settings;
+		 */
+		$settings = $container['settings']['integrations'];
+		$settings->addSetting( new MysqlSettings() )
+		         ->addSetting( new JWTSettings() );
+	}
+
+	/**
+	 * @return \Psr\Http\Message\ResponseInterface
+	 * @throws \Exception
+	 * @throws \Slim\Exception\MethodNotAllowedException
+	 * @throws \Slim\Exception\NotFoundException
+	 */
 	static public function run() {
-		static::$app->run();
+		return static::$app->run();
+	}
+
+	/**
+	 * @return mixed|\Slim\App
+	 */
+	static public function getApplication() {
+		return static::$app;
 	}
 }

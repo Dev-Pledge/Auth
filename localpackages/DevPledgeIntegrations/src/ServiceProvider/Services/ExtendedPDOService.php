@@ -9,6 +9,7 @@
 namespace DevPledge\Integrations\ServiceProvider\Services;
 
 use DevPledge\Integrations\ServiceProvider\AbstractService;
+use DevPledge\Integrations\Setting\Settings\MysqlSettings;
 use Slim\Container;
 use TomWright\Database\ExtendedPDO\ExtendedPDO;
 
@@ -31,10 +32,11 @@ class ExtendedPDOService extends AbstractService {
 	 * @throws \Interop\Container\Exception\ContainerException
 	 */
 	public function __invoke( Container $container ) {
-		$db = new ExtendedPDO(
-			$container->get( 'settings' )['database']['dsn'],
-			$container->get( 'settings' )['database']['user'],
-			$container->get( 'settings' )['database']['pass']
+		$settings = MysqlSettings::getSetting();
+		$db       = new ExtendedPDO(
+			$settings->getDsn(),
+			$settings->getUserName(),
+			$settings->getPassword()
 		);
 		$db->setAttribute( \PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION );
 

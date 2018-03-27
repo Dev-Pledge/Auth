@@ -35,8 +35,8 @@ Integrations::setSentry( new Raven_Client( getenv( 'SENTRY_DSN' ) ) );
  */
 $settings = require __DIR__ . '/../src/settings.php';
 
-Integrations::setApp( new \Slim\App( $settings ) );
-
+Integrations::initApplication();
+Integrations::addCommonSettings();
 Integrations::addExtrapolations( [
 	new ExtrapolateServices( __DIR__ . '/../src/Framework/Services', "DevPledge\\Framework\\Services" ),
 	new ExtrapolateRepositoryDependencies( __DIR__ . '/../src/Framework/RepositoryDependencies', "DevPledge\\Framework\\RepositoryDependencies" ),
@@ -44,9 +44,7 @@ Integrations::addExtrapolations( [
 	new ExtrapolateFactoryDependencies( __DIR__ . '/../src/Framework/FactoryDependencies', "DevPledge\\Framework\\FactoryDependencies" ),
 	new ExtrapolateRouteGroups( __DIR__ . '/../src/Framework/RouteGroups', "DevPledge\\Framework\\RouteGroups" )
 ] );
-
 Integrations::addCommonServices();
 Integrations::addCommonHandlers();
 Integrations::run();
-
 

@@ -10,6 +10,7 @@ use DevPledge\Integrations\Container\AbstractContainerCallable;
  */
 abstract class AbstractControllerDependency extends AbstractContainerCallable {
 	/**
+	 * usually return static::getFromContainer();
 	 * @return mixed
 	 */
 	abstract static public function getController();

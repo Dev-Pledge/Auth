@@ -10,6 +10,7 @@ namespace DevPledge\Framework\RouteGroups;
 
 
 use DevPledge\Framework\Controller\Auth\AuthController;
+use DevPledge\Integrations\Integrations;
 use DevPledge\Integrations\Middleware\JWT\Present;
 use DevPledge\Integrations\Middleware\JWT\Refresh;
 use DevPledge\Integrations\Route\AbstractRouteGroup;
@@ -24,8 +25,10 @@ class AuthRouteGroup extends AbstractRouteGroup {
 		parent::__construct( '/auth' );
 	}
 
-	protected function callableInGroup(){
+	protected function callableInGroup() {
+
 		$app = $this->getApp();
+
 		$app->post( '/login', AuthController::class . ':login' );
 
 		$app->post( '/refresh', AuthController::class . ':refresh' )

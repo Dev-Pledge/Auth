@@ -29,12 +29,12 @@ class OrganisationMySqlRepositoryDependency extends AbstractRepositoryDependency
 	 * @return OrganisationMySQLRepository|mixed
 	 */
 	public function __invoke( Container $container ) {
-		$extendedPDO = ExtendedPDOService::getFromContainer();
-		$factory     = OrganisationFactoryDependency::getFromContainer();
+		$extendedPDO = ExtendedPDOService::getService();
+		$factory     = OrganisationFactoryDependency::getFactory();
 
 		return new OrganisationMySQLRepository( $extendedPDO, $factory );
 	}
-	
+
 
 	/**
 	 * @return OrganisationMySQLRepository
