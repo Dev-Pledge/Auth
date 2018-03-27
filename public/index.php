@@ -35,7 +35,7 @@ Integrations::setSentry( new Raven_Client( getenv( 'SENTRY_DSN' ) ) );
  */
 $settings = require __DIR__ . '/../src/settings.php';
 
-Integrations::initApplication();
+Integrations::initApplication( $settings );
 Integrations::addCommonSettings();
 Integrations::addExtrapolations( [
 	new ExtrapolateServices( __DIR__ . '/../src/Framework/Services', "DevPledge\\Framework\\Services" ),
