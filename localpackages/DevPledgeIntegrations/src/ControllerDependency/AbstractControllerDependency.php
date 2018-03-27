@@ -9,5 +9,8 @@ use DevPledge\Integrations\Container\AbstractContainerCallable;
  * @package DevPledge\Integrations\ControllerDependency
  */
 abstract class AbstractControllerDependency extends AbstractContainerCallable {
-
+	/**
+	 * @return mixed
+	 */
+	abstract static public function getController();
 }

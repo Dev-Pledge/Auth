@@ -11,15 +11,36 @@ namespace DevPledge\Integrations\ServiceProvider\Services;
 
 use DevPledge\Integrations\ServiceProvider\AbstractService;
 use Slim\Container;
+use Slim\Views\PhpRenderer;
 
+/**
+ * Class PHPRendererService
+ * @package DevPledge\Integrations\ServiceProvider\Services
+ */
 class PHPRendererService extends AbstractService {
+	/**
+	 * PHPRendererService constructor.
+	 */
 	public function __construct() {
 		parent::__construct( 'renderer' );
 	}
 
+	/**
+	 * @param Container $container
+	 *
+	 * @return PhpRenderer|mixed
+	 * @throws \Interop\Container\Exception\ContainerException
+	 */
 	public function __invoke( Container $container ) {
 		$settings = $container->get( 'settings' )['renderer'];
 
-		return new PHPRendererService( $settings['template_path'] );
+		return new PhpRenderer( $settings['template_path'] );
+	}
+
+	/**
+	 * @return PhpRenderer
+	 */
+	static public function getService() {
+		return static::getFromContainer();
 	}
 }

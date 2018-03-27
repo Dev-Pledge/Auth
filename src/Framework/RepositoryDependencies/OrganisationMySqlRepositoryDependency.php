@@ -34,4 +34,12 @@ class OrganisationMySqlRepositoryDependency extends AbstractRepositoryDependency
 
 		return new OrganisationMySQLRepository( $extendedPDO, $factory );
 	}
+	
+
+	/**
+	 * @return OrganisationMySQLRepository
+	 */
+	static public function getRepository() {
+		return static::getFromContainer();
+	}
 }

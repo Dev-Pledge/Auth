@@ -38,7 +38,7 @@ $settings = require __DIR__ . '/../src/settings.php';
 Integrations::setApp( new \Slim\App( $settings ) );
 
 Integrations::addExtrapolations( [
-	new ExtrapolateServices( __DIR__ . '/../src/Framework/ServicesDependencies', "DevPledge\\Framework\\ServicesDependencies" ),
+	new ExtrapolateServices( __DIR__ . '/../src/Framework/Services', "DevPledge\\Framework\\Services" ),
 	new ExtrapolateRepositoryDependencies( __DIR__ . '/../src/Framework/RepositoryDependencies', "DevPledge\\Framework\\RepositoryDependencies" ),
 	new ExtrapolateControllerDependencies( __DIR__ . '/../src/Framework/ControllerDependencies', "DevPledge\\Framework\\ControllerDependencies" ),
 	new ExtrapolateFactoryDependencies( __DIR__ . '/../src/Framework/FactoryDependencies', "DevPledge\\Framework\\FactoryDependencies" ),

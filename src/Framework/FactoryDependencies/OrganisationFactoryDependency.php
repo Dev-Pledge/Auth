@@ -27,4 +27,12 @@ class OrganisationFactoryDependency extends AbstractFactoryDependency {
 	public function __invoke( Container $container ) {
 		return new OrganisationFactory();
 	}
+
+
+	/**
+	 * @return OrganisationFactory
+	 */
+	static public function getFactory() {
+		return static::getFromContainer();
+	}
 }

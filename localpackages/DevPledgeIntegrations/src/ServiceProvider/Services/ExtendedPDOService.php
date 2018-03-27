@@ -40,4 +40,11 @@ class ExtendedPDOService extends AbstractService {
 
 		return $db;
 	}
+
+	/**
+	 * @return ExtendedPDO;
+	 */
+	public static function getService() {
+		return static::getFromContainer();
+	}
 }

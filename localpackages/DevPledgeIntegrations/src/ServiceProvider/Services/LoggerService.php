@@ -39,4 +39,11 @@ class LoggerService extends AbstractService {
 
 		return $logger;
 	}
+
+	/**
+	 * @return Logger;
+	 */
+	static public function getService() {
+		return static::getFromContainer();
+	}
 }

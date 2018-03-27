@@ -4,7 +4,6 @@ namespace DevPledge\Framework\ControllerDependencies;
 
 use DevPledge\Framework\Controller\Auth\AuthController;
 use DevPledge\Integrations\ControllerDependency\AbstractControllerDependency;
-use DevPledge\Integrations\Handler\Handlers\NotAllowedHandler;
 use DevPledge\Integrations\ServiceProvider\Services\JWTService;
 use Slim\Container;
 
@@ -26,7 +25,14 @@ class AuthControllerDependency extends AbstractControllerDependency {
 	 * @return AuthController
 	 */
 	public function __invoke( Container $container ) {
-		$jwt = JWTService::getFromContainer();
+		$jwt = JWTService::getService();
 		return new AuthController( $jwt );
+	}
+
+	/**
+	 * @return AuthController
+	 */
+	static public function getController() {
+		return static ::getFromContainer();
 	}
 }

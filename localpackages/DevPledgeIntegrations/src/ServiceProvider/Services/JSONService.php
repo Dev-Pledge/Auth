@@ -13,12 +13,32 @@ use DevPledge\Integrations\ServiceProvider\AbstractService;
 use Slim\Container;
 use TomWright\JSON\JSON;
 
+/**
+ * Class JSONService
+ * @package DevPledge\Integrations\ServiceProvider\Services
+ */
 class JSONService extends AbstractService {
-	public function __construct( ) {
+	/**
+	 * JSONService constructor.
+	 */
+	public function __construct() {
 		parent::__construct( JSON::class );
 	}
 
+	/**
+	 * @param Container $container
+	 *
+	 * @return mixed|JSON
+	 */
 	public function __invoke( Container $container ) {
 		return new JSON();
+	}
+
+
+	/**
+	 * @return JSON
+	 */
+	public static function getService() {
+		return static::getFromContainer();
 	}
 }

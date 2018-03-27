@@ -43,4 +43,11 @@ class JWTService extends AbstractService {
 
 		return $jwt;
 	}
+
+	/**
+	 * @return JWT;
+	 */
+	static public function getService() {
+		return static::getFromContainer();
+	}
 }

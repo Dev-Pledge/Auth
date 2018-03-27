@@ -33,8 +33,15 @@ class OrganisationControllerDependency extends AbstractControllerDependency {
 	 * @return OrganisationController
 	 */
 	public function __invoke( Container $container ) {
-		$organisationRepository = OrganisationMySqlRepositoryDependency::getFromContainer();
+		$organisationRepository = OrganisationMySqlRepositoryDependency::getRepository();
 
 		return new OrganisationController( $organisationRepository );
+	}
+
+	/**
+	 * @return OrganisationController
+	 */
+	static public function getController() {
+		return static::getFromContainer();
 	}
 }

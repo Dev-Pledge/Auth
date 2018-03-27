@@ -1,5 +1,6 @@
 <?php
 
+use DevPledge\Framework\ControllerDependencies\AuthControllerDependency;
 use DevPledge\Framework\RouteGroups\OrganisationRouteGroup;
 use DevPledge\Integrations\Middleware\JWT\Authorise;
 use DevPledge\Integrations\Middleware\JWT\Present;
