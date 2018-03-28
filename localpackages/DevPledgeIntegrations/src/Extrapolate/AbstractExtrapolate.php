@@ -13,6 +13,7 @@ namespace DevPledge\Integrations\Extrapolate;
  * @package DevPledge\Integrations\Extrapolate
  */
 abstract class AbstractExtrapolate {
+
 	/**
 	 * @var string
 	 */
@@ -39,10 +40,11 @@ abstract class AbstractExtrapolate {
 	}
 
 	public function __invoke() {
+
 		if ( is_dir( $this->path ) ) {
 			$phpFiles = glob( $this->path . '/*.php' );
 			if ( count( $phpFiles ) && $phpFiles ) {
-				foreach ( glob( $this->path . '/*.php' ) as $filename ) {
+				foreach ( $phpFiles as $filename ) {
 					$split     = explode( '/', $filename );
 					$className = str_replace( '.php', '', end( $split ) );
 					$class     = $this->nameSpace . '\\' . $className;
