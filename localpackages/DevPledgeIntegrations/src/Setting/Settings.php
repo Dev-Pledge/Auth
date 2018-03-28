@@ -9,7 +9,7 @@ use Slim\Container;
  * Class Settings
  * @package DevPledge\Integrations\Setting
  */
-class Settings extends Container {
+final class Settings extends Container {
 	/**
 	 * Settings constructor.
 	 *
@@ -72,6 +72,6 @@ class Settings extends Container {
 
 		return $this;
 	}
-	
+
 
 }

@@ -1,14 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: johnsaunders
- * Date: 27/03/2018
- * Time: 17:49
- */
 
 namespace DevPledge\Integrations\Setting\Settings;
 
 
+use DevPledge\Integrations\ServiceProvider\Services\ExtendedPDOService;
 use DevPledge\Integrations\Setting\AbstractSetting;
 use Slim\Container;
 
@@ -73,6 +68,7 @@ class JWTSettings extends AbstractSetting {
 	 * @return string
 	 */
 	public function getSecret(): string {
+
 		return $this->secret;
 	}
 

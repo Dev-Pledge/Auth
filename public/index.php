@@ -1,12 +1,12 @@
 <?php
 
 use DevPledge\Integrations\ControllerDependency\ExtrapolateControllerDependencies;
-use DevPledge\Integrations\Extrapolate\Extrapolate;
 use DevPledge\Integrations\FactoryDependency\ExtrapolateFactoryDependencies;
 use DevPledge\Integrations\Integrations;
 use DevPledge\Integrations\RepositoryDependency\ExtrapolateRepositoryDependencies;
 use DevPledge\Integrations\Route\ExtrapolateRouteGroups;
 use DevPledge\Integrations\ServiceProvider\ExtrapolateServices;
+use DevPledge\Integrations\Setting\ExtrapolateSettings;
 
 
 if ( PHP_SAPI == 'cli-server' ) {
@@ -25,26 +25,20 @@ session_start();
 
 require __DIR__ . '/../dotenv.php';
 
-/**
- * SENTRY SET UP
- */
-Integrations::setSentry( new Raven_Client( getenv( 'SENTRY_DSN' ) ) );
 
-/**
- * Instantiate the app
- */
-$settings = require __DIR__ . '/../src/settings.php';
-
-Integrations::initApplication( $settings );
+Integrations::initSentry( getenv( 'SENTRY_DSN' ) );
+Integrations::initApplication( require __DIR__ . '/../src/settings.php' );
 Integrations::addCommonSettings();
+Integrations::addCommonServices();
+Integrations::addCommonHandlers();
 Integrations::addExtrapolations( [
+	new ExtrapolateSettings( __DIR__ . '/../src/Framework/Settings', "DevPledge\\Framework\\Settings" ),
 	new ExtrapolateServices( __DIR__ . '/../src/Framework/Services', "DevPledge\\Framework\\Services" ),
 	new ExtrapolateRepositoryDependencies( __DIR__ . '/../src/Framework/RepositoryDependencies', "DevPledge\\Framework\\RepositoryDependencies" ),
 	new ExtrapolateControllerDependencies( __DIR__ . '/../src/Framework/ControllerDependencies', "DevPledge\\Framework\\ControllerDependencies" ),
 	new ExtrapolateFactoryDependencies( __DIR__ . '/../src/Framework/FactoryDependencies', "DevPledge\\Framework\\FactoryDependencies" ),
 	new ExtrapolateRouteGroups( __DIR__ . '/../src/Framework/RouteGroups', "DevPledge\\Framework\\RouteGroups" )
 ] );
-Integrations::addCommonServices();
-Integrations::addCommonHandlers();
 Integrations::run();
+
 

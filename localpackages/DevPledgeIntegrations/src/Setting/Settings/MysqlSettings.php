@@ -1,15 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: johnsaunders
- * Date: 27/03/2018
- * Time: 17:38
- */
 
 namespace DevPledge\Integrations\Setting\Settings;
 
 
-use DevPledge\Integrations\Sentry;
 use DevPledge\Integrations\Setting\AbstractSetting;
 use Slim\Container;
 
@@ -71,7 +64,7 @@ class MysqlSettings extends AbstractSetting {
 	/**
 	 * @return string
 	 */
-	public function getPassword() {
+	public function getPassword():string {
 		return $this->password;
 	}
 

@@ -18,9 +18,11 @@ use DevPledge\Integrations\ServiceProvider\Services\JSONService;
 use DevPledge\Integrations\ServiceProvider\Services\JWTService;
 use DevPledge\Integrations\ServiceProvider\Services\LoggerService;
 use DevPledge\Integrations\ServiceProvider\Services\PHPRendererService;
+use DevPledge\Integrations\Setting\AddSetting;
 use DevPledge\Integrations\Setting\Settings;
 use DevPledge\Integrations\Setting\Settings\JWTSettings;
 use DevPledge\Integrations\Setting\Settings\MysqlSettings;
+use Psr\Http\Message\ResponseInterface;
 use Slim\App;
 
 
@@ -29,6 +31,27 @@ use Slim\App;
  * @package DevPledge\Integrations
  */
 class Integrations extends AbstractAppAccess {
+
+
+	/**
+	 * @param \Raven_Client $client
+	 *
+	 * @return \Raven_Client
+	 */
+	static public function setSentry( \Raven_Client $client ): \Raven_Client {
+		return Sentry::setSentry( $client );
+	}
+
+	/**
+	 * @param null $options_or_dsn
+	 * @param array $options
+	 *
+	 * @return \Raven_Client
+	 */
+	static public function initSentry( $options_or_dsn = null, $options = array() ): \Raven_Client {
+		return static::setSentry( new \Raven_Client( $options_or_dsn, $options ) );
+	}
+
 	/**
 	 * @param array $container
 	 *
@@ -42,15 +65,11 @@ class Integrations extends AbstractAppAccess {
 		return static::setApp( new App( $settings ) );
 	}
 
-	/**
-	 * @param \Raven_Client $client
-	 *
-	 * @return \Raven_Client
-	 */
-	static public function setSentry( \Raven_Client $client ): \Raven_Client {
-		return Sentry::setSentry( $client );
+	static public function addCommonSettings(): void {
+		$settingAdder = new AddSetting();
+		$settingAdder->addSetting( new MysqlSettings() )
+		             ->addSetting( new JWTSettings() );
 	}
-
 
 	static public function addCommonServices(): void {
 		$serviceAdder = new AddService();
@@ -61,7 +80,7 @@ class Integrations extends AbstractAppAccess {
 		             ->addService( new JWTService() );
 	}
 
-	static public function addCommonHandlers():void {
+	static public function addCommonHandlers(): void {
 		$handlerAdder = new AddHandler();
 		$handlerAdder->addHandler( new NotFoundHandler() )
 		             ->addHandler( new NotAllowedHandler() );
@@ -75,30 +94,20 @@ class Integrations extends AbstractAppAccess {
 	}
 
 
-	static public function addCommonSettings() {
-		$container = static::$app->getContainer();
-		/**
-		 * @var $settings Settings;
-		 */
-		$settings = $container['settings']['integrations'];
-		$settings->addSetting( new MysqlSettings() )
-		         ->addSetting( new JWTSettings() );
-	}
-
 	/**
 	 * @return \Psr\Http\Message\ResponseInterface
 	 * @throws \Exception
 	 * @throws \Slim\Exception\MethodNotAllowedException
 	 * @throws \Slim\Exception\NotFoundException
 	 */
-	static public function run() {
+	static public function run(): ResponseInterface {
 		return static::$app->run();
 	}
 
 	/**
 	 * @return mixed|\Slim\App
 	 */
-	static public function getApplication() {
+	static public function getApplication(): App {
 		return static::$app;
 	}
 }

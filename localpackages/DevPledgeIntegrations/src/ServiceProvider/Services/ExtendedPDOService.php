@@ -28,8 +28,10 @@ class ExtendedPDOService extends AbstractService {
 	/**
 	 * @param Container $container
 	 *
-	 * @return mixed|ExtendedPDO
+	 * @return ExtendedPDO
 	 * @throws \Interop\Container\Exception\ContainerException
+	 * @throws \Psr\Container\ContainerExceptionInterface
+	 * @throws \Psr\Container\NotFoundExceptionInterface
 	 */
 	public function __invoke( Container $container ) {
 		$settings = MysqlSettings::getSetting();

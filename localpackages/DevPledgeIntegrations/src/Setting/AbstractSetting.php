@@ -3,10 +3,8 @@
 namespace DevPledge\Integrations\Setting;
 
 use DevPledge\Integrations\Container\AbstractContainerCallable;
-use DevPledge\Integrations\Sentry;
 use Slim\Container;
-use Slim\Exception\ContainerException;
-use Slim\Exception\NotFoundException;
+
 
 /**
  * Class AbstractSetting
