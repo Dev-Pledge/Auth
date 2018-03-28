@@ -33,7 +33,7 @@ Integrations::addCommonSettings();
 Integrations::addCommonServices();
 Integrations::addCommonHandlers();
 
-$prodCacheDir = ( getenv( 'ENVIRONMENT' ) == 'development' ) ? __DIR__ . '/../data/integrations' : null;
+$prodCacheDir = ( getenv( 'ENVIRONMENT' ) == 'production' ) ? __DIR__ . '/../data/integrations' : null;
 
 Integrations::addExtrapolations( [
 	new ExtrapolateSettings( __DIR__ . '/../src/Framework/Settings', "DevPledge\\Framework\\Settings" ),

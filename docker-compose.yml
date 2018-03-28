@@ -20,8 +20,6 @@ services:
     expose:
       - 9000
       - 9501
-    ports:
-      - 9999:9000
     networks:
       - default
       - sentry_network
