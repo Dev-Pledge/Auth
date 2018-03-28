@@ -21,7 +21,8 @@
     "tomwright/extended-pdo": "^1.0",
     "slim/php-view": "^2.2",
     "monolog/monolog": "^1.23",
-    "sentry/sentry": "^1.8"
+    "sentry/sentry": "^1.8",
+    "jrsaunders/quickcache": "^1.0"
   },
   "autoload": {
     "psr-4": {

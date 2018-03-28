@@ -13,10 +13,14 @@ namespace DevPledge\Integrations\Extrapolate;
  * @package DevPledge\Integrations\Extrapolate
  */
 class Extrapolate {
+
+	protected static $cachedExtrapolationsDir;
+
 	/**
 	 * @param AbstractExtrapolateForContainer[] $extrapolations
 	 */
 	public static function extrapolate( array $extrapolations ) {
+
 		if ( count( $extrapolations ) ) {
 			foreach ( $extrapolations as $ext ) {
 				if ( $ext instanceof AbstractExtrapolate ) {
@@ -24,5 +28,19 @@ class Extrapolate {
 				}
 			}
 		}
+	}
+
+	/**
+	 * @return bool|string
+	 */
+	public static function getCachedExtrapolationsDir() {
+		return static::$cachedExtrapolationsDir ?? false;
+	}
+
+	/**
+	 * @param string $cachedExtrapolationsDir
+	 */
+	public static function setCachedExtrapolationsDir( $cachedExtrapolationsDir ): void {
+		static::$cachedExtrapolationsDir = rtrim( $cachedExtrapolationsDir, '/' );
 	}
 }

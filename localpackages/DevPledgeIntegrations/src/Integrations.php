@@ -87,9 +87,11 @@ class Integrations extends AbstractAppAccess {
 	}
 
 	/**
-	 * @param AbstractExtrapolate[] $extrapolations
+	 * @param array $extrapolations
+	 * @param null $cachedExtrapolationsDir
 	 */
-	static public function addExtrapolations( array $extrapolations ) {
+	static public function addExtrapolations( array $extrapolations, $cachedExtrapolationsDir = null ) {
+		Extrapolate::setCachedExtrapolationsDir( $cachedExtrapolationsDir );
 		Extrapolate::extrapolate( $extrapolations );
 	}
 

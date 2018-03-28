@@ -2423,12 +2423,19 @@
             "dist": {
                 "type": "path",
                 "url": "./localpackages/DevPledgeIntegrations",
-                "reference": "902b2ebc6ec15bd4e4c01dbef76cecc80375a0dd",
+                "reference": "c36ada4a4d4867e19799cea8d653231d0564e1fd",
                 "shasum": null
             },
             "require": {
-                "php": ">=7.1.0",
-                "slim/slim": "^3.1"
+                "jrsaunders/quickcache": "^1.0",
+                "monolog/monolog": "^1.23",
+                "php": ">=7.2.0",
+                "sentry/sentry": "^1.8",
+                "slim/php-view": "^2.2",
+                "slim/slim": "^3.1",
+                "spomky-labs/base64url": "^1.0",
+                "tomwright/extended-pdo": "^1.0",
+                "tomwright/json": "^1.0"
             },
             "type": "library",
             "autoload": {
@@ -2458,12 +2465,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/eaglewu/swoole-ide-helper.git",
-                "reference": "56983de1e4ec216435e3d4203172f1accec554d7"
+                "reference": "683b6f8f301a6c13ba9ec89cb11d883405a18630"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/eaglewu/swoole-ide-helper/zipball/56983de1e4ec216435e3d4203172f1accec554d7",
-                "reference": "56983de1e4ec216435e3d4203172f1accec554d7",
+                "url": "https://api.github.com/repos/eaglewu/swoole-ide-helper/zipball/683b6f8f301a6c13ba9ec89cb11d883405a18630",
+                "reference": "683b6f8f301a6c13ba9ec89cb11d883405a18630",
                 "shasum": ""
             },
             "type": "library",
@@ -2480,7 +2487,43 @@
                 }
             ],
             "description": "Swoole 在IDE下自动识别类、函数、宏，自动补全函数名",
-            "time": "2018-03-22T02:32:39+00:00"
+            "time": "2018-03-28T03:53:57+00:00"
+        },
+        {
+            "name": "jrsaunders/quickcache",
+            "version": "v1.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/JRSaunders/QuickCache.git",
+                "reference": "56e5002361c4d402cad58ea4dad76a527317a63b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/JRSaunders/QuickCache/zipball/56e5002361c4d402cad58ea4dad76a527317a63b",
+                "reference": "56e5002361c4d402cad58ea4dad76a527317a63b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "QuickCache\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "John Saunders",
+                    "email": "john@yettimedia.co.uk"
+                }
+            ],
+            "description": "Quick Caching",
+            "time": "2017-05-24T09:07:15+00:00"
         }
     ],
     "aliases": [],

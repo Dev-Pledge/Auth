@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "565edac8603cbd3ec2dd0c2fd1269e06",
+    "content-hash": "f580105a5de0740f6a4a0296a0d58e05",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -90,6 +90,42 @@
                 "instantiate"
             ],
             "time": "2017-07-22T11:58:36+00:00"
+        },
+        {
+            "name": "jrsaunders/quickcache",
+            "version": "v1.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/JRSaunders/QuickCache.git",
+                "reference": "56e5002361c4d402cad58ea4dad76a527317a63b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/JRSaunders/QuickCache/zipball/56e5002361c4d402cad58ea4dad76a527317a63b",
+                "reference": "56e5002361c4d402cad58ea4dad76a527317a63b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "QuickCache\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "John Saunders",
+                    "email": "john@yettimedia.co.uk"
+                }
+            ],
+            "description": "Quick Caching",
+            "time": "2017-05-24T09:07:15+00:00"
         },
         {
             "name": "monolog/monolog",

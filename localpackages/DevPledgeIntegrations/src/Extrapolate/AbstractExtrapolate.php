@@ -8,6 +8,8 @@
 
 namespace DevPledge\Integrations\Extrapolate;
 
+use QuickCache\Cache;
+
 /**
  * Class AbstractExtrapolate
  * @package DevPledge\Integrations\Extrapolate
@@ -26,6 +28,15 @@ abstract class AbstractExtrapolate {
 	 * @var AbstractContainerCallable | null
 	 */
 	protected $adapterClass;
+	/**
+	 * @var null|false|\stdClass
+	 */
+	protected static $cacheData;
+
+	/**
+	 * @var Cache
+	 */
+	protected static $cache;
 
 	/**
 	 * AbstractExtrapolate constructor.
@@ -39,10 +50,47 @@ abstract class AbstractExtrapolate {
 		$this->setAdapterClass( $adapterClass );
 	}
 
-	public function __invoke() {
+	protected function getPhpFilesFromCache() {
+		$fileName = 'ExtrapolationFiles';
+		if ( ( $CacheDir = Extrapolate::getCachedExtrapolationsDir() ) && static::$cacheData ) {
+			if ( ! ( static::$cache instanceof ExtrapolationsCache ) ) {
+				static::$cache = new ExtrapolationsCache();
+			}
+			static::$cache->setCachePath( $CacheDir );
+			static::$cacheData = static::$cache->getCacheData( $fileName );
 
+		}
+		if ( static::$cacheData ) {
+			if ( isset( static::$cacheData->{$this->getPathForCache()} ) ) {
+				return static::$cacheData->{$this->getPathForCache()};
+			}
+		}
+
+		return false;
+	}
+
+	protected function saveToCache( $phpFiles ) {
+		$fileName = 'ExtrapolationFiles';
+		if ( ! ( static::$cacheData instanceof \stdClass ) ) {
+			static::$cacheData = new \stdClass();
+		}
+		if (
+			isset( static::$cacheData->{$this->getPathForCache()} ) &&
+			static::$cacheData->{$this->getPathForCache()} === $phpFiles
+		) {
+			return false;
+		}
+		static::$cacheData->{$this->getPathForCache()} = $phpFiles;
+		if ( ! ( static::$cache instanceof ExtrapolationsCache ) ) {
+			static::$cache = new ExtrapolationsCache();
+		}
+		static::$cache->saveToCache( $fileName, static::$cacheData );
+	}
+
+	public function __invoke() {
+		$phpFiles = $this->getPhpFilesFromCache();
 		if ( is_dir( $this->path ) ) {
-			$phpFiles = glob( $this->path . '/*.php' );
+			$phpFiles = ( isset( $phpFiles ) && $phpFiles ) ? $phpFiles : glob( $this->path . '/*.php' );
 			if ( count( $phpFiles ) && $phpFiles ) {
 				foreach ( $phpFiles as $filename ) {
 					$split     = explode( '/', $filename );
@@ -57,6 +105,7 @@ abstract class AbstractExtrapolate {
 					}
 
 				}
+				$this->saveToCache( $phpFiles );
 			}
 		}
 	}
@@ -67,9 +116,13 @@ abstract class AbstractExtrapolate {
 	 * @return AbstractExtrapolateForContainer
 	 */
 	public function setPath( string $path ): AbstractExtrapolate {
-		$this->path = $path;
+		$this->path = rtrim( $path, '/' );
 
 		return $this;
+	}
+
+	private function getPathForCache() {
+		return str_replace( '/', '~', $this->path );
 	}
 
 	/**
