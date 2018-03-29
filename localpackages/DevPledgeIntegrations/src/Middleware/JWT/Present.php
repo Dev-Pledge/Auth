@@ -4,6 +4,7 @@ namespace DevPledge\Integrations\Middleware\JWT;
 
 use DevPledge\Integrations\Middleware\AbstractMiddleware;
 use DevPledge\Integrations\Security\JWT\JWT;
+use DevPledge\Integrations\ServiceProvider\Services\JWTService;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -22,7 +23,6 @@ class Present extends AbstractMiddleware {
 	 * @throws \Psr\Container\NotFoundExceptionInterface
 	 */
 	public function __invoke( Request $request, Response $response, callable $next ) {
-		$container = $this->getApp()->getContainer();
 		if ( ! $request->hasHeader( 'Authorization' ) ) {
 			return $response->withJson( [ 'error' => 'Missing Authorization header' ], 403 );
 		}
@@ -39,7 +39,7 @@ class Present extends AbstractMiddleware {
 						/**
 						 * @var JWT $jwt
 						 */
-						$jwt   = $container->get( JWT::class );
+						$jwt   = JWTService::getService();
 						$token = $jwt->verify( $accessToken, false, false );
 					}
 					break;
