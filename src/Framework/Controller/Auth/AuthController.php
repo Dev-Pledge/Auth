@@ -6,11 +6,12 @@ namespace DevPledge\Framework\Controller\Auth;
 use DevPledge\Domain\Permissions\Action;
 use DevPledge\Domain\Permissions\Permissions;
 use DevPledge\Domain\Permissions\Resource;
+use DevPledge\Integrations\Security\JWT\JWT;
+use DevPledge\Integrations\Security\JWT\Token;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use TomWright\JSON\Exception\JSONEncodeException;
-use DevPledge\Application\Security\JWT\JWT;
-use DevPledge\Application\Security\JWT\Token;
+
 
 class AuthController
 {
