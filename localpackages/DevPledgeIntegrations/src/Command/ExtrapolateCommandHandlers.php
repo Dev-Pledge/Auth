@@ -18,4 +18,8 @@ class ExtrapolateCommandHandlers extends AbstractExtrapolate {
 		AddCommandHandler::commandHandler( $commandHandler );
 	}
 
+	protected function extrapolate( callable $callable ) {
+		$this->add( $callable );
+	}
+
 }
