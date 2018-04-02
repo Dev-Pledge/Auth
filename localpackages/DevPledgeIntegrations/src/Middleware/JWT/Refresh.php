@@ -4,6 +4,7 @@ namespace DevPledge\Integrations\Middleware\JWT;
 
 use DevPledge\Integrations\Middleware\AbstractMiddleware;
 use DevPledge\Integrations\Security\JWT\JWT;
+use DevPledge\Integrations\Security\JWT\Token;
 use DevPledge\Integrations\ServiceProvider\Services\JWTService;
 use Slim\Http\Request;
 use Slim\Http\Response;

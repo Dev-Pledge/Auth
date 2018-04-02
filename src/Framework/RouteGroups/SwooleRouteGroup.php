@@ -3,7 +3,8 @@
 namespace DevPledge\Framework\RouteGroups;
 
 
-use DevPledge\Framework\ServicesDependencies\TestService;
+use DevPledge\Integrations\Command\Dispatch;
+use DevPledge\Integrations\Command\TestCommand;
 use DevPledge\Integrations\Route\AbstractRouteGroup;
 
 /**
@@ -17,7 +18,11 @@ class SwooleRouteGroup extends AbstractRouteGroup {
 	}
 
 	protected function callableInGroup() {
-		$this->getApp()->get( '', function (){
+		$this->getApp()->get( '/command', function () {
+			Dispatch::command( new TestCommand( 'funky' ) );
+
+		} );
+		$this->getApp()->get( '/launch', function () {
 
 			shell_exec( 'php /var/www/swooletest.php > /dev/null 2>/dev/null &' );
 

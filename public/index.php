@@ -1,5 +1,6 @@
 <?php
 
+use DevPledge\Integrations\Command\ExtrapolateCommandHandlers;
 use DevPledge\Integrations\ControllerDependency\ExtrapolateControllerDependencies;
 use DevPledge\Integrations\FactoryDependency\ExtrapolateFactoryDependencies;
 use DevPledge\Integrations\Handler\ExtrapolateHandlers;
@@ -40,8 +41,10 @@ Integrations::addExtrapolations( [
 	new ExtrapolateRepositoryDependencies( __DIR__ . '/../src/Framework/RepositoryDependencies', "DevPledge\\Framework\\RepositoryDependencies" ),
 	new ExtrapolateControllerDependencies( __DIR__ . '/../src/Framework/ControllerDependencies', "DevPledge\\Framework\\ControllerDependencies" ),
 	new ExtrapolateFactoryDependencies( __DIR__ . '/../src/Framework/FactoryDependencies', "DevPledge\\Framework\\FactoryDependencies" ),
-	new ExtrapolateRouteGroups( __DIR__ . '/../src/Framework/RouteGroups', "DevPledge\\Framework\\RouteGroups" )
+	new ExtrapolateRouteGroups( __DIR__ . '/../src/Framework/RouteGroups', "DevPledge\\Framework\\RouteGroups" ),
+	new ExtrapolateCommandHandlers( __DIR__ . '/../src/Application/CommandHandlers', "DevPledge\\Application\\CommandHandlers" )
 ] );
+
 
 Integrations::run();
 

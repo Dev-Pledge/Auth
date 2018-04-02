@@ -13,6 +13,7 @@ use DevPledge\Integrations\Handler\AddHandler;
 use DevPledge\Integrations\Handler\Handlers\NotAllowedHandler;
 use DevPledge\Integrations\Handler\Handlers\NotFoundHandler;
 use DevPledge\Integrations\ServiceProvider\AddService;
+use DevPledge\Integrations\ServiceProvider\Services\CommandBusService;
 use DevPledge\Integrations\ServiceProvider\Services\ExtendedPDOService;
 use DevPledge\Integrations\ServiceProvider\Services\JSONService;
 use DevPledge\Integrations\ServiceProvider\Services\JWTService;
@@ -77,7 +78,8 @@ class Integrations extends AbstractAppAccess {
 		             ->addService( new PHPRendererService() )
 		             ->addService( new JSONService() )
 		             ->addService( new ExtendedPDOService() )
-		             ->addService( new JWTService() );
+		             ->addService( new JWTService() )
+		             ->addService( new CommandBusService() );
 	}
 
 	static public function addCommonHandlers(): void {
