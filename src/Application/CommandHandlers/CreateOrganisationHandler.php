@@ -27,7 +27,7 @@ class CreateOrganisationHandler extends AbstractCommandHandler {
 	 * @return \DevPledge\Domain\Organisation
 	 */
 	public function handle( $command ) {
-
+		// TODO: $this->organisationService->setOwner($command->getUser());
 		return OrganisationService::getService()->create( $command->getName() );
 	}
 }
