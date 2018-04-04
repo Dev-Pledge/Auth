@@ -39,16 +39,16 @@
         },
         {
             "name": "dev-pledge/uuid",
-            "version": "1.0.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Dev-Pledge/uuid.git",
-                "reference": "43e09b252006a5ced732e7bd3c54dd0ccd7f46ba"
+                "reference": "f77af7e4326116391066cdecdd08290d089aa797"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Dev-Pledge/uuid/zipball/43e09b252006a5ced732e7bd3c54dd0ccd7f46ba",
-                "reference": "43e09b252006a5ced732e7bd3c54dd0ccd7f46ba",
+                "url": "https://api.github.com/repos/Dev-Pledge/uuid/zipball/f77af7e4326116391066cdecdd08290d089aa797",
+                "reference": "f77af7e4326116391066cdecdd08290d089aa797",
                 "shasum": ""
             },
             "require": {
@@ -74,7 +74,7 @@
                 }
             ],
             "description": "DevPledge UUID generator for specific entities.",
-            "time": "2018-03-05T10:03:42+00:00"
+            "time": "2018-04-04T17:55:39+00:00"
         },
         {
             "name": "doctrine/instantiator",
@@ -2091,7 +2091,7 @@
         },
         {
             "name": "symfony/translation",
-            "version": "v4.0.6",
+            "version": "v4.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
@@ -2159,16 +2159,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v4.0.6",
+            "version": "v4.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "de5f125ea39de846b90b313b2cfb031a0152d223"
+                "reference": "8b34ebb5989df61cbd77eff29a02c4db9ac1069c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/de5f125ea39de846b90b313b2cfb031a0152d223",
-                "reference": "de5f125ea39de846b90b313b2cfb031a0152d223",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/8b34ebb5989df61cbd77eff29a02c4db9ac1069c",
+                "reference": "8b34ebb5989df61cbd77eff29a02c4db9ac1069c",
                 "shasum": ""
             },
             "require": {
@@ -2213,7 +2213,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2018-02-19T20:08:53+00:00"
+            "time": "2018-04-03T05:24:00+00:00"
         },
         {
             "name": "tomwright/extended-pdo",
