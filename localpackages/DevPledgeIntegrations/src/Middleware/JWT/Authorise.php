@@ -55,7 +55,7 @@ class Authorise extends AbstractMiddleware {
 		$request = $request->withAttribute( Token::class, $token );
 
 		$response = $next( $request, $response );
-		
+
 		return $response;
 	}
 

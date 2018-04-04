@@ -8,6 +8,10 @@ use TomWright\JSON\Exception\JSONDecodeException;
 use TomWright\JSON\Exception\JSONEncodeException;
 use TomWright\JSON\JSON;
 
+/**
+ * Class JWT
+ * @package DevPledge\Integrations\Security\JWT
+ */
 class JWT
 {
 
