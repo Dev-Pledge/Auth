@@ -194,55 +194,17 @@ class JWT
 
         $payload = $this->decodeTokenPart($parts->payload);
 
+        $token = new Token($payload);
+
         if ($checkTtl) {
-            $this->checkTimeToLive($payload);
+            $token->checkLiveTime();
         }
 
         if ($checkTtr) {
-            $this->checkTimeToRefresh($payload);
+            $token->checkRefreshTime();
         }
-
-        $data = $payload->data ?? new \stdClass();
-
-        $token = new Token($data);
 
         return $token;
-    }
-
-    /**
-     * @param \stdClass $payload
-     * @throws InvalidTokenException
-     */
-    private function checkTimeToLive(\stdClass $payload)
-    {
-        if (!is_numeric($payload->ttl ?? null)) {
-            // Invalid token signature
-            throw new InvalidTokenException('Missing or invalid TTL');
-        }
-
-        $now = time();
-
-        if ($payload->ttl < $now) {
-            throw new InvalidTokenException('TTL has expired');
-        }
-    }
-
-    /**
-     * @param \stdClass $payload
-     * @throws InvalidTokenException
-     */
-    private function checkTimeToRefresh(\stdClass $payload)
-    {
-        if (!is_numeric($payload->ttr ?? null)) {
-            // Invalid token signature
-            throw new InvalidTokenException('Missing or invalid TTR');
-        }
-
-        $now = time();
-
-        if ($payload->ttr < $now) {
-            throw new InvalidTokenException('TTR has expired');
-        }
     }
 
     /**
