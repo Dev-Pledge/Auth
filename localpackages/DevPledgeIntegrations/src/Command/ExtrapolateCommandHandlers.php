@@ -1,5 +1,7 @@
 <?php
+
 namespace DevPledge\Integrations\Command;
+
 use DevPledge\Integrations\Extrapolate\AbstractExtrapolate;
 
 

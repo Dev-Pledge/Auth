@@ -2,8 +2,6 @@
 
 namespace DevPledge\Integrations\Command;
 
-use PHPUnit\Runner\Exception;
-use Slim\Container;
 
 /**
  * Class CommandBus
@@ -26,7 +24,7 @@ class CommandBus {
 			$handler = new $handlerClass();
 			call_user_func_array( $handler, array( $command ) );
 		} else {
-			throw new CommandException( 'No command found for ' . get_class( $command ) );
+			throw new CommandException( 'No Command Handler found for ' . get_class( $command ) );
 		}
 	}
 
