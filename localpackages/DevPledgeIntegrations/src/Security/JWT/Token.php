@@ -2,7 +2,10 @@
 
 namespace DevPledge\Integrations\Security\JWT;
 
-
+/**
+ * Class Token
+ * @package DevPledge\Integrations\Security\JWT
+ */
 class Token
 {
 
