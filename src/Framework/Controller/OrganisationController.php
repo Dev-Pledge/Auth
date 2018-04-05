@@ -3,25 +3,25 @@
 namespace DevPledge\Framework\Controller;
 
 
+use DevPledge\Application\Services\OrganisationService;
 use Slim\Http\Request;
 use Slim\Http\Response;
-use DevPledge\Application\Repository\Organisation\OrganisationRepository;
 
 class OrganisationController
 {
 
     /**
-     * @var OrganisationRepository
+     * @var OrganisationService
      */
-    private $organisationRepository;
+    private $organisationService;
 
     /**
      * OrganisationController constructor.
-     * @param OrganisationRepository $organisationRepository
+     * @param OrganisationService $organisationService
      */
-    public function __construct(OrganisationRepository $organisationRepository)
+    public function __construct(OrganisationService $organisationService)
     {
-        $this->organisationRepository = $organisationRepository;
+        $this->organisationService = $organisationService;
     }
 
     /**
@@ -38,7 +38,7 @@ class OrganisationController
             ], 400);
         }
 
-        $organisation = $this->organisationRepository->getOrganisation($organisationId);
+        $organisation = $this->organisationService->read($organisationId);
         if ($organisation === null) {
             return $res->withJson([
                 'Organisation not found'
@@ -62,7 +62,7 @@ class OrganisationController
             'email',
         ]);
 
-        $organisations = $this->organisationRepository->searchOrganisations($filters);
+        $organisations = $this->organisationService->readAll($filters);
 
         return $res->withJson($organisations);
     }
@@ -81,7 +81,7 @@ class OrganisationController
             ], 400);
         }
 
-        $organisation = $this->organisationRepository->getOrganisation($organisationId);
+        $organisation = $this->organisationService->read($organisationId);
         if ($organisation === null) {
             return $res->withJson([
                 'OrganisationController not found'
@@ -92,41 +92,42 @@ class OrganisationController
 
         // todo : set organisation values from body
 
-        $organisation = $this->organisationRepository->saveOrganisation($organisation);
+        $organisation = $this->organisationService->update($organisation);
 
         return $res->withJson($organisation);
     }
 
-	/**
-	 * @param Request $req
-	 * @param Response $res
-	 *
-	 * @return Response
-	 */
-	public function postOrganisation( Request $req, Response $res ) {
-		$body   = $req->getParsedBody();
-		$userId = $body['user_id'] ?? null;
-		if ( $userId === null ) {
-			return $res->withJson( [
-				'Missing user_id'
-			], 400 );
-		}
+    /**
+     * @param Request $req
+     * @param Response $res
+     *
+     * @return Response
+     */
+    public function postOrganisation(Request $req, Response $res)
+    {
+        $body = $req->getParsedBody();
+        $userId = $body['user_id'] ?? null;
+        if ($userId === null) {
+            return $res->withJson([
+                'Missing user_id'
+            ], 400);
+        }
 
-		$name = $body['name'] ?? null;
-		if ( $name === null ) {
-			return $res->withJson( [
-				'Missing name'
-			], 400 );
-		}
+        $name = $body['name'] ?? null;
+        if ($name === null) {
+            return $res->withJson([
+                'Missing name'
+            ], 400);
+        }
 
-		$userUuid = new Uuid( $userId );
-		$user     = new User(); // TODO: Get user from $userUuid
+        $userUuid = new Uuid($userId);
+        $user = new User(); // TODO: Get user from $userUuid
 
-		// See CommandHandler\CreateOrganisationHandler
-		$command      = new CreateOrganisationCommand( $user, $name );
-		$organisation = Dispatch::command( $command );
+        // See CommandHandler\CreateOrganisationHandler
+        $command = new CreateOrganisationCommand($user, $name);
+        $organisation = Dispatch::command($command);
 
-		return $res->withJson( $organisation );
-	}
+        return $res->withJson($organisation);
+    }
 
 }

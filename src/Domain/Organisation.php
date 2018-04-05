@@ -3,7 +3,9 @@
 namespace DevPledge\Domain;
 
 
-class Organisation
+use DevPledge\Application\Mapper\Mappable;
+
+class Organisation implements Mappable
 {
 
     /**
@@ -52,4 +54,14 @@ class Organisation
         return $this->name;
     }
 
+    /**
+     * @return \stdClass
+     */
+    function toMap(): \stdClass
+    {
+        return (object)[
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+        ];
+    }
 }

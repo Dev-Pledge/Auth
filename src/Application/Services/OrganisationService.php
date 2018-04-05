@@ -3,9 +3,8 @@
 namespace DevPledge\Application\Services;
 
 use DevPledge\Application\Factory\OrganisationFactory;
-use DevPledge\Application\Repository\Organisation\OrganisationRepository;
+use DevPledge\Application\Repository\OrganisationRepository;
 use DevPledge\Framework\FactoryDependencies\OrganisationFactoryDependency;
-use DevPledge\Framework\RepositoryDependencies\OrganisationMySqlRepositoryDependency;
 use DevPledge\Integrations\ServiceProvider\AbstractService;
 use Slim\Container;
 
@@ -13,56 +12,60 @@ use Slim\Container;
  * Class OrganisationService
  * @package DevPledge\Application\Services
  */
-class OrganisationService extends AbstractService {
-	/**
-	 * @var OrganisationRepository $repo
-	 */
-	protected $repo;
-	/**
-	 * @var OrganisationFactory $factory
-	 */
-	private $factory;
+class OrganisationService extends AbstractService
+{
+    /**
+     * @var OrganisationRepository $repo
+     */
+    protected $repo;
+    /**
+     * @var OrganisationFactory $factory
+     */
+    private $factory;
 
-	/**
-	 * OrganisationService constructor.
-	 */
-	public function __construct() {
+    /**
+     * OrganisationService constructor.
+     */
+    public function __construct()
+    {
 
-		parent::__construct( static::class );
-	}
+        parent::__construct(static::class);
+    }
 
-	/**
-	 * @param string $name
-	 *
-	 * @return \DevPledge\Domain\Organisation
-	 */
-	public function create( string $name ) {
-		$organisation = $this->factory->create( [
-			'name' => $name,
-		] );
-		$this->repo->saveOrganisation( $organisation );
+    /**
+     * @param string $name
+     *
+     * @return \DevPledge\Domain\Organisation
+     * @throws \Exception
+     */
+    public function create(string $name)
+    {
+        $organisation = $this->factory->create([
+            'name' => $name,
+        ]);
+        return $this->repo->create($organisation);
+    }
 
-		return $organisation;
-	}
 
+    /**
+     * @param Container $container
+     *
+     * @return mixed
+     */
+    public function __invoke(Container $container)
+    {
+        $this->factory = OrganisationFactoryDependency::getFactory();
+        $this->repo = OrganisationRepositoryDependency::getRepository();
 
-	/**
-	 * @param Container $container
-	 *
-	 * @return mixed
-	 */
-	public function __invoke( Container $container ) {
-		$this->factory = OrganisationFactoryDependency::getFactory();
-		$this->repo    = OrganisationMySqlRepositoryDependency::getRepository();
+        return $this;
+    }
 
-		return $this;
-	}
-
-	/**
-	 * usually return static::getFromContainer();
-	 * @return $this
-	 */
-	static public function getService() {
-		return static::getFromContainer();
-	}
+    /**
+     * usually return static::getFromContainer();
+     * @return $this
+     */
+    static public function getService()
+    {
+        return static::getFromContainer();
+    }
 }
