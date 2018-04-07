@@ -9,35 +9,37 @@
 namespace DevPledge\Framework\RepositoryDependencies;
 
 
-use DevPledge\Application\Repository\Organisation\OrganisationMySQLRepository;
+use DevPledge\Application\Mapper\Mapper;
+use DevPledge\Application\Repository\OrganisationRepository;
+use DevPledge\Framework\Adapter\MysqlAdapter;
 use DevPledge\Framework\FactoryDependencies\OrganisationFactoryDependency;
 use DevPledge\Integrations\RepositoryDependency\AbstractRepositoryDependency;
 use DevPledge\Integrations\ServiceProvider\Services\ExtendedPDOService;
 use Slim\Container;
 
-class OrganisationMySqlRepositoryDependency extends AbstractRepositoryDependency {
+class OrganisationRepositoryDependency extends AbstractRepositoryDependency {
 	/**
-	 * OrganisationMySqlRepositoryDependency constructor.
+	 * OrganisationRepositoryDependency constructor.
 	 */
 	public function __construct() {
-		parent::__construct( OrganisationMySQLRepository::class );
+		parent::__construct( OrganisationRepository::class );
 	}
 
 	/**
 	 * @param Container $container
 	 *
-	 * @return OrganisationMySQLRepository|mixed
+	 * @return OrganisationRepository
 	 */
 	public function __invoke( Container $container ) {
-		$extendedPDO = ExtendedPDOService::getService();
-		$factory     = OrganisationFactoryDependency::getFactory();
-
-		return new OrganisationMySQLRepository( $extendedPDO, $factory );
+		$factory = OrganisationFactoryDependency::getFactory();
+		$adaptor = new MysqlAdapter( ExtendedPDOService::getService() );
+		$mapper = new Mapper();
+		return new OrganisationRepository( $adaptor, $mapper, $factory );
 	}
 
 
 	/**
-	 * @return OrganisationMySQLRepository
+	 * @return OrganisationRepository
 	 */
 	static public function getRepository() {
 		return static::getFromContainer();

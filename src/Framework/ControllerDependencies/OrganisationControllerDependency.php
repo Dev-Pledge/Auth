@@ -11,7 +11,7 @@ namespace DevPledge\Framework\ControllerDependencies;
 
 use DevPledge\Application\Repository\Organisation\OrganisationRepository;
 use DevPledge\Framework\Controller\OrganisationController;
-use DevPledge\Framework\RepositoryDependencies\OrganisationMySqlRepositoryDependency;
+use DevPledge\Framework\RepositoryDependencies\OrganisationRepositoryDependency;
 use DevPledge\Integrations\ControllerDependency\AbstractControllerDependency;
 use Slim\Container;
 
@@ -33,7 +33,7 @@ class OrganisationControllerDependency extends AbstractControllerDependency {
 	 * @return OrganisationController
 	 */
 	public function __invoke( Container $container ) {
-		$organisationRepository = OrganisationMySqlRepositoryDependency::getRepository();
+		$organisationRepository = OrganisationRepositoryDependency::getRepository();
 
 		return new OrganisationController( $organisationRepository );
 	}
