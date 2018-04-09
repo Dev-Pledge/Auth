@@ -9,9 +9,8 @@
 namespace DevPledge\Framework\ControllerDependencies;
 
 
-use DevPledge\Application\Repository\Organisation\OrganisationRepository;
+use DevPledge\Application\Services\OrganisationService;
 use DevPledge\Framework\Controller\OrganisationController;
-use DevPledge\Framework\RepositoryDependencies\OrganisationRepositoryDependency;
 use DevPledge\Integrations\ControllerDependency\AbstractControllerDependency;
 use Slim\Container;
 
@@ -33,9 +32,9 @@ class OrganisationControllerDependency extends AbstractControllerDependency {
 	 * @return OrganisationController
 	 */
 	public function __invoke( Container $container ) {
-		$organisationRepository = OrganisationRepositoryDependency::getRepository();
+		$organisationService = OrganisationService::getService();
 
-		return new OrganisationController( $organisationRepository );
+		return new OrganisationController( $organisationService );
 	}
 
 	/**

@@ -4,8 +4,6 @@ namespace DevPledge\Framework\RouteGroups;
 
 
 use DevPledge\Framework\Controller\OrganisationController;
-use DevPledge\Integrations\Command\Dispatch;
-use DevPledge\Integrations\Command\TestCommand;
 use DevPledge\Integrations\Middleware\JWT\Authorise;
 use DevPledge\Integrations\Route\AbstractRouteGroup;
 
@@ -26,6 +24,5 @@ class OrganisationRouteGroup extends AbstractRouteGroup {
 
 	protected function callableInGroup() {
 		$this->getApp()->get( '/{id}', OrganisationController::class . ':getOrganisation' );
-
 	}
 }

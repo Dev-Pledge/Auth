@@ -3,7 +3,11 @@
 namespace DevPledge\Framework\Controller;
 
 
+use DevPledge\Application\Commands\CreateOrganisationCommand;
 use DevPledge\Application\Services\OrganisationService;
+use DevPledge\Domain\User;
+use DevPledge\Integrations\Command\Dispatch;
+use DevPledge\Uuid\Uuid;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -21,6 +25,13 @@ class OrganisationController
      */
     public function __construct(OrganisationService $organisationService)
     {
+	    /**
+	     * You could just do if we aren't using OrganisationServices Class ancestors through the construct!!!
+	     */
+	    $this->organisationService = OrganisationService::getService();
+	    /**
+	     * but this works too!
+	     */
         $this->organisationService = $organisationService;
     }
 
@@ -48,11 +59,13 @@ class OrganisationController
         return $res->withJson($organisation);
     }
 
-    /**
-     * @param Request $req
-     * @param Response $res
-     * @return Response
-     */
+	/**
+	 * @param Request $req
+	 * @param Response $res
+	 *
+	 * @return static
+	 * @throws \Exception
+	 */
     public function getOrganisations(Request $req, Response $res)
     {
         $filters = $req->getParams([
@@ -67,11 +80,13 @@ class OrganisationController
         return $res->withJson($organisations);
     }
 
-    /**
-     * @param Request $req
-     * @param Response $res
-     * @return Response
-     */
+	/**
+	 * @param Request $req
+	 * @param Response $res
+	 *
+	 * @return static
+	 * @throws \Exception
+	 */
     public function patchOrganisation(Request $req, Response $res)
     {
         $organisationId = $req->getParam('id');

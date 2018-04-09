@@ -46,6 +46,35 @@ class OrganisationService extends AbstractService {
 		return $this->repo->create( $organisation );
 	}
 
+	/**
+	 * @param string $id
+	 *
+	 * @return Organisation
+	 */
+	public function read( string $id ): Organisation {
+		return $this->repo->read( $id );
+	}
+
+	/**
+	 * @param Organisation $organisation
+	 *
+	 * @return Organisation
+	 * @throws \Exception
+	 */
+	public function update( Organisation $organisation ): Organisation {
+		return $this->repo->update( $organisation );
+	}
+
+	/**
+	 * @param array $filters
+	 *
+	 * @return array
+	 * @throws \Exception
+	 */
+	public function readAll( array $filters ): array {
+		return $this->repo->readAll( $filters );
+	}
+
 
 	/**
 	 * @param Container $container
@@ -73,7 +102,7 @@ class OrganisationService extends AbstractService {
 		/**
 		 * or this way (which is best!!!!)
 		 *
-		 * This way gives you IDE helpers so you dont have to keep visually referencing other files
+		 * This way gives you IDE helpers so you don't have to keep visually referencing other files
 		 *
 		 */
 		$this->repo = OrganisationRepositoryDependency::getRepository();
