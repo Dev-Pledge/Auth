@@ -6,6 +6,7 @@ namespace DevPledge\Framework\Controller;
 use DevPledge\Application\Commands\CreateOrganisationCommand;
 use DevPledge\Application\Services\OrganisationService;
 use DevPledge\Domain\User;
+use DevPledge\Framework\ControllerDependencies\OrganisationControllerDependency;
 use DevPledge\Integrations\Command\Dispatch;
 use DevPledge\Uuid\Uuid;
 use Slim\Http\Request;
@@ -26,9 +27,17 @@ class OrganisationController
     public function __construct(OrganisationService $organisationService)
     {
 	    /**
+	     * The 'injection' into the controller construct comes from
+	     * @var $dependecyInjector OrganisationControllerDependency
+	     * you can make as many as you want and stick them in ControllerDependencies Dir  -
+	     * these dirs are set in Extrapolations in the index.php
+	     */
+
+	    /**
 	     * You could just do if we aren't using OrganisationServices Class ancestors through the construct!!!
 	     */
 	    $this->organisationService = OrganisationService::getService();
+
 	    /**
 	     * but this works too!
 	     */
