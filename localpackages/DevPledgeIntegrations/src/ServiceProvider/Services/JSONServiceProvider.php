@@ -9,7 +9,7 @@
 namespace DevPledge\Integrations\ServiceProvider\Services;
 
 
-use DevPledge\Integrations\ServiceProvider\AbstractService;
+use DevPledge\Integrations\ServiceProvider\AbstractServiceProvider;
 use Slim\Container;
 use TomWright\JSON\JSON;
 
@@ -17,7 +17,7 @@ use TomWright\JSON\JSON;
  * Class JSONService
  * @package DevPledge\Integrations\ServiceProvider\Services
  */
-class JSONService extends AbstractService {
+class JSONServiceProvider extends AbstractServiceProvider {
 	/**
 	 * JSONService constructor.
 	 */

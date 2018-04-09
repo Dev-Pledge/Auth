@@ -8,7 +8,7 @@
 
 namespace DevPledge\Integrations\ServiceProvider\Services;
 
-use DevPledge\Integrations\ServiceProvider\AbstractService;
+use DevPledge\Integrations\ServiceProvider\AbstractServiceProvider;
 use DevPledge\Integrations\Setting\Settings\MysqlSettings;
 use Slim\Container;
 use TomWright\Database\ExtendedPDO\ExtendedPDO;
@@ -17,7 +17,7 @@ use TomWright\Database\ExtendedPDO\ExtendedPDO;
  * Class ExtendedPDOService
  * @package DevPledge\Integrations\ServiceProvider\Services
  */
-class ExtendedPDOService extends AbstractService {
+class ExtendedPDOServiceProvider extends AbstractServiceProvider {
 	/**
 	 * ExtendedPDOService constructor.
 	 */

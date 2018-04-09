@@ -8,22 +8,22 @@ use DevPledge\Integrations\Container\AddCallable;
  * Class AddService
  * @package DevPledge\Integrations\ServiceProvider
  */
-class AddService extends AddCallable {
+class AddServiceProvider extends AddCallable {
 
 	/**
-	 * @param AbstractService $service
+	 * @param AbstractServiceProvider $service
 	 */
-	public static function service( AbstractService $service ) {
+	public static function service( AbstractServiceProvider $service ) {
 		static::callable( $service );
 
 	}
 
 	/**
-	 * @param AbstractService $service
+	 * @param AbstractServiceProvider $service
 	 *
 	 * @return $this
 	 */
-	public function addService( AbstractService $service ) {
+	public function addService( AbstractServiceProvider $service ) {
 		static::service( $service );
 
 		return $this;

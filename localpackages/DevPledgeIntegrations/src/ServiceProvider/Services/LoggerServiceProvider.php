@@ -9,7 +9,7 @@
 namespace DevPledge\Integrations\ServiceProvider\Services;
 
 
-use DevPledge\Integrations\ServiceProvider\AbstractService;
+use DevPledge\Integrations\ServiceProvider\AbstractServiceProvider;
 use Monolog\Logger;
 use Slim\Container;
 
@@ -17,7 +17,7 @@ use Slim\Container;
  * Class LoggerService
  * @package DevPledge\Integrations\ServiceProvider\Services
  */
-class LoggerService extends AbstractService {
+class LoggerServiceProvider extends AbstractServiceProvider {
 	/**
 	 * LoggerService constructor.
 	 */

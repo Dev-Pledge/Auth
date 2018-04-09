@@ -9,7 +9,7 @@
 namespace DevPledge\Integrations\ServiceProvider\Services;
 
 
-use DevPledge\Integrations\ServiceProvider\AbstractService;
+use DevPledge\Integrations\ServiceProvider\AbstractServiceProvider;
 use Slim\Container;
 use Slim\Views\PhpRenderer;
 
@@ -17,7 +17,7 @@ use Slim\Views\PhpRenderer;
  * Class PHPRendererService
  * @package DevPledge\Integrations\ServiceProvider\Services
  */
-class PHPRendererService extends AbstractService {
+class PHPRendererServiceProvider extends AbstractServiceProvider {
 	/**
 	 * PHPRendererService constructor.
 	 */

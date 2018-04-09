@@ -3,7 +3,7 @@
 namespace DevPledge\Integrations\Command;
 
 use DevPledge\Integrations\Container\AddCallable;
-use DevPledge\Integrations\ServiceProvider\Services\CommandBusService;
+use DevPledge\Integrations\ServiceProvider\Services\CommandBusServiceProvider;
 
 /**
  * Class AddRepositoryDependency
@@ -17,7 +17,7 @@ class AddCommandHandler extends AddCallable {
 	 * @throws \Psr\Container\NotFoundExceptionInterface
 	 */
 	public static function commandHandler( AbstractCommandHandler $commandHandler ) {
-		$commandBusService = CommandBusService::getService();
+		$commandBusService = CommandBusServiceProvider::getService();
 
 		$commandBusService->setHandler( $commandHandler );
 

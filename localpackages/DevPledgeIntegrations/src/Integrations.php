@@ -6,13 +6,14 @@ use DevPledge\Integrations\Extrapolate\Extrapolate;
 use DevPledge\Integrations\Handler\AddHandler;
 use DevPledge\Integrations\Handler\Handlers\NotAllowedHandler;
 use DevPledge\Integrations\Handler\Handlers\NotFoundHandler;
-use DevPledge\Integrations\ServiceProvider\AddService;
-use DevPledge\Integrations\ServiceProvider\Services\CommandBusService;
-use DevPledge\Integrations\ServiceProvider\Services\ExtendedPDOService;
-use DevPledge\Integrations\ServiceProvider\Services\JSONService;
-use DevPledge\Integrations\ServiceProvider\Services\JWTService;
-use DevPledge\Integrations\ServiceProvider\Services\LoggerService;
-use DevPledge\Integrations\ServiceProvider\Services\PHPRendererService;
+use DevPledge\Integrations\ServiceProvider\AddServiceProvider;
+use DevPledge\Integrations\ServiceProvider\Services\CommandBusServiceProvider;
+use DevPledge\Integrations\ServiceProvider\Services\EventBusServiceProvider;
+use DevPledge\Integrations\ServiceProvider\Services\ExtendedPDOServiceProvider;
+use DevPledge\Integrations\ServiceProvider\Services\JSONServiceProvider;
+use DevPledge\Integrations\ServiceProvider\Services\JWTServiceProvider;
+use DevPledge\Integrations\ServiceProvider\Services\LoggerServiceProvider;
+use DevPledge\Integrations\ServiceProvider\Services\PHPRendererServiceProvider;
 use DevPledge\Integrations\Setting\AddSetting;
 use DevPledge\Integrations\Setting\Settings;
 use DevPledge\Integrations\Setting\Settings\JWTSettings;
@@ -67,13 +68,14 @@ class Integrations extends AbstractAppAccess {
 	}
 
 	static public function addCommonServices(): void {
-		$serviceAdder = new AddService();
-		$serviceAdder->addService( new LoggerService() )
-		             ->addService( new PHPRendererService() )
-		             ->addService( new JSONService() )
-		             ->addService( new ExtendedPDOService() )
-		             ->addService( new JWTService() )
-		             ->addService( new CommandBusService() );
+		$serviceAdder = new AddServiceProvider();
+		$serviceAdder->addService( new LoggerServiceProvider() )
+		             ->addService( new PHPRendererServiceProvider() )
+		             ->addService( new JSONServiceProvider() )
+		             ->addService( new ExtendedPDOServiceProvider() )
+		             ->addService( new JWTServiceProvider() )
+		             ->addService( new CommandBusServiceProvider() )
+		             ->addService( new EventBusServiceProvider() );
 	}
 
 	static public function addCommonHandlers(): void {

@@ -5,7 +5,7 @@ namespace DevPledge\Integrations\Event;
 
 
 use DevPledge\Integrations\Container\AddCallable;
-use DevPledge\Integrations\ServiceProvider\Services\EventBusService;
+use DevPledge\Integrations\ServiceProvider\Services\EventBusServiceProvider;
 
 /**
  * Class AddEventHandler
@@ -16,7 +16,7 @@ class AddEventHandler extends AddCallable {
 	 * @param AbstractEventHandler $eventHandler
 	 */
 	public static function eventHandler( AbstractEventHandler $eventHandler ) {
-		$eventBusService = EventBusService::getService();
+		$eventBusService = EventBusServiceProvider::getService();
 
 		$eventBusService->setHandler( $eventHandler );
 

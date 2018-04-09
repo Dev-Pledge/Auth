@@ -14,7 +14,7 @@ use Slim\Container;
  * Class OrganisationService
  * @package DevPledge\Application\Services
  */
-class OrganisationService extends AbstractService {
+class OrganisationService {
 	/**
 	 * @var OrganisationRepository $repo
 	 */
@@ -26,10 +26,14 @@ class OrganisationService extends AbstractService {
 
 	/**
 	 * OrganisationService constructor.
+	 *
+	 * @param OrganisationRepository $repository
+	 * @param OrganisationFactory $factory
 	 */
-	public function __construct() {
+	public function __construct( OrganisationRepository $repository, OrganisationFactory $factory ) {
 
-		parent::__construct( static::class );
+		$this->repo    = $repository;
+		$this->factory = $factory;
 	}
 
 	/**
@@ -55,15 +59,17 @@ class OrganisationService extends AbstractService {
 		return $this->repo->read( $id );
 	}
 
-    /**
-     * @param Organisation $organisation
-     *
-     * @param array $data
-     * @return Organisation
-     * @throws \Exception
-     */
+	/**
+	 * @param Organisation $organisation
+	 *
+	 * @param array $data
+	 *
+	 * @return Organisation
+	 * @throws \Exception
+	 */
 	public function update( Organisation $organisation, array $data = [] ): Organisation {
-	    $organisation = $this->factory->update($organisation, $data);
+		$organisation = $this->factory->update( $organisation, $data );
+
 		return $this->repo->update( $organisation );
 	}
 
@@ -77,27 +83,4 @@ class OrganisationService extends AbstractService {
 		return $this->repo->readAll( $filters );
 	}
 
-
-	/**
-	 * @param Container $container
-	 *
-	 * @return $this
-	 * @throws \Interop\Container\Exception\ContainerException
-	 * @throws \Psr\Container\ContainerExceptionInterface
-	 * @throws \Psr\Container\NotFoundExceptionInterface
-	 */
-	public function __invoke( Container $container ) {
-		$this->factory = OrganisationFactoryDependency::getFactory();
-		$this->repo = OrganisationRepositoryDependency::getRepository();
-
-		return $this;
-	}
-
-	/**
-	 * usually return static::getFromContainer();
-	 * @return $this
-	 */
-	static public function getService() {
-		return static::getFromContainer();
-	}
 }

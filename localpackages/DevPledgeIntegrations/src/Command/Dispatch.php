@@ -5,8 +5,8 @@ namespace DevPledge\Integrations\Command;
 
 
 use DevPledge\Integrations\Event\AbstractEvent;
-use DevPledge\Integrations\ServiceProvider\Services\CommandBusService;
-use DevPledge\Integrations\ServiceProvider\Services\EventBusService;
+use DevPledge\Integrations\ServiceProvider\Services\CommandBusServiceProvider;
+use DevPledge\Integrations\ServiceProvider\Services\EventBusServiceProvider;
 
 /**
  * Class Dispatch
@@ -19,14 +19,14 @@ class Dispatch {
 	 * @throws CommandException
 	 */
 	static public function command( AbstractCommand $command ) {
-		CommandBusService::getService()->handle( $command );
+		CommandBusServiceProvider::getService()->handle( $command );
 	}
 
 	/**
 	 * @param AbstractEvent $event
 	 */
 	static public function event( AbstractEvent $event ) {
-		EventBusService::getService()->handle( $event );
+		EventBusServiceProvider::getService()->handle( $event );
 	}
 
 }

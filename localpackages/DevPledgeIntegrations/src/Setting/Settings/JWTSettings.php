@@ -3,7 +3,7 @@
 namespace DevPledge\Integrations\Setting\Settings;
 
 
-use DevPledge\Integrations\ServiceProvider\Services\ExtendedPDOService;
+use DevPledge\Integrations\ServiceProvider\Services\ExtendedPDOServiceProvider;
 use DevPledge\Integrations\Setting\AbstractSetting;
 use Slim\Container;
 

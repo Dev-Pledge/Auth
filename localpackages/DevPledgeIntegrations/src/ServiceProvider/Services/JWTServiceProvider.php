@@ -3,7 +3,7 @@
 namespace DevPledge\Integrations\ServiceProvider\Services;
 
 use DevPledge\Integrations\Security\JWT\JWT;
-use DevPledge\Integrations\ServiceProvider\AbstractService;
+use DevPledge\Integrations\ServiceProvider\AbstractServiceProvider;
 use DevPledge\Integrations\Setting\Settings\JWTSettings;
 use Slim\Container;
 use TomWright\JSON\JSON;
@@ -12,7 +12,7 @@ use TomWright\JSON\JSON;
  * Class JWTService
  * @package DevPledge\Integrations\ServiceProvider\Services
  */
-class JWTService extends AbstractService {
+class JWTServiceProvider extends AbstractServiceProvider {
 	/**
 	 * JWTService constructor.
 	 */
@@ -31,7 +31,7 @@ class JWTService extends AbstractService {
 		$settings  = JWTSettings::getSetting();
 		$secret    = $settings->getSecret();
 		$algorithm = $settings->getAlgorithm();
-		$jwt       = new JWT( $secret, $algorithm, JSONService::getService() );
+		$jwt       = new JWT( $secret, $algorithm, JSONServiceProvider::getService() );
 
 		$ttl = $settings->getTimeToLive();
 		$ttr = $settings->getTimeToRefresh();

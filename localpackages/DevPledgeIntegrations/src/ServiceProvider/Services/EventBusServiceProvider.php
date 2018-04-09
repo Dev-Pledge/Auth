@@ -2,45 +2,42 @@
 
 namespace DevPledge\Integrations\ServiceProvider\Services;
 
-
-use DevPledge\Integrations\Command\CommandBus;
-use DevPledge\Integrations\ServiceProvider\AbstractService;
+use DevPledge\Integrations\Event\EventBus;
+use DevPledge\Integrations\ServiceProvider\AbstractServiceProvider;
 use Slim\Container;
 
 /**
- * Class CommandBusService
+ * Class EventBusService
  * @package DevPledge\Integrations\ServiceProvider\Services
  */
-class CommandBusService extends AbstractService {
+class EventBusServiceProvider extends AbstractServiceProvider {
 	/**
-	 * CommandBusService constructor.
+	 * EventBusService constructor.
 	 */
 	public function __construct() {
-		parent::__construct( 'commandBusService' );
+		parent::__construct( 'eventBusService' );
 	}
 
 	/**
 	 * @param Container $container
 	 *
-	 * @return CommandBus
+	 * @return EventBus
 	 * @throws \Psr\Container\ContainerExceptionInterface
 	 * @throws \Psr\Container\NotFoundExceptionInterface
 	 */
 	public function __invoke( Container $container ) {
-
-		if ( ! static::$app->getContainer()->has( CommandBus::class ) ) {
-			static::$app->getContainer()[ CommandBus::class ] = function () {
-				return new CommandBus();
+		if ( ! static::$app->getContainer()->has( EventBus::class ) ) {
+			static::$app->getContainer()[ EventBus::class ] = function () {
+				return new EventBus();
 			};
 		}
 
-		return static::$app->getContainer()->get( CommandBus::class );
-
+		return static::$app->getContainer()->get( EventBus::class );
 	}
 
 	/**
 	 * usually return static::getFromContainer();
-	 * @return CommandBus
+	 * @return EventBus
 	 */
 	static public function getService() {
 		return static::getFromContainer();

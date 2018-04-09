@@ -5,7 +5,7 @@ namespace DevPledge\Integrations\Middleware\JWT;
 use DevPledge\Integrations\Middleware\AbstractMiddleware;
 use DevPledge\Integrations\Security\JWT\JWT;
 use DevPledge\Integrations\Security\JWT\Token;
-use DevPledge\Integrations\ServiceProvider\Services\JWTService;
+use DevPledge\Integrations\ServiceProvider\Services\JWTServiceProvider;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -41,7 +41,7 @@ class Refresh extends AbstractMiddleware {
 						/**
 						 * @var JWT $jwt
 						 */
-						$jwt   = JWTService::getService();
+						$jwt   = JWTServiceProvider::getService();
 						$token = $jwt->verify( $accessToken, false, true );
 					}
 					break;
