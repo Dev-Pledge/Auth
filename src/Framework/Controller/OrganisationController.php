@@ -6,7 +6,6 @@ namespace DevPledge\Framework\Controller;
 use DevPledge\Application\Commands\CreateOrganisationCommand;
 use DevPledge\Application\Services\OrganisationService;
 use DevPledge\Domain\User;
-use DevPledge\Framework\ControllerDependencies\OrganisationControllerDependency;
 use DevPledge\Integrations\Command\Dispatch;
 use DevPledge\Uuid\Uuid;
 use Slim\Http\Request;
@@ -26,21 +25,6 @@ class OrganisationController
      */
     public function __construct(OrganisationService $organisationService)
     {
-	    /**
-	     * The 'injection' into the controller construct comes from
-	     * @var $dependecyInjector OrganisationControllerDependency
-	     * you can make as many as you want and stick them in ControllerDependencies Dir  -
-	     * these dirs are set in Extrapolations in the index.php
-	     */
-
-	    /**
-	     * You could just do if we aren't using OrganisationServices Class ancestors through the construct!!!
-	     */
-	    $this->organisationService = OrganisationService::getService();
-
-	    /**
-	     * but this works too!
-	     */
         $this->organisationService = $organisationService;
     }
 
@@ -68,13 +52,13 @@ class OrganisationController
         return $res->withJson($organisation);
     }
 
-	/**
-	 * @param Request $req
-	 * @param Response $res
-	 *
-	 * @return static
-	 * @throws \Exception
-	 */
+    /**
+     * @param Request $req
+     * @param Response $res
+     *
+     * @return Response
+     * @throws \Exception
+     */
     public function getOrganisations(Request $req, Response $res)
     {
         $filters = $req->getParams([
@@ -89,13 +73,13 @@ class OrganisationController
         return $res->withJson($organisations);
     }
 
-	/**
-	 * @param Request $req
-	 * @param Response $res
-	 *
-	 * @return static
-	 * @throws \Exception
-	 */
+    /**
+     * @param Request $req
+     * @param Response $res
+     *
+     * @return Response
+     * @throws \Exception
+     */
     public function patchOrganisation(Request $req, Response $res)
     {
         $organisationId = $req->getParam('id');
@@ -108,15 +92,15 @@ class OrganisationController
         $organisation = $this->organisationService->read($organisationId);
         if ($organisation === null) {
             return $res->withJson([
-                'OrganisationController not found'
+                'Organisation not found'
             ], 404);
         }
 
-        $body = $req->getParsedBody();
+        $data = $req->getParams([
+            'name',
+        ]);
 
-        // todo : set organisation values from body
-
-        $organisation = $this->organisationService->update($organisation);
+        $organisation = $this->organisationService->update($organisation, $data);
 
         return $res->withJson($organisation);
     }
@@ -126,6 +110,7 @@ class OrganisationController
      * @param Response $res
      *
      * @return Response
+     * @throws \DevPledge\Integrations\Command\CommandException
      */
     public function postOrganisation(Request $req, Response $res)
     {
@@ -146,6 +131,7 @@ class OrganisationController
 
         $userUuid = new Uuid($userId);
         $user = new User(); // TODO: Get user from $userUuid
+        $user->setId($userUuid);
 
         // See CommandHandler\CreateOrganisationHandler
         $command = new CreateOrganisationCommand($user, $name);

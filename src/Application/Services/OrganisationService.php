@@ -55,13 +55,15 @@ class OrganisationService extends AbstractService {
 		return $this->repo->read( $id );
 	}
 
-	/**
-	 * @param Organisation $organisation
-	 *
-	 * @return Organisation
-	 * @throws \Exception
-	 */
-	public function update( Organisation $organisation ): Organisation {
+    /**
+     * @param Organisation $organisation
+     *
+     * @param array $data
+     * @return Organisation
+     * @throws \Exception
+     */
+	public function update( Organisation $organisation, array $data = [] ): Organisation {
+	    $organisation = $this->factory->update($organisation, $data);
 		return $this->repo->update( $organisation );
 	}
 
@@ -86,25 +88,6 @@ class OrganisationService extends AbstractService {
 	 */
 	public function __invoke( Container $container ) {
 		$this->factory = OrganisationFactoryDependency::getFactory();
-
-		/**
-		 * This could work either way
-		 */
-		$this->repo = $container->get( OrganisationRepository::class );
-
-
-		/**
-		 * or this way
-		 */
-		$this->repo = $this->getApp()->getContainer()->get( OrganisationRepository::class );
-
-
-		/**
-		 * or this way (which is best!!!!)
-		 *
-		 * This way gives you IDE helpers so you don't have to keep visually referencing other files
-		 *
-		 */
 		$this->repo = OrganisationRepositoryDependency::getRepository();
 
 		return $this;

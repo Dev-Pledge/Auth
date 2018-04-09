@@ -6,6 +6,9 @@ use DevPledge\Domain\Organisation;
 /**
  * Class OrganisationFactory
  * @package DevPledge\Application\Factory
+ *
+ * The factory is just a way of converting a data array into a desired object.
+ * I also like to use it when "updating" an object from a data array too.
  */
 class OrganisationFactory {
 	/**
@@ -14,12 +17,27 @@ class OrganisationFactory {
 	 * @return Organisation
 	 */
 	public function create( $data ):Organisation {
-		/**
-		 * TODO implement this properly???  Maybe Tom has other ideas how this works???
-		 */
-		$organistaion =  new Organisation();
-		$organistaion->setName( $data['name']);
-		return $organistaion;
+		$organisation =  new Organisation();
+
+        if (array_key_exists('name', $data)) {
+            $organisation->setName($data['name']);
+        }
+
+		return $organisation;
+	}
+
+    /**
+     * @param Organisation $organisation
+     * @param array $data
+     *
+     * @return Organisation
+     */
+	public function update( Organisation $organisation, array $data ):Organisation {
+	    if (array_key_exists('name', $data)) {
+	        $organisation->setName($data['name']);
+        }
+
+		return $organisation;
 	}
 
 }
