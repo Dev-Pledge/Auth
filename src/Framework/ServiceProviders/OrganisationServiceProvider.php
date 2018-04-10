@@ -3,6 +3,8 @@
 namespace DevPledge\Framework\ServiceProviders;
 
 use DevPledge\Application\Services\OrganisationService;
+use DevPledge\Framework\FactoryDependencies\OrganisationFactoryDependency;
+use DevPledge\Framework\RepositoryDependencies\OrganisationRepositoryDependency;
 use DevPledge\Integrations\ServiceProvider\AbstractServiceProvider;
 use Slim\Container;
 
