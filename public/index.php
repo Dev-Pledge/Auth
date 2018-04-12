@@ -10,7 +10,6 @@ use DevPledge\Integrations\Route\ExtrapolateRouteGroups;
 use DevPledge\Integrations\ServiceProvider\ExtrapolateServiceProviders;
 use DevPledge\Integrations\Setting\ExtrapolateSettings;
 
-
 if ( PHP_SAPI == 'cli-server' ) {
 	// To help the built-in PHP dev server, check if the request was actually for
 	// something which should probably be served as a static file
@@ -44,7 +43,6 @@ Integrations::addExtrapolations( [
 	new ExtrapolateRouteGroups( __DIR__ . '/../src/Framework/RouteGroups', "DevPledge\\Framework\\RouteGroups" ),
 	new ExtrapolateCommandHandlers( __DIR__ . '/../src/Application/CommandHandlers', "DevPledge\\Application\\CommandHandlers" ),
 ] );
-
 
 Integrations::run();
 
