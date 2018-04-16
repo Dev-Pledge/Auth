@@ -29,7 +29,7 @@ class Resource implements JsonSerializable
 
     /**
      * @param Action[] $actions
-     * @return Resource
+     * @return static
      */
     public function setActions(array $actions): self
     {
@@ -39,7 +39,7 @@ class Resource implements JsonSerializable
 
     /**
      * @param Action $action
-     * @return Resource
+     * @return static
      */
     public function addAction(Action $action): self
     {

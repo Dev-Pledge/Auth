@@ -1,7 +1,6 @@
 <?php
 
-
-namespace Tests\Domain\Domain\Permissions;
+namespace Tests\Security\Permissions;
 
 
 use DevPledge\Integrations\Security\Permissions\Action;

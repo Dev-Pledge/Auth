@@ -1,5 +1,7 @@
 <?php
 
+namespace Tests\Security\Permissions;
+
 use DevPledge\Integrations\Security\Permissions\Action;
 use DevPledge\Integrations\Security\Permissions\Resource;
 use PHPUnit\Framework\TestCase;

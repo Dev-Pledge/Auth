@@ -2,6 +2,11 @@
 
 namespace DevPledge\Integrations\Security\JWT;
 
+use DevPledge\Integrations\Security\Permissions\Action;
+use DevPledge\Integrations\Security\Permissions\Permissions;
+use DevPledge\Integrations\Security\Permissions\Resource;
+use DevPledge\Integrations\Security\Permissions\Restriction;
+
 /**
  * Class Token
  * @package DevPledge\Integrations\Security\JWT
@@ -15,12 +20,37 @@ class Token
     private $payload;
 
     /**
+     * @var Permissions
+     */
+    private $permissions;
+
+    /**
      * Token constructor.
      * @param \stdClass $payload
      */
     public function __construct(\stdClass $payload)
     {
         $this->payload = $payload;
+        $this->permissions = new Permissions();
+
+        $perms = $this->getData()->perms ?? new \stdClass();
+        foreach ($perms as $resName => $actions) {
+            $resource = new Resource();
+            $resource->setName($resName);
+
+            foreach ($actions as $actionName => $restrictions) {
+                $action = new Action();
+                $action->setName($actionName);
+
+                foreach ($restrictions as $restrictionName => $restrictionValue) {
+                    $restriction = new Restriction();
+                    $restriction->setName($restrictionName);
+                    $restriction->setValues($restrictionValue);
+                }
+            }
+
+            $this->permissions->addResource($resource);
+        }
     }
 
     /**
