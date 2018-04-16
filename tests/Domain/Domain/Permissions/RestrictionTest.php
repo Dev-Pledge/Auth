@@ -4,7 +4,7 @@
 namespace Tests\Domain\Domain\Permissions;
 
 
-use DevPledge\Domain\Permissions\Restriction;
+use DevPledge\Integrations\Security\Permissions\Restriction;
 use PHPUnit\Framework\TestCase;
 
 class RestrictionTest extends TestCase

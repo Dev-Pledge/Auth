@@ -1,7 +1,7 @@
 <?php
 
 
-namespace DevPledge\Domain\Permissions;
+namespace DevPledge\Integrations\Security\Permissions;
 
 
 use JsonSerializable;

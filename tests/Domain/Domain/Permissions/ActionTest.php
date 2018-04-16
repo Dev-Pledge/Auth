@@ -1,7 +1,7 @@
 <?php
 
-use DevPledge\Domain\Permissions\Action;
-use DevPledge\Domain\Permissions\Restriction;
+use DevPledge\Integrations\Security\Permissions\Action;
+use DevPledge\Integrations\Security\Permissions\Restriction;
 use PHPUnit\Framework\TestCase;
 
 class ActionTest extends TestCase

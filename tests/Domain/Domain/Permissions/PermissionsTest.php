@@ -4,10 +4,10 @@
 namespace Tests\Domain\Domain\Permissions;
 
 
-use DevPledge\Domain\Permissions\Action;
-use DevPledge\Domain\Permissions\Permissions;
-use DevPledge\Domain\Permissions\Resource;
-use DevPledge\Domain\Permissions\Restriction;
+use DevPledge\Integrations\Security\Permissions\Action;
+use DevPledge\Integrations\Security\Permissions\Permissions;
+use DevPledge\Integrations\Security\Permissions\Resource;
+use DevPledge\Integrations\Security\Permissions\Restriction;
 use PHPUnit\Framework\TestCase;
 
 class PermissionsTest extends TestCase

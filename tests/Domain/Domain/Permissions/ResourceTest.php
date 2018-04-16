@@ -1,7 +1,7 @@
 <?php
 
-use DevPledge\Domain\Permissions\Action;
-use DevPledge\Domain\Permissions\Resource;
+use DevPledge\Integrations\Security\Permissions\Action;
+use DevPledge\Integrations\Security\Permissions\Resource;
 use PHPUnit\Framework\TestCase;
 
 class ResourceTest extends TestCase
