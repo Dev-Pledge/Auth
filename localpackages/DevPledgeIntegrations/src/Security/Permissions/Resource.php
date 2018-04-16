@@ -49,6 +49,30 @@ class Resource implements JsonSerializable
 
     /**
      * @param string $name
+     * @return Action
+     */
+    public function getAction(string $name): Action
+    {
+        foreach ($this->getActions() as $r) {
+            if ($r->getName() === $name) {
+                return $r;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param string $name
+     * @return bool
+     */
+    public function hasAction(string $name): bool
+    {
+        return $this->getAction($name) !== null;
+    }
+
+    /**
+     * @param string $name
      * @return Resource
      */
     public function setName(string $name): self

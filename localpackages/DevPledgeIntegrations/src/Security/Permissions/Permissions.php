@@ -43,6 +43,30 @@ class Permissions implements JsonSerializable
     }
 
     /**
+     * @param string $name
+     * @return Resource
+     */
+    public function getResource(string $name): Resource
+    {
+        foreach ($this->getResources() as $r) {
+            if ($r->getName() === $name) {
+                return $r;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param string $name
+     * @return bool
+     */
+    public function hasResource(string $name): bool
+    {
+        return $this->getResource($name) !== null;
+    }
+
+    /**
      * @return Resource[]
      */
     public function getResources(): array

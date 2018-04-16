@@ -4,9 +4,13 @@ namespace DevPledge\Framework\Controller;
 
 
 use DevPledge\Application\Commands\CreateOrganisationCommand;
+use DevPledge\Application\Service\OrganisationAuthService;
 use DevPledge\Application\Services\OrganisationService;
 use DevPledge\Domain\User;
 use DevPledge\Integrations\Command\Dispatch;
+use DevPledge\Integrations\Security\JWT\Token;
+use DevPledge\Integrations\Security\Permissions\Permissions;
+use DevPledge\Integrations\Service\AuthException;
 use DevPledge\Uuid\Uuid;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -20,12 +24,21 @@ class OrganisationController
     private $organisationService;
 
     /**
+     * @var OrganisationAuthService
+     */
+    private $organisationAuthService;
+
+    /**
      * OrganisationController constructor.
      * @param OrganisationService $organisationService
+     * @param OrganisationAuthService $organisationAuthService
      */
-    public function __construct(OrganisationService $organisationService)
-    {
+    public function __construct(
+        OrganisationService $organisationService,
+        OrganisationAuthService $organisationAuthService
+    ) {
         $this->organisationService = $organisationService;
+        $this->organisationAuthService = $organisationAuthService;
     }
 
     /**
@@ -49,6 +62,15 @@ class OrganisationController
             ], 404);
         }
 
+        try {
+            $this->organisationAuthService->checkRead($organisation,
+                $req->getAttribute(Token::class, new Permissions()));
+        } catch (AuthException $e) {
+            return $res->withJson([
+                $e->getMessage(),
+            ], 403);
+        }
+
         return $res->withJson($organisation);
     }
 
@@ -69,6 +91,17 @@ class OrganisationController
         ]);
 
         $organisations = $this->organisationService->readAll($filters);
+
+        foreach ($organisations as $organisation) {
+            try {
+                $this->organisationAuthService->checkRead($organisation,
+                    $req->getAttribute(Token::class, new Permissions()));
+            } catch (AuthException $e) {
+                return $res->withJson([
+                    $e->getMessage(),
+                ], 403);
+            }
+        }
 
         return $res->withJson($organisations);
     }
@@ -94,6 +127,15 @@ class OrganisationController
             return $res->withJson([
                 'Organisation not found'
             ], 404);
+        }
+
+        try {
+            $this->organisationAuthService->checkUpdate($organisation,
+                $req->getAttribute(Token::class, new Permissions()));
+        } catch (AuthException $e) {
+            return $res->withJson([
+                $e->getMessage(),
+            ], 403);
         }
 
         $data = $req->getParams([
@@ -136,6 +178,15 @@ class OrganisationController
         // See CommandHandler\CreateOrganisationHandler
         $command = new CreateOrganisationCommand($user, $name);
         $organisation = Dispatch::command($command);
+
+        try {
+            $this->organisationAuthService->checkCreate($organisation,
+                $req->getAttribute(Token::class, new Permissions()));
+        } catch (AuthException $e) {
+            return $res->withJson([
+                $e->getMessage(),
+            ], 403);
+        }
 
         return $res->withJson($organisation);
     }
