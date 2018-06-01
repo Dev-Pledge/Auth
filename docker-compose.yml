@@ -23,6 +23,7 @@ services:
     networks:
       - default
       - sentry_network
+      - cache_network
 
   mysql-db:
     restart: always
@@ -43,4 +44,8 @@ networks:
   sentry_network:
     external:
       name: global_sentry
+
+  cache_network:
+    external:
+      name: devpledge_cache
 
