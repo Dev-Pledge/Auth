@@ -6,8 +6,8 @@ namespace DevPledge\Application\Service;
 
 use DevPledge\Domain\Organisation;
 use DevPledge\Integrations\Security\Permissions\Permissions;
-use DevPledge\Integrations\Service\AuthException;
-use DevPledge\Integrations\Service\AuthService;
+use DevPledge\Integrations\Auth\AuthException;
+use DevPledge\Integrations\Auth\AuthService;
 
 class OrganisationAuthService
 {

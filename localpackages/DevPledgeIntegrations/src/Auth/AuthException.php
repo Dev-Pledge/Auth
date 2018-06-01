@@ -1,7 +1,7 @@
 <?php
 
 
-namespace DevPledge\Integrations\Service;
+namespace DevPledge\Integrations\Auth;
 
 
 class AuthException extends \Exception
