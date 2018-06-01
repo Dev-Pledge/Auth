@@ -22,7 +22,8 @@
     "slim/php-view": "^2.2",
     "monolog/monolog": "^1.23",
     "sentry/sentry": "^1.8",
-    "jrsaunders/quickcache": "^1.0"
+    "jrsaunders/quickcache": "^1.0",
+    "predis/predis": "^1.1"
   },
   "autoload": {
     "psr-4": {

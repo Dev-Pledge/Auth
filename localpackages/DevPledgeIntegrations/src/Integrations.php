@@ -14,10 +14,12 @@ use DevPledge\Integrations\ServiceProvider\Services\JSONServiceProvider;
 use DevPledge\Integrations\ServiceProvider\Services\JWTServiceProvider;
 use DevPledge\Integrations\ServiceProvider\Services\LoggerServiceProvider;
 use DevPledge\Integrations\ServiceProvider\Services\PHPRendererServiceProvider;
+use DevPledge\Integrations\ServiceProvider\Services\RedisServiceProvider;
 use DevPledge\Integrations\Setting\AddSetting;
 use DevPledge\Integrations\Setting\Settings;
 use DevPledge\Integrations\Setting\Settings\JWTSettings;
 use DevPledge\Integrations\Setting\Settings\MysqlSettings;
+use DevPledge\Integrations\Setting\Settings\RedisSettings;
 use Psr\Http\Message\ResponseInterface;
 use Slim\App;
 
@@ -64,7 +66,9 @@ class Integrations extends AbstractAppAccess {
 	static public function addCommonSettings(): void {
 		$settingAdder = new AddSetting();
 		$settingAdder->addSetting( new MysqlSettings() )
-		             ->addSetting( new JWTSettings() );
+		             ->addSetting( new JWTSettings() )
+		             ->addSetting( new RedisSettings() );
+
 	}
 
 	static public function addCommonServices(): void {
@@ -75,7 +79,8 @@ class Integrations extends AbstractAppAccess {
 		             ->addService( new ExtendedPDOServiceProvider() )
 		             ->addService( new JWTServiceProvider() )
 		             ->addService( new CommandBusServiceProvider() )
-		             ->addService( new EventBusServiceProvider() );
+		             ->addService( new EventBusServiceProvider() )
+		             ->addService( new RedisServiceProvider() );
 	}
 
 	static public function addCommonHandlers(): void {

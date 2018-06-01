@@ -6,6 +6,7 @@ namespace DevPledge\Framework\RouteGroups;
 use DevPledge\Application\Commands\TestCommand;
 use DevPledge\Integrations\Command\Dispatch;
 use DevPledge\Integrations\Route\AbstractRouteGroup;
+use DevPledge\Integrations\ServiceProvider\Services\RedisServiceProvider;
 
 /**
  * Class SwooleRouteGroup
@@ -23,6 +24,10 @@ class SwooleRouteGroup extends AbstractRouteGroup {
 
 			shell_exec( 'php /var/www/swooletest.php > /dev/null 2>/dev/null &' );
 
+		} );
+
+		$this->getApp()->get( '/redis', function () {
+			echo RedisServiceProvider::getService()->get( 'test' );
 		} );
 
 	}
