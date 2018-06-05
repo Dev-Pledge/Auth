@@ -1,7 +1,7 @@
 <?php
 
 
-namespace DevPledge\Integrations\Service;
+namespace DevPledge\Integrations\Auth;
 
 
 use DevPledge\Integrations\Security\Permissions\Action;

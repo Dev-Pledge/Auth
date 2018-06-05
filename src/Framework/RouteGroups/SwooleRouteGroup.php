@@ -27,7 +27,9 @@ class SwooleRouteGroup extends AbstractRouteGroup {
 		} );
 
 		$this->getApp()->get( '/redis', function () {
-			echo RedisServiceProvider::getService()->get( 'test' );
+//			RedisServiceProvider::getService()->set( 'test2', gzcompress( serialize( array( 'yes' => 'no' ) ), 9 ), 'ex', 30 );
+			$x =  RedisServiceProvider::getService()->get( 'test2' );
+			var_dump( $x );
 		} );
 
 	}

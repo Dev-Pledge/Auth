@@ -5,6 +5,10 @@ namespace DevPledge\Domain;
 
 use DevPledge\Domain\Role\Role;
 
+/**
+ * Class UserOrganisationMembership
+ * @package DevPledge\Domain
+ */
 class UserOrganisationMembership
 {
 

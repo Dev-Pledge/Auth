@@ -10,6 +10,10 @@ use DevPledge\Domain\Organisation;
 use DevPledge\Framework\Adapter\Adapter;
 use TomWright\Database\ExtendedPDO\Query;
 
+/**
+ * Class OrganisationRepository
+ * @package DevPledge\Application\Repository
+ */
 class OrganisationRepository {
 
 	/**

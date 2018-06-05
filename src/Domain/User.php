@@ -2,7 +2,10 @@
 
 namespace DevPledge\Domain;
 
-
+/**
+ * Class User
+ * @package DevPledge\Domain
+ */
 class User
 {
 

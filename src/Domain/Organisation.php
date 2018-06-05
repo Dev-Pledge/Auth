@@ -5,6 +5,10 @@ namespace DevPledge\Domain;
 
 use DevPledge\Application\Mapper\Mappable;
 
+/**
+ * Class Organisation
+ * @package DevPledge\Domain
+ */
 class Organisation implements Mappable
 {
 
