@@ -9,6 +9,10 @@ use DevPledge\Integrations\Security\Permissions\Permissions;
 use DevPledge\Integrations\Auth\AuthException;
 use DevPledge\Integrations\Auth\AuthService;
 
+/**
+ * Class OrganisationAuthService
+ * @package DevPledge\Application\Service
+ */
 class OrganisationAuthService
 {
 

@@ -11,6 +11,7 @@ namespace DevPledge\Framework\ControllerDependencies;
 
 use DevPledge\Application\Services\OrganisationService;
 use DevPledge\Framework\Controller\OrganisationController;
+use DevPledge\Framework\ServiceProviders\OrganisationAuthServiceProvider;
 use DevPledge\Integrations\ControllerDependency\AbstractControllerDependency;
 use Slim\Container;
 
@@ -32,9 +33,10 @@ class OrganisationControllerDependency extends AbstractControllerDependency {
 	 * @return OrganisationController
 	 */
 	public function __invoke( Container $container ) {
-		$organisationService = OrganisationService::getService();
+		$organisationService     = OrganisationService::getService();
+		$organisationAuthService = OrganisationAuthServiceProvider::getService();
 
-		return new OrganisationController( $organisationService );
+		return new OrganisationController( $organisationService, $organisationAuthService );
 	}
 
 	/**
