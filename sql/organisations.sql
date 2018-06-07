@@ -1,3 +1,5 @@
+use auth;
+
 CREATE TABLE organisations
 (
   organisation_id VARCHAR(50)  NOT NULL

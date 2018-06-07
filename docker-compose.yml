@@ -27,13 +27,15 @@ services:
 
   mysql-db:
     restart: always
-    image: mysql:latest
+    image: percona:5.7
     environment:
-      MYSQL_ROOT_PASSWORD: 'test_pass'
-      MYSQL_USER: 'test'
-      MYSQL_PASS: 'pass'
+      MYSQL_ROOT_PASSWORD: test_pass
+      MYSQL_USER: test
+      MYSQL_PASS: pass
+      MYSQL_DATABASE: auth
     volumes:
      - ./data/mysql:/var/lib/mysql:cached
+     - ./sql:/docker-entrypoint-initdb.d:cached
     ports:
       - 3311:3306
 
