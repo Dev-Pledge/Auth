@@ -23,10 +23,6 @@ if ( PHP_SAPI == 'cli-server' ) {
 require __DIR__ . '/../vendor/autoload.php';
 
 session_start();
-
-require __DIR__ . '/../dotenv.php';
-
-
 Integrations::initSentry( getenv( 'SENTRY_DSN' ) );
 Integrations::initApplication( require __DIR__ . '/../src/settings.php' );
 Integrations::addCommonSettings();
