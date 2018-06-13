@@ -1,6 +1,6 @@
 <?php
 
-namespace DevPledge\Domain\ThirdPartyAuth;
+namespace DevPledge\Domain\PreferredUserAuth;
 
 
 use DevPledge\Domain\User;
@@ -9,7 +9,7 @@ use DevPledge\Domain\User;
  * Class GitHub
  * @package DevPledge\Domain\ThirdPartyAuth
  */
-class GitHub implements ThirdPartyAuth {
+class GitHub implements PreferredUserAuth {
 	/**
 	 * @var int
 	 */
@@ -26,11 +26,11 @@ class GitHub implements ThirdPartyAuth {
 
 	/**
 	 * @return bool
-	 * @throws ThirdPartyAuthValidationException
+	 * @throws PreferredUserAuthValidationException
 	 */
 	public function validate(): void {
-		if ( ! strlen( $this->getGithubId() ) > 3 ) {
-			throw new ThirdPartyAuthValidationException( 'Github Id is not valid' );
+		if ( ! ( strlen( $this->getGithubId() ) > 3 && is_numeric( $this->getGithubId() ) ) ) {
+			throw new PreferredUserAuthValidationException( 'Github Id is not valid' );
 		}
 	}
 
@@ -46,5 +46,12 @@ class GitHub implements ThirdPartyAuth {
 	 */
 	public function getGithubId(): int {
 		return $this->githubId;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getAuthDataArray() {
+		return [ 'github_id' => $this->getGithubId() ];
 	}
 }

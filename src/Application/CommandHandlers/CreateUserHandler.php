@@ -4,8 +4,13 @@ namespace DevPledge\Application\CommandHandlers;
 
 
 use DevPledge\Application\Commands\CreateUserCommand;
+use DevPledge\Framework\ServiceProviders\UserServiceProvider;
 use DevPledge\Integrations\Command\AbstractCommandHandler;
 
+/**
+ * Class CreateUserHandler
+ * @package DevPledge\Application\CommandHandlers
+ */
 class CreateUserHandler extends AbstractCommandHandler {
 
 	public function __construct() {
@@ -13,12 +18,16 @@ class CreateUserHandler extends AbstractCommandHandler {
 	}
 
 	/**
-	 * @param $command CreateUserCommand
+	 * @param $command
+	 *
+	 * @return string
+	 * @throws \Exception
 	 */
 	protected function handle( $command ) {
-		$thirdPartyAuth = $command->getThirdPartyAuth();
+		$auth = $command->getPreferredUserAuth();
+		$auth->validate();
+		UserServiceProvider::getService()->create( $command->getUsername(), $auth );
 
-		$thirdPartyAuth->validate();
-
+		return 'fred';
 	}
 }

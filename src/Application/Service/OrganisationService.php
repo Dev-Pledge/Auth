@@ -1,6 +1,6 @@
 <?php
 
-namespace DevPledge\Application\Services;
+namespace DevPledge\Application\Service;
 
 use DevPledge\Application\Factory\OrganisationFactory;
 use DevPledge\Application\Repository\OrganisationRepository;

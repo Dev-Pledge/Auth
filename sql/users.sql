@@ -4,11 +4,11 @@ CREATE TABLE users
 (
   user_id     VARCHAR(50)            NOT NULL
     PRIMARY KEY,
-  developer   TINYINT(1) DEFAULT '0' NULL,
-  first_name  VARCHAR(50)            NULL,
-  last_name   VARCHAR(50)            NULL,
+  username    VARCHAR(50)            NOT NULL,
+  name        VARCHAR(50)            NULL,
   email       VARCHAR(200)           NULL,
   dob         DATE                   NULL,
+  developer   TINYINT(1) DEFAULT '0' NULL,
   github_id   INT                    NULL,
   facebook_id BIGINT                 NULL,
   google_id   BIGINT                 NULL,
@@ -20,6 +20,8 @@ CREATE TABLE users
   UNIQUE (user_id),
   CONSTRAINT users_email_uindex
   UNIQUE (email),
+  CONSTRAINT users_username_uindex
+  UNIQUE (username),
   CONSTRAINT users_github_id_uindex
   UNIQUE (github_id),
   CONSTRAINT users_facebook_id_uindex

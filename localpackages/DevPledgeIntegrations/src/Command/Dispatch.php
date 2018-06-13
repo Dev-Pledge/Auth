@@ -16,10 +16,11 @@ class Dispatch {
 	/**
 	 * @param AbstractCommand $command
 	 *
+	 * @return mixed
 	 * @throws CommandException
 	 */
 	static public function command( AbstractCommand $command ) {
-		CommandBusServiceProvider::getService()->handle( $command );
+		return CommandBusServiceProvider::getService()->handle( $command );
 	}
 
 	/**

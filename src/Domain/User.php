@@ -2,13 +2,15 @@
 
 namespace DevPledge\Domain;
 
-use DevPledge\Domain\ThirdPartyAuth\EmailPassword;
+use DevPledge\Application\Mapper\Mappable;
+use DevPledge\Domain\PreferredUserAuth\EmailPassword;
+
 
 /**
  * Class User
  * @package DevPledge\Domain
  */
-class User {
+class User implements Mappable {
 
 	/**
 	 * @var string
@@ -21,7 +23,7 @@ class User {
 	/**
 	 * @var int | null
 	 */
-	private $gitHubId=1;
+	private $gitHubId;
 	/**
 	 * @var string | null
 	 */
@@ -33,11 +35,11 @@ class User {
 	/**
 	 * @var string
 	 */
-	private $firstName;
+	private $username;
 	/**
 	 * @var string
 	 */
-	private $lastName;
+	private $name;
 	/**
 	 * @var \stdClass
 	 */
@@ -132,12 +134,23 @@ class User {
 	}
 
 	/**
-	 * @param string $firstName
+	 * @param string $name
 	 *
 	 * @return User
 	 */
-	public function setFirstName( string $firstName ): User {
-		$this->firstName = $firstName;
+	public function setName( string $name ): User {
+		$this->name = $name;
+
+		return $this;
+	}
+
+	/**
+	 * @param string $name
+	 *
+	 * @return User
+	 */
+	public function setUsername( string $username ): User {
+		$this->username = $username;
 
 		return $this;
 	}
@@ -145,26 +158,15 @@ class User {
 	/**
 	 * @return string
 	 */
-	public function getFirstName(): string {
-		return $this->firstName;
+	public function getName() {
+		return $this->name;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getLastName(): string {
-		return $this->lastName;
-	}
-
-	/**
-	 * @param string $lastName
-	 *
-	 * @return User
-	 */
-	public function setLastName( string $lastName ): User {
-		$this->lastName = $lastName;
-
-		return $this;
+	public function getUsername() {
+		return $this->username;
 	}
 
 	/**
@@ -239,4 +241,19 @@ class User {
 		return $this;
 	}
 
+	/**
+	 * @return \stdClass
+	 */
+	function toMap(): \stdClass {
+		$now = new \DateTime();
+
+		return (object) [
+			'user_id'         => $this->getId(),
+			'name'            => $this->getName(),
+			'username'        => $this->getUsername(),
+			'modified'        => $now->format( 'Y-m-d H:i:s' ),
+			'created'         => $this->getCreated()->format( 'Y-m-d H:i:s' ),
+			'hashed_password' => $this->getHashedPassword()
+		];
+	}
 }

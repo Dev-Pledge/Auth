@@ -1,12 +1,7 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: johnsaunders
- * Date: 12/06/2018
- * Time: 23:19
- */
 
-namespace DevPledge\Domain\ThirdPartyAuth;
+
+namespace DevPledge\Domain\PreferredUserAuth;
 
 use Throwable;
 
@@ -14,7 +9,7 @@ use Throwable;
  * Class ThirdPartyValidationException
  * @package DevPledge\Domain\ThirdPartyAuth
  */
-class ThirdPartyAuthValidationException extends \Exception {
+class PreferredUserAuthValidationException extends \InvalidArgumentException {
 	/**
 	 * @var string
 	 */

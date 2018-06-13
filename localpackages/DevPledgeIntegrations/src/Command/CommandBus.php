@@ -11,10 +11,10 @@ class CommandBus {
 
 	protected $commandHandlerMap = [];
 
-
 	/**
 	 * @param AbstractCommand $command
 	 *
+	 * @return mixed
 	 * @throws CommandException
 	 */
 	public function handle( AbstractCommand $command ) {
@@ -22,7 +22,8 @@ class CommandBus {
 		$handlerClass = $this->getHandler( get_class( $command ) );
 		if ( $handlerClass ) {
 			$handler = new $handlerClass();
-			call_user_func_array( $handler, array( $command ) );
+
+			return call_user_func_array( $handler, array( $command ) );
 		} else {
 			throw new CommandException( 'No Command Handler found for ' . get_class( $command ) );
 		}

@@ -1,13 +1,14 @@
 <?php
 
-namespace DevPledge\Domain\ThirdPartyAuth;
+namespace DevPledge\Domain\PreferredUserAuth;
+
 use DevPledge\Domain\User;
 
 /**
  * Interface ThirdPartyAuth
  * @package DevPledge\Domain\ThirdPartyAuth
  */
-interface ThirdPartyAuth {
+interface PreferredUserAuth {
 	/**
 	 * @return bool
 	 * @throws ThirdPartyAuthValidationException
@@ -19,5 +20,9 @@ interface ThirdPartyAuth {
 	 */
 	public function updateUserWithAuth( User $user ): void;
 
+	/**
+	 * @return array
+	 */
+	public function getAuthDataArray();
 
 }

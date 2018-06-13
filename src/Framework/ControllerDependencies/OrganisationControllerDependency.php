@@ -9,7 +9,7 @@
 namespace DevPledge\Framework\ControllerDependencies;
 
 
-use DevPledge\Application\Services\OrganisationService;
+use DevPledge\Application\Service\OrganisationService;
 use DevPledge\Framework\Controller\OrganisationController;
 use DevPledge\Framework\ServiceProviders\OrganisationAuthServiceProvider;
 use DevPledge\Integrations\ControllerDependency\AbstractControllerDependency;

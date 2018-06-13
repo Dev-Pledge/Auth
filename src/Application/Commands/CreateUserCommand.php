@@ -3,8 +3,8 @@
 namespace DevPledge\Application\Commands;
 
 
-use DevPledge\Domain\ThirdPartyAuth\EmailPassword;
-use DevPledge\Domain\ThirdPartyAuth\ThirdPartyAuth;
+use DevPledge\Domain\PreferredUserAuth\EmailPassword;
+use DevPledge\Domain\PreferredUserAuth\PreferredUserAuth;
 use DevPledge\Integrations\Command\AbstractCommand;
 
 /**
@@ -15,22 +15,37 @@ class CreateUserCommand extends AbstractCommand {
 	/**
 	 * @var EmailPassword
 	 */
-	private $thirdPartyAuth;
+	private $preferredUserAuth;
+	/**
+	 * @var string
+	 */
+	private $username;
 
 	/**
 	 * CreateUserCommand constructor.
 	 *
-	 * @param ThirdPartyAuth $thirdPartyAuth
+	 * @param string $username
+	 * @param PreferredUserAuth $preferredUserAuth
 	 */
-	public function __construct( ThirdPartyAuth $thirdPartyAuth ) {
-		$this->thirdPartyAuth = $thirdPartyAuth;
+	public function __construct( string $username, PreferredUserAuth $preferredUserAuth ) {
+		$this->username          = $username;
+		$this->preferredUserAuth = $preferredUserAuth;
+
 	}
 
 	/**
-	 * @return EmailPassword
+	 * @return PreferredUserAuth
 	 */
-	public function getThirdPartyAuth(): EmailPassword {
-		return $this->thirdPartyAuth;
+	public function getPreferredUserAuth(): PreferredUserAuth {
+		return $this->preferredUserAuth;
 	}
+
+	/**
+	 * @return string
+	 */
+	public function getUsername(): string {
+		return $this->username;
+	}
+
 
 }

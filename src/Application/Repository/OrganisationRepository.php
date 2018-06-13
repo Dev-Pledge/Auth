@@ -66,7 +66,7 @@ class OrganisationRepository {
 	public function update( Organisation $organisation ): Organisation {
 		$data = $this->mapper->toMap( $organisation );
 		unset( $data->id );
-		$id = $this->adapter->update( 'organisation', $organisation->getId(), $data );
+		$id = $this->adapter->update( 'organisations', $organisation->getId(), $data ,'organisation_id');
 
 		return $this->read( $id );
 	}
@@ -77,7 +77,7 @@ class OrganisationRepository {
 	 * @return Organisation
 	 */
 	public function read( string $id ): Organisation {
-		$data = $this->adapter->read( 'organisation', $id );
+		$data = $this->adapter->read( 'organisations', $id );
 
 		return $this->factory->create( $data );
 	}

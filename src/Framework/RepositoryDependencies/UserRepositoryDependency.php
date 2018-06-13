@@ -1,45 +1,42 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: johnsaunders
- * Date: 25/03/2018
- * Time: 11:06
- */
 
 namespace DevPledge\Framework\RepositoryDependencies;
 
 
 use DevPledge\Application\Mapper\Mapper;
-use DevPledge\Application\Repository\OrganisationRepository;
+use DevPledge\Application\Repository\UserRepository;
 use DevPledge\Framework\Adapter\MysqlAdapter;
-use DevPledge\Framework\FactoryDependencies\OrganisationFactoryDependency;
+use DevPledge\Framework\FactoryDependencies\UserFactoryDependency;
 use DevPledge\Integrations\RepositoryDependency\AbstractRepositoryDependency;
 use DevPledge\Integrations\ServiceProvider\Services\ExtendedPDOServiceProvider;
 use Slim\Container;
 
-class OrganisationRepositoryDependency extends AbstractRepositoryDependency {
-	/**
-	 * OrganisationRepositoryDependency constructor.
-	 */
+/**
+ * Class UserRepositoryDependency
+ * @package DevPledge\Framework\RepositoryDependencies
+ */
+class UserRepositoryDependency extends AbstractRepositoryDependency {
+
 	public function __construct() {
-		parent::__construct( OrganisationRepository::class );
+		parent::__construct( UserRepository::class );
 	}
 
 	/**
 	 * @param Container $container
 	 *
-	 * @return OrganisationRepository
+	 * @return UserRepository
 	 */
 	public function __invoke( Container $container ) {
-		$factory = OrganisationFactoryDependency::getFactory();
+		$factory = UserFactoryDependency::getFactory();
 		$adaptor = new MysqlAdapter( ExtendedPDOServiceProvider::getService() );
 		$mapper  = new Mapper();
-		return new OrganisationRepository( $adaptor, $mapper, $factory );
+
+		return new UserRepository( $adaptor, $mapper, $factory );
 	}
 
-
 	/**
-	 * @return OrganisationRepository
+	 * usually return static::getFromContainer();
+	 * @return UserRepository
 	 */
 	static public function getRepository() {
 		return static::getFromContainer();

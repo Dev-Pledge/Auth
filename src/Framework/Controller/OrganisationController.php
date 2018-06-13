@@ -5,7 +5,7 @@ namespace DevPledge\Framework\Controller;
 
 use DevPledge\Application\Commands\CreateOrganisationCommand;
 use DevPledge\Application\Service\OrganisationAuthService;
-use DevPledge\Application\Services\OrganisationService;
+use DevPledge\Application\Service\OrganisationService;
 use DevPledge\Domain\User;
 use DevPledge\Integrations\Command\Dispatch;
 use DevPledge\Integrations\Security\JWT\Token;
