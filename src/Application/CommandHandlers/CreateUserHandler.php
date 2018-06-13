@@ -26,8 +26,11 @@ class CreateUserHandler extends AbstractCommandHandler {
 	protected function handle( $command ) {
 		$auth = $command->getPreferredUserAuth();
 		$auth->validate();
-		UserServiceProvider::getService()->create( $command->getUsername(), $auth );
 
-		return 'fred';
+		return UserServiceProvider::getService()->create(
+			$command->getUsername(),
+			$auth
+		);
+
 	}
 }

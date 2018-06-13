@@ -46,6 +46,7 @@ class UserCreateController {
 					, 401 );
 			}
 			if ( $user ) {
+
 				return $response->withJson(
 					[ 'user' => $user->getId() ]
 				);
