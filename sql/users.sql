@@ -12,7 +12,7 @@ CREATE TABLE users
   github_id   INT                    NULL,
   facebook_id BIGINT                 NULL,
   google_id   BIGINT                 NULL,
-  password    VARCHAR(200)           NULL,
+  hashed_password    VARCHAR(200)    NULL,
   data        JSON                   NULL,
   created     DATETIME               NOT NULL,
   modified    DATETIME               NOT NULL,
