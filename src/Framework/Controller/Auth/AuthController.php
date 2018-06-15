@@ -61,13 +61,11 @@ class AuthController {
 					'field' => $authException->getField()
 				], 401 );
 			}
-			try {
-				$token = new TokenString( $user, $this->jwt );
 
-				return $response->withJson( [ 'token' => $token->getTokenString() ] );
-			} catch ( JSONEncodeException $e ) {
-				return $response->withJson( [ 'error' => 'Could not generate token' ], 500 );
-			}
+			$token = new TokenString( $user, $this->jwt );
+
+			return $response->withJson( [ 'token' => $token->getTokenString() ] );
+
 		} else {
 			return $response->withJson( [ 'error' => 'Invalid username or password' ], 401 );
 		}

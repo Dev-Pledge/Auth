@@ -2,6 +2,8 @@
 
 namespace DevPledge\Domain;
 
+use DevPledge\Integrations\Security\JWT\JWT;
+
 /**
  * Class TokenString
  * @package DevPledge\Domain
@@ -43,6 +45,7 @@ class TokenString {
 		$wildCardPermissions = new WildCardPermissions();
 		$user                = $this->user;
 		$token               = $this->jwt->generate( (object) [
+			'user_id'  => $user->getId(),
 			'name'     => $user->getName(),
 			'username' => $user->getUsername(),
 			'perms'    => $wildCardPermissions->getPerms()
