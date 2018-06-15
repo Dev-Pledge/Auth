@@ -9,7 +9,9 @@ use DevPledge\Domain\PreferredUserAuth\GitHub;
 use DevPledge\Domain\PreferredUserAuth\PreferredUserAuth;
 use DevPledge\Domain\PreferredUserAuth\PreferredUserAuthValidationException;
 use DevPledge\Domain\PreferredUserAuth\UsernamePassword;
+use DevPledge\Domain\TokenString;
 use DevPledge\Domain\User;
+use DevPledge\Framework\ServiceProviders\UserServiceProvider;
 use DevPledge\Integrations\Command\Dispatch;
 use DevPledge\Integrations\Security\JWT\JWT;
 use Slim\Http\Request;
@@ -43,9 +45,14 @@ class UserCreateController {
 	public function checkUsernameAvailability( Request $request, Response $response ) {
 		$data     = $request->getParsedBody();
 		$username = $data['username'] ?? null;
+		if ( isset( $username ) ) {
+			$user = UserServiceProvider::getService()->getByUsername( $username );
+			if ( $user->getUsername() != $username ) {
+				return $response->withJson( [ 'available' => true ] );
+			}
+		}
 
-		return $response;
-
+		return $response->withJson( [ 'available' => false ] );
 
 	}
 
@@ -98,8 +105,14 @@ class UserCreateController {
 				, 401 );
 		}
 		if ( $user instanceof User ) {
+			$token = new TokenString( $user, $this->jwt );
+
 			return $response->withJson(
-				[ 'user_id' => $user->getId(), 'username' => $user->getUsername() ]
+				[
+					'user_id'  => $user->getId(),
+					'username' => $user->getUsername(),
+					'token'    => $token->getTokenString()
+				]
 			);
 		}
 
