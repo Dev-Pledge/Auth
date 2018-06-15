@@ -94,7 +94,7 @@ trait PasswordTrait {
 			throw new PreferredUserAuthValidationException( 'Password Required', 'password' );
 		}
 
-		if ( !preg_match( '/\A(?=[\x20-\x7E]*?[A-Z])(?=[\x20-\x7E]*?[a-z])(?=[\x20-\x7E]*?[0-9])[\x20-\x7E]{6,}\z/', $this->password ) ) {
+		if ( ! preg_match( '/\A(?=[\x20-\x7E]*?[A-Z])(?=[\x20-\x7E]*?[a-z])(?=[\x20-\x7E]*?[0-9])[\x20-\x7E]{6,}\z/', $this->password ) ) {
 			throw new PreferredUserAuthValidationException( 'Passwords are required to have Uppercase, Lowercase, Symbols and more than 6 characters', 'password' );
 		}
 		if ( ! isset( $this->hashedPassword ) ) {
@@ -106,7 +106,7 @@ trait PasswordTrait {
 			isset( $hashedPasswordArray[1] ) &&
 			$this->encrypt( $this->password, $hashedPasswordArray[1] ) == $this->getHashedPassword()
 		) ) {
-			throw new PreferredUserAuthValidationException( 'Password and Email do not match', 'password' );
+			throw new PreferredUserAuthValidationException( 'Password Invalid', 'password' );
 		}
 	}
 }
