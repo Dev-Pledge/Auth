@@ -16,6 +16,13 @@ class UserRouteGroup extends AbstractRouteGroup {
 	}
 
 	protected function callableInGroup() {
-		$this->getApp()->post( '/createFromUsernamePassword', UserCreateController::class . ':createUserFromUsernamePassword' );
+		$this->getApp()->post(
+			'/createFromUsernamePassword',
+			UserCreateController::class . ':createUserFromUsernamePassword'
+		);
+		$this->getApp()->post(
+			'/createFromGitHub',
+			UserCreateController::class . ':createUserFromGitHub'
+		);
 	}
 }

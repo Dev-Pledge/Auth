@@ -3,6 +3,12 @@
 namespace DevPledge\Framework\Controller\Auth;
 
 
+use DevPledge\Application\Service\UserService;
+use DevPledge\Domain\PreferredUserAuth\PreferredUserAuthValidationException;
+use DevPledge\Domain\PreferredUserAuth\UsernamePassword;
+use DevPledge\Domain\TokenString;
+use DevPledge\Domain\WildCardPermissions;
+use DevPledge\Framework\ServiceProviders\UserServiceProvider;
 use DevPledge\Integrations\Security\Permissions\Action;
 use DevPledge\Integrations\Security\Permissions\Permissions;
 use DevPledge\Integrations\Security\Permissions\Resource;
@@ -36,20 +42,29 @@ class AuthController {
 	 * @return Response
 	 */
 	public function login( Request $request, Response $response ) {
-		$data = $request->getParsedBody();
-
+		$data     = $request->getParsedBody();
 		$username = $data['username'] ?? null;
 		$password = $data['password'] ?? null;
 
-		if ( $username === 'tom' && $password === 'password' ) {
+		if ( isset( $username ) && isset( $password ) ) {
+			$user           = UserServiceProvider::getService()->getByUsername( $username );
+			$hashedPassword = $user->getHashedPassword();
+			if ( ! isset( $hashedPassword ) ) {
+				return $response->withJson( [ 'error' => 'Password Authorisation is not acceptable' ], 401 );
+			}
+			$userAuth = new UsernamePassword( $username, $password, $user->getHashedPassword() );
 			try {
-				$token = $this->jwt->generate( (object) [
-					'name'     => 'Tommy Bum Bum',
-					'username' => $username,
-					'perms'    => $this->createWildcardPermissions(),
-				] );
+				$userAuth->validate();
+			} catch ( PreferredUserAuthValidationException $authException ) {
+				return $response->withJson( [
+					'error' => $authException->getMessage(),
+					'field' => $authException->getField()
+				], 401 );
+			}
+			try {
+				$token = new TokenString( $user, $this->jwt );
 
-				return $response->withJson( [ 'token' => $token ] );
+				return $response->withJson( [ 'token' => $token->getTokenString() ] );
 			} catch ( JSONEncodeException $e ) {
 				return $response->withJson( [ 'error' => 'Could not generate token' ], 500 );
 			}
@@ -94,57 +109,5 @@ class AuthController {
 		return $response->withJson( [ 'payload' => $token->getData() ] );
 	}
 
-	/**
-	 * Generates a permissions object that gives access to all
-	 * actions on all known resources.
-	 *
-	 * @return Permissions
-	 */
-	private function createWildcardPermissions(): Permissions {
-		$p = new Permissions();
-		$p
-			->addResource( ( new Resource() )
-				->setName( 'organisations' )
-				->addAction( ( new Action() )
-					->setName( 'create' ) )
-				->addAction( ( new Action() )
-					->setName( 'read' ) )
-				->addAction( ( new Action() )
-					->setName( 'update' ) )
-				->addAction( ( new Action() )
-					->setName( 'delete' ) ) )
-			->addResource( ( new Resource() )
-				->setName( 'members' )
-				->addAction( ( new Action() )
-					->setName( 'create' ) )
-				->addAction( ( new Action() )
-					->setName( 'read' ) )
-				->addAction( ( new Action() )
-					->setName( 'update' ) )
-				->addAction( ( new Action() )
-					->setName( 'delete' ) ) )
-			->addResource( ( new Resource() )
-				->setName( 'problem' )
-				->addAction( ( new Action() )
-					->setName( 'create' ) )
-				->addAction( ( new Action() )
-					->setName( 'read' ) )
-				->addAction( ( new Action() )
-					->setName( 'update' ) )
-				->addAction( ( new Action() )
-					->setName( 'delete' ) ) )
-			->addResource( ( new Resource() )
-				->setName( 'pledge' )
-				->addAction( ( new Action() )
-					->setName( 'create' ) )
-				->addAction( ( new Action() )
-					->setName( 'read' ) )
-				->addAction( ( new Action() )
-					->setName( 'update' ) )
-				->addAction( ( new Action() )
-					->setName( 'delete' ) ) );
-
-		return $p;
-	}
 
 }

@@ -40,4 +40,14 @@ class UserService {
 
 		return $this->repo->create( $user );
 	}
+
+	/**
+	 * @param string $username
+	 *
+	 * @return \DevPledge\Domain\User
+	 */
+	public function getByUsername(string $username){
+		return $this->repo->readByUsername( $username);
+	}
+
 }

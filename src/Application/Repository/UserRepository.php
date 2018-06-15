@@ -83,6 +83,17 @@ class UserRepository {
 	}
 
 	/**
+	 * @param string $username
+	 *
+	 * @return User
+	 */
+	public function readByUsername( string $username ): User {
+		$data = $this->adapter->read( 'users', $username, 'username' );
+
+		return $this->factory->create( $data );
+	}
+
+	/**
 	 * @param array $filters
 	 *
 	 * @return array
