@@ -4,6 +4,7 @@ namespace DevPledge\Domain\PreferredUserAuth;
 
 
 use DevPledge\Domain\User;
+use DevPledge\Integrations\Curl\CurlRequest;
 
 /**
  * Class GitHub
@@ -14,14 +15,20 @@ class GitHub implements PreferredUserAuth {
 	 * @var int
 	 */
 	private $githubId;
+	/**
+	 * @var string
+	 */
+	private $accessToken;
 
 	/**
 	 * GitHub constructor.
 	 *
 	 * @param int $gitHubId
+	 * @param string $accessToken
 	 */
-	public function __construct( int $gitHubId ) {
-		$this->githubId = $gitHubId;
+	public function __construct( int $gitHubId, string $accessToken ) {
+		$this->githubId    = $gitHubId;
+		$this->accessToken = $accessToken;
 	}
 
 	/**
@@ -32,6 +39,16 @@ class GitHub implements PreferredUserAuth {
 		if ( ! ( strlen( $this->getGithubId() ) > 3 && is_numeric( $this->getGithubId() ) ) ) {
 			throw new PreferredUserAuthValidationException( 'Github Id is not valid' );
 		}
+		$githubCall = new CurlRequest( 'https://api.github.com/user/' . $this->githubId );
+		$response   = $githubCall->get()->setData(
+			[ 'access_token' => $this->accessToken ]
+		)->getDecodedJsonResponse();
+		if ( (
+			     isset( $response->message ) && strpos( $response->message, 'Bad Response' ) !== false
+		     ) || $githubCall->getHttpCode() == '401' ) {
+			throw new PreferredUserAuthValidationException( 'Github Access Token not Authorised', 'github' );
+		}
+
 	}
 
 	/**

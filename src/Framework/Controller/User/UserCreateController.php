@@ -156,17 +156,18 @@ class UserCreateController {
 	public function createUserFromGitHub( Request $request, Response $response ) {
 		$data = $request->getParsedBody();
 
-		$githubId = $data['github_id'] ?? null;
-		$username = $data['username'] ?? null;
+		$githubId    = $data['github_id'] ?? null;
+		$accessToken = $data['access_token'] ?? null;
+		$username    = $data['username'] ?? null;
 
-		if ( isset( $githubId ) && isset( $username ) ) {
-			$preferredUserAuth = new GitHub( $githubId );
+		if ( isset( $githubId ) && isset( $username ) && isset( $accessToken ) ) {
+			$preferredUserAuth = new GitHub( $githubId, $accessToken );
 
 			return $this->creationResponse( $username, $preferredUserAuth, $response );
 		}
 
 		return $response->withJson(
-			[ 'error' => 'Github ID, Username not set' ]
+			[ 'error' => 'Github ID, GitHub Access Token and Username not set' ]
 			, 401
 		);
 	}
