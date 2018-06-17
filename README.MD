@@ -111,7 +111,6 @@ Authorization: Bearer eyJhbGciOiJTSEEyNTYiLCJ0eXAiOiJKV1QifQ.eyJ0dGwiOjE1MjE1MDY
 
 Logs a user in.
 
-Use the username `tom` and the password `password` for now. 
 
 ```
 {
@@ -127,3 +126,28 @@ The response will contain the JWT token.
 Authorization required!
 
 This endpoint will response with the payload contained in the JWT token.
+
+## Create A User
+
+### `POST`  `/user/createFromUsernamePassword`
+```
+{
+    "username": "tom",
+    "password": "password"
+}
+```
+
+### `POST`  `/user/createFromGitHub`
+You will need to use GitHubs Oauth to get the access token and github_id (github user id)
+```
+{
+    "github_id": 09876789,
+    "access_token": "WHg092ohiuaed97yujedfndsdjwdjs"
+}
+```
+
+
+
+The /user/create... endpoints will give a new JWT Token or send back an error message.
+
+It will also give state what `field` the error relates to.
