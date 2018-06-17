@@ -3,6 +3,7 @@ version: "3.5"
 services:
 
   auth:
+    container_name: dev_pledge_auth
     image: devpledge/phpfpm-swoole:latest
     environment:
       docker: "true"
