@@ -114,8 +114,8 @@ Logs a user in.
 
 ```
 {
-    "username": "tom",
-    "password": "password"
+    "username": "PTBarnum",
+    "password": "MyCleverPassword34"
 }
 ```
 
@@ -132,8 +132,8 @@ This endpoint will response with the payload contained in the JWT token.
 ### `POST`  `/user/createFromUsernamePassword`
 ```
 {
-    "username": "tom",
-    "password": "password"
+    "username": "PTBarnum",
+    "password": "MyCleverPassword34"
 }
 ```
 
@@ -141,12 +141,10 @@ This endpoint will response with the payload contained in the JWT token.
 You will need to use GitHubs Oauth to get the access token and github_id (github user id)
 ```
 {
-    "github_id": 09876789,
+    "github_id": 19876789,
     "access_token": "WHg092ohiuaed97yujedfndsdjwdjs"
 }
 ```
-
-
 
 The /user/create... endpoints will give a new JWT Token or send back an error message.
 
