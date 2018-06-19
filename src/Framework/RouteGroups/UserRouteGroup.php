@@ -24,5 +24,9 @@ class UserRouteGroup extends AbstractRouteGroup {
 			'/createFromGitHub',
 			UserCreateController::class . ':createUserFromGitHub'
 		);
+		$this->getApp()->post(
+			'/checkUsernameAvailability',
+			UserCreateController::class . ':checkUsernameAvailability'
+		);
 	}
 }

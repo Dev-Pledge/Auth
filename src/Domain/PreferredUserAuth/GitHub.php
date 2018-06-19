@@ -40,8 +40,8 @@ class GitHub implements PreferredUserAuth {
 			throw new PreferredUserAuthValidationException( 'Github Id is not valid' );
 		}
 		$githubCall = new CurlRequest( 'https://api.github.com/user/' . $this->githubId );
-		$response   = $githubCall->get()->setData(
-			[ 'access_token' => $this->accessToken ]
+		$response   = $githubCall->get()->setHeaders(
+			[ 'Authorization' => $this->accessToken ]
 		)->getDecodedJsonResponse();
 		if ( (
 			     isset( $response->message ) && strpos( $response->message, 'Bad Response' ) !== false
