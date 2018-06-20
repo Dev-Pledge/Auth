@@ -79,6 +79,19 @@ class AuthController {
 	 *
 	 * @return Response
 	 */
+	public function gitHubLogin( Request $request, Response $response ) {
+		/**
+		 * TODO implement Github
+		 */
+		return $response->withJson( [ 'error' => 'TODO implement this' ] );
+	}
+
+	/**
+	 * @param Request $request
+	 * @param Response $response
+	 *
+	 * @return Response
+	 */
 	public function refresh( Request $request, Response $response ) {
 		/**
 		 * @var Token $token

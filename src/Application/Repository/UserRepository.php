@@ -94,6 +94,17 @@ class UserRepository {
 	}
 
 	/**
+	 * @param int $gitHubId
+	 *
+	 * @return User
+	 */
+	public function readByGitHubId( int $gitHubId ): User {
+		$data = $this->adapter->read( 'users', $gitHubId, 'github_id' );
+
+		return $this->factory->create( $data );
+	}
+
+	/**
 	 * @param array $filters
 	 *
 	 * @return array

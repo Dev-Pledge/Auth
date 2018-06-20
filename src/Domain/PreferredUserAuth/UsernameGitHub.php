@@ -7,10 +7,10 @@ use DevPledge\Domain\User;
 use DevPledge\Integrations\Curl\CurlRequest;
 
 /**
- * Class GitHub
- * @package DevPledge\Domain\ThirdPartyAuth
+ * Class UsernameGitHub
+ * @package DevPledge\Domain\PreferredUserAuth
  */
-class GitHub implements PreferredUserAuth {
+class UsernameGitHub implements PreferredUserAuth {
 	use UsernameTrait;
 	/**
 	 * @var int

@@ -49,4 +49,13 @@ class UserService {
 		return $this->repo->readByUsername( $username );
 	}
 
+	/**
+	 * @param int $gitHubId
+	 *
+	 * @return \DevPledge\Domain\User
+	 */
+	public function getByGitHubId( int $gitHubId ) {
+		return $this->repo->readByGitHubId( $gitHubId );
+	}
+
 }

@@ -5,12 +5,13 @@ namespace DevPledge\Framework\Controller\User;
 
 use DevPledge\Application\Commands\CreateUserCommand;
 use DevPledge\Domain\PreferredUserAuth\UsernameEmailPassword;
-use DevPledge\Domain\PreferredUserAuth\GitHub;
+use DevPledge\Domain\PreferredUserAuth\UsernameGitHub;
 use DevPledge\Domain\PreferredUserAuth\PreferredUserAuth;
 use DevPledge\Domain\PreferredUserAuth\PreferredUserAuthValidationException;
 use DevPledge\Domain\PreferredUserAuth\UsernamePassword;
 use DevPledge\Domain\TokenString;
 use DevPledge\Domain\User;
+use DevPledge\Framework\ControllerDependencies\AuthControllerDependency;
 use DevPledge\Framework\ServiceProviders\UserServiceProvider;
 use DevPledge\Integrations\Command\Dispatch;
 use DevPledge\Integrations\Security\JWT\JWT;
@@ -57,21 +58,35 @@ class UserCreateController {
 	}
 
 	/**
-	 * @param $username
 	 * @param PreferredUserAuth $preferredUserAuth
+	 * @param Request $request
 	 * @param Response $response
 	 *
 	 * @return Response
 	 */
-	private function creationResponse( PreferredUserAuth $preferredUserAuth, Response $response ) {
+	private function creationResponse( PreferredUserAuth $preferredUserAuth, Request $request, Response $response ) {
 
 		try {
 			try {
 				$user = Dispatch::command( new CreateUserCommand( $preferredUserAuth, $response ) );
 			} catch ( \PDOException $PDoException ) {
-				throw new PreferredUserAuthValidationException(
-					'Unable to create new user'
-				);
+
+				if ( strpos( strtolower( $PDoException->getMessage() ), 'duplicate' ) !== false || $PDoException->getCode() == 23000 ) {
+					if ( $preferredUserAuth instanceof UsernameEmailPassword ) {
+						throw new PreferredUserAuthValidationException(
+							'User with ' . $preferredUserAuth->getEmail() . ' already exist!'
+						);
+					}
+					if ( $preferredUserAuth instanceof UsernameGitHub ) {
+						return AuthControllerDependency::getController()->gitHubLogin( $request, $response );
+					}
+
+				} else {
+					throw new PreferredUserAuthValidationException(
+						'Unable to create new user'
+					);
+				}
+
 			}
 		} catch ( PreferredUserAuthValidationException $exception ) {
 			return $response->withJson(
@@ -112,7 +127,7 @@ class UserCreateController {
 		if ( isset( $email ) && isset( $password ) && isset( $username ) ) {
 			$preferredUserAuth = new UsernameEmailPassword( $username, $email, $password );
 
-			return $this->creationResponse( $preferredUserAuth, $response );
+			return $this->creationResponse( $preferredUserAuth, $request, $response );
 		}
 
 		return $response->withJson(
@@ -135,9 +150,9 @@ class UserCreateController {
 		$username    = $data['username'] ?? null;
 
 		if ( isset( $githubId ) && isset( $username ) && isset( $accessToken ) ) {
-			$preferredUserAuth = new GitHub( $username, $githubId, $accessToken );
+			$preferredUserAuth = new UsernameGitHub( $username, $githubId, $accessToken );
 
-			return $this->creationResponse( $preferredUserAuth, $response );
+			return $this->creationResponse( $preferredUserAuth, $request, $response );
 		}
 
 		return $response->withJson(
