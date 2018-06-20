@@ -8,24 +8,27 @@ use DevPledge\Domain\User;
  * Class EmailPassword
  * @package DevPledge\Domain\ThirdPartyAuth
  */
-class EmailPassword implements PreferredUserAuth {
+class UsernameEmailPassword implements PreferredUserAuth {
 
 	use PasswordTrait;
-
+	use UsernameTrait;
 	/**
 	 * @var string
 	 */
 	private $email;
 
 	/**
-	 * EmailPassword constructor.
+	 * UsernameEmailPassword constructor.
 	 *
+	 * @param string $username
 	 * @param string $email
 	 * @param string|null $password
 	 * @param string|null $hashedPassword
 	 */
-	public function __construct( string $email, string $password = null, string $hashedPassword = null ) {
-		$this->email = $email;
+	public function __construct( string $username, string $email, string $password = null, string $hashedPassword = null ) {
+		$this->username = $username;
+		$this->email    = $email;
+
 		if ( isset( $password ) ) {
 			$this->setPassword( $password );
 		}

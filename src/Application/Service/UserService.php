@@ -25,15 +25,14 @@ class UserService {
 	}
 
 	/**
-	 * @param string $username
 	 * @param PreferredUserAuth $preferredUserAuth
 	 *
 	 * @return \DevPledge\Domain\User
 	 * @throws \Exception
 	 */
-	public function create( string $username, PreferredUserAuth $preferredUserAuth ) {
+	public function create( PreferredUserAuth $preferredUserAuth ) {
 		$uuid     = Uuid::make( 'user' )->toString();
-		$initData = [ 'username' => $username, 'user_id' => $uuid ];
+		$initData = [ 'username' => $preferredUserAuth->getUsername(), 'user_id' => $uuid ];
 		$data     = array_merge( $initData, $preferredUserAuth->getAuthDataArray() );
 
 		$user = $this->factory->create( $data );
@@ -46,8 +45,8 @@ class UserService {
 	 *
 	 * @return \DevPledge\Domain\User
 	 */
-	public function getByUsername(string $username){
-		return $this->repo->readByUsername( $username);
+	public function getByUsername( string $username ) {
+		return $this->repo->readByUsername( $username );
 	}
 
 }

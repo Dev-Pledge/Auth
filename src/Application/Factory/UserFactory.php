@@ -13,7 +13,7 @@ class UserFactory {
 	/**
 	 * @param $data
 	 *
-	 * @return Organisation
+	 * @return User
 	 */
 	public function create( $data ): User {
 		if ( $data instanceof \stdClass ) {
@@ -64,6 +64,9 @@ class UserFactory {
 		}
 		if ( array_key_exists( 'email', $data ) ) {
 			$user->setEmail( $data['email'] );
+		}
+		if ( array_key_exists( 'developer', $data ) ) {
+			$user->setDeveloper( (bool) $data['developer'] );
 		}
 		if ( array_key_exists( 'hashed_password', $data ) ) {
 			$user->setHashedPassword( $data['email'] );

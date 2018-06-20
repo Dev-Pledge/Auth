@@ -11,6 +11,7 @@ use DevPledge\Integrations\Curl\CurlRequest;
  * @package DevPledge\Domain\ThirdPartyAuth
  */
 class GitHub implements PreferredUserAuth {
+	use UsernameTrait;
 	/**
 	 * @var int
 	 */
@@ -23,10 +24,12 @@ class GitHub implements PreferredUserAuth {
 	/**
 	 * GitHub constructor.
 	 *
+	 * @param string $username
 	 * @param int $gitHubId
 	 * @param string $accessToken
 	 */
-	public function __construct( int $gitHubId, string $accessToken ) {
+	public function __construct( string $username, int $gitHubId, string $accessToken ) {
+		$this->username    = $username;
 		$this->githubId    = $gitHubId;
 		$this->accessToken = $accessToken;
 	}
@@ -36,6 +39,9 @@ class GitHub implements PreferredUserAuth {
 	 * @throws PreferredUserAuthValidationException
 	 */
 	public function validate(): void {
+
+		$this->validateUsername();
+
 		if ( ! ( strlen( $this->getGithubId() ) > 3 && is_numeric( $this->getGithubId() ) ) ) {
 			throw new PreferredUserAuthValidationException( 'Github Id is not valid' );
 		}

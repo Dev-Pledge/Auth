@@ -3,7 +3,7 @@
 namespace DevPledge\Application\Commands;
 
 
-use DevPledge\Domain\PreferredUserAuth\EmailPassword;
+use DevPledge\Domain\PreferredUserAuth\UsernameEmailPassword;
 use DevPledge\Domain\PreferredUserAuth\PreferredUserAuth;
 use DevPledge\Integrations\Command\AbstractCommand;
 
@@ -13,13 +13,13 @@ use DevPledge\Integrations\Command\AbstractCommand;
  */
 class CreateUserCommand extends AbstractCommand {
 	/**
-	 * @var EmailPassword
+	 * @var UsernameEmailPassword
 	 */
 	private $preferredUserAuth;
 	/**
 	 * @var string
 	 */
-	private $username;
+
 
 	/**
 	 * CreateUserCommand constructor.
@@ -27,8 +27,8 @@ class CreateUserCommand extends AbstractCommand {
 	 * @param string $username
 	 * @param PreferredUserAuth $preferredUserAuth
 	 */
-	public function __construct( string $username, PreferredUserAuth $preferredUserAuth ) {
-		$this->username          = $username;
+	public function __construct( PreferredUserAuth $preferredUserAuth ) {
+
 		$this->preferredUserAuth = $preferredUserAuth;
 
 	}
@@ -44,7 +44,7 @@ class CreateUserCommand extends AbstractCommand {
 	 * @return string
 	 */
 	public function getUsername(): string {
-		return $this->username;
+		return $this->preferredUserAuth->getUsername();
 	}
 
 

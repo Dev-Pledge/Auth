@@ -129,10 +129,11 @@ This endpoint will response with the payload contained in the JWT token.
 
 ## Create A User
 
-### `POST`  `/user/createFromUsernamePassword`
+### `POST`  `/user/createFromEmailPassword`
 ```
 {
     "username": "PTBarnum",
+    "email": "pt@barnham.com",
     "password": "MyCleverPassword34"
 }
 ```
@@ -141,6 +142,7 @@ This endpoint will response with the payload contained in the JWT token.
 You will need to use GitHubs Oauth to get the access token and github_id (github user id)
 ```
 {
+    "username": "PTBarnum",
     "github_id": 19876789,
     "access_token": "WHg092ohiuaed97yujedfndsdjwdjs"
 }

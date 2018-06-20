@@ -3,7 +3,7 @@
 namespace DevPledge\Domain;
 
 use DevPledge\Application\Mapper\Mappable;
-use DevPledge\Domain\PreferredUserAuth\EmailPassword;
+use DevPledge\Domain\PreferredUserAuth\UsernameEmailPassword;
 
 
 /**
@@ -102,10 +102,10 @@ class User implements Mappable {
 	}
 
 	/**
-	 * @return EmailPassword
+	 * @return UsernameEmailPassword
 	 */
 	public function getEmailPasswordAuth() {
-		return new EmailPassword( $this->getEmail(), null, $this->getHashedPassword() );
+		return new UsernameEmailPassword( $this->getEmail(), null, $this->getHashedPassword() );
 	}
 
 	/**

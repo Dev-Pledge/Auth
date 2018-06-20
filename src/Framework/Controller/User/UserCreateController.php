@@ -4,7 +4,7 @@ namespace DevPledge\Framework\Controller\User;
 
 
 use DevPledge\Application\Commands\CreateUserCommand;
-use DevPledge\Domain\PreferredUserAuth\EmailPassword;
+use DevPledge\Domain\PreferredUserAuth\UsernameEmailPassword;
 use DevPledge\Domain\PreferredUserAuth\GitHub;
 use DevPledge\Domain\PreferredUserAuth\PreferredUserAuth;
 use DevPledge\Domain\PreferredUserAuth\PreferredUserAuthValidationException;
@@ -57,43 +57,17 @@ class UserCreateController {
 	}
 
 	/**
-	 * @param Request $request
-	 * @param Response $response
-	 *
-	 * @return Response
-	 */
-	public function createUserFromUsernamePassword( Request $request, Response $response ) {
-		$data = $request->getParsedBody();
-
-		$password = $data['password'] ?? null;
-		$username = $data['username'] ?? null;
-
-		if ( isset( $password ) && isset( $username ) ) {
-			$preferredUserAuth = new UsernamePassword( $username, $password );
-
-			return $this->creationResponse( $username, $preferredUserAuth, $response );
-		}
-
-		return $response->withJson(
-			[ 'error' => 'Username and Password not set' ]
-			, 401
-		);
-
-
-	}
-
-	/**
 	 * @param $username
 	 * @param PreferredUserAuth $preferredUserAuth
 	 * @param Response $response
 	 *
 	 * @return Response
 	 */
-	private function creationResponse( $username, PreferredUserAuth $preferredUserAuth, Response $response ) {
-		$user = false;
+	private function creationResponse( PreferredUserAuth $preferredUserAuth, Response $response ) {
+
 		try {
 			try {
-				$user = Dispatch::command( new CreateUserCommand( $username, $preferredUserAuth, $response ) );
+				$user = Dispatch::command( new CreateUserCommand( $preferredUserAuth, $response ) );
 			} catch ( \PDOException $PDoException ) {
 				throw new PreferredUserAuthValidationException(
 					'Unable to create new user'
@@ -136,9 +110,9 @@ class UserCreateController {
 		$username = $data['username'] ?? null;
 
 		if ( isset( $email ) && isset( $password ) && isset( $username ) ) {
-			$preferredUserAuth = new EmailPassword( $email, $password );
+			$preferredUserAuth = new UsernameEmailPassword( $username, $email, $password );
 
-			return $this->creationResponse( $username, $preferredUserAuth, $response );
+			return $this->creationResponse( $preferredUserAuth, $response );
 		}
 
 		return $response->withJson(
@@ -161,9 +135,9 @@ class UserCreateController {
 		$username    = $data['username'] ?? null;
 
 		if ( isset( $githubId ) && isset( $username ) && isset( $accessToken ) ) {
-			$preferredUserAuth = new GitHub( $githubId, $accessToken );
+			$preferredUserAuth = new GitHub( $username, $githubId, $accessToken );
 
-			return $this->creationResponse( $username, $preferredUserAuth, $response );
+			return $this->creationResponse( $preferredUserAuth, $response );
 		}
 
 		return $response->withJson(
