@@ -22,9 +22,9 @@ class UserFactory {
 		$user = new User();
 
 		$set = function ( $key, $setMethod, $dateTime = false ) use ( $data, $user ) {
-			if ( array_key_exists( $key, $data ) && isset( $data[ $key ] ) ) {
+			if ( ( $data ) && array_key_exists( $key, $data ) && isset( $data[ $key ] ) ) {
 
-				if(is_callable( array($user,$setMethod))) {
+				if ( is_callable( array( $user, $setMethod ) ) ) {
 					if ( $dateTime ) {
 						$user->{$setMethod}( new \DateTime( $data[ $key ] ) );
 					} else {
