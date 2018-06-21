@@ -54,7 +54,7 @@ class UserRepository {
 		$data = $this->mapper->toMap( $user );
 		$this->adapter->create( 'users', $data );
 
-		return $this->read( $user->getId() );
+		return $this->read( $user->getId()->toString() );
 	}
 
 	/**

@@ -45,7 +45,7 @@ class TokenString {
 		$wildCardPermissions = new WildCardPermissions();
 		$user                = $this->user;
 		$token               = $this->jwt->generate( (object) [
-			'user_id'  => $user->getId(),
+			'user_id'  => $user->getId()->toString(),
 			'name'     => $user->getName(),
 			'username' => $user->getUsername(),
 			'perms'    => $wildCardPermissions->getPerms()

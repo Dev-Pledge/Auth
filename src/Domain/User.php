@@ -56,7 +56,7 @@ class User implements Mappable {
 
 
 	/**
-	 * @param string $id
+	 * @param Uuid $id
 	 *
 	 * @return User
 	 */
@@ -91,7 +91,7 @@ class User implements Mappable {
 	/**
 	 * @return null|Uuid
 	 */
-	public function getId(): ?string {
+	public function getId(): ?Uuid {
 		return $this->id;
 	}
 
