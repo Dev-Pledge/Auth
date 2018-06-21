@@ -4,6 +4,7 @@ namespace DevPledge\Application\Factory;
 
 
 use DevPledge\Domain\User;
+use DevPledge\Uuid\Uuid;
 
 /**
  * Class UserFactory
@@ -21,12 +22,12 @@ class UserFactory {
 		}
 		$user = new User();
 
-		$set = function ( $key, $setMethod, $dateTime = false ) use ( $data, $user ) {
+		$set = function ( $key, $setMethod, $useClass = null ) use ( $data, $user ) {
 			if ( ( $data ) && array_key_exists( $key, $data ) && isset( $data[ $key ] ) ) {
 
 				if ( is_callable( array( $user, $setMethod ) ) ) {
-					if ( $dateTime ) {
-						$user->{$setMethod}( new \DateTime( $data[ $key ] ) );
+					if ( ! is_null( $useClass ) ) {
+						$user->{$setMethod}( new $useClass( $data[ $key ] ) );
 					} else {
 						$user->{$setMethod}( $data[ $key ] );
 					}
@@ -34,14 +35,14 @@ class UserFactory {
 			}
 		};
 
-		$set( 'user_id', 'setId' );
+		$set( 'user_id', 'setId', Uuid::class );
 		$set( 'username', 'setUsername' );
 		$set( 'name', 'setName' );
 		$set( 'email', 'setEmail' );
 		$set( 'hashed_password', 'setHashedPassword' );
 		$set( 'github_id', 'setGitHubId' );
-		$set( 'created', 'setCreated', true );
-		$set( 'modified', 'setModified', true );
+		$set( 'created', 'setCreated', \DateTime::class );
+		$set( 'modified', 'setModified', \DateTime::class );
 
 		return $user;
 	}
@@ -53,9 +54,7 @@ class UserFactory {
 	 * @return User
 	 */
 	public function update( User $user, array $data ): User {
-		if ( array_key_exists( 'user_id', $data ) ) {
-			$user->setId( $data['user_id'] );
-		}
+
 		if ( array_key_exists( 'username', $data ) ) {
 			$user->setUsername( $data['username'] );
 		}
@@ -69,7 +68,7 @@ class UserFactory {
 			$user->setDeveloper( (bool) $data['developer'] );
 		}
 		if ( array_key_exists( 'hashed_password', $data ) ) {
-			$user->setHashedPassword( $data['email'] );
+			$user->setHashedPassword( $data['hashed_password'] );
 		}
 		if ( array_key_exists( 'github_id', $data ) ) {
 			$user->setHashedPassword( $data['github_id'] );

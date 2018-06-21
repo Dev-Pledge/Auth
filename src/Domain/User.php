@@ -4,6 +4,7 @@ namespace DevPledge\Domain;
 
 use DevPledge\Application\Mapper\Mappable;
 use DevPledge\Domain\PreferredUserAuth\UsernameEmailPassword;
+use DevPledge\Uuid\Uuid;
 
 
 /**
@@ -13,7 +14,7 @@ use DevPledge\Domain\PreferredUserAuth\UsernameEmailPassword;
 class User implements Mappable {
 
 	/**
-	 * @var string
+	 * @var Uuid
 	 */
 	private $id;
 	/**
@@ -59,7 +60,7 @@ class User implements Mappable {
 	 *
 	 * @return User
 	 */
-	public function setId( string $id ): User {
+	public function setId( Uuid $id ): User {
 		$this->id = $id;
 
 		return $this;
@@ -88,7 +89,7 @@ class User implements Mappable {
 	}
 
 	/**
-	 * @return null|string
+	 * @return null|Uuid
 	 */
 	public function getId(): ?string {
 		return $this->id;
@@ -248,7 +249,7 @@ class User implements Mappable {
 		$now = new \DateTime();
 
 		return (object) [
-			'user_id'         => $this->getId(),
+			'user_id'         => $this->getId()->toString(),
 			'name'            => $this->getName(),
 			'username'        => $this->getUsername(),
 			'modified'        => $now->format( 'Y-m-d H:i:s' ),
