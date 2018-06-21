@@ -50,9 +50,9 @@ class UsernamePassword implements PreferredUserAuth {
 	 * @return array
 	 */
 	public function getAuthDataArray() {
-		return [
+		return new AuthDataArray( [
 			'hashed_password' => $this->getHashedPassword(),
 			'username'        => $this->getUsername()
-		];
+		] );
 	}
 }

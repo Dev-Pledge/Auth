@@ -72,9 +72,14 @@ class UsernameGitHub implements PreferredUserAuth {
 	}
 
 	/**
-	 * @return array
+	 * @return AuthDataArray
 	 */
 	public function getAuthDataArray() {
-		return [ 'github_id' => $this->getGithubId() ];
+		return new AuthDataArray(
+			[
+				'github_id' => $this->getGithubId(),
+				'username'  => $this->getUsername(),
+			]
+		);
 	}
 }

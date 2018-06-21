@@ -68,12 +68,13 @@ class UsernameEmailPassword implements PreferredUserAuth {
 	}
 
 	/**
-	 * @return array
+	 * @return AuthDataArray
 	 */
 	public function getAuthDataArray() {
-		return [
+		return new AuthDataArray( [
 			'hashed_password' => $this->getHashedPassword(),
-			'email'           => $this->getEmail()
-		];
+			'email'           => $this->getEmail(),
+			'username'        => $this->getUsername()
+		] );
 	}
 }

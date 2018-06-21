@@ -8,6 +8,10 @@ use DevPledge\Application\Repository\UserRepository;
 use DevPledge\Domain\PreferredUserAuth\PreferredUserAuth;
 use DevPledge\Uuid\Uuid;
 
+/**
+ * Class UserService
+ * @package DevPledge\Application\Service
+ */
 class UserService {
 	/**
 	 * @var UserRepository $repo
@@ -31,9 +35,9 @@ class UserService {
 	 * @throws \Exception
 	 */
 	public function create( PreferredUserAuth $preferredUserAuth ) {
-		$uuid     = Uuid::make( 'user' )->toString();
-		$initData = [ 'username' => $preferredUserAuth->getUsername(), 'user_id' => $uuid ];
-		$data     = array_merge( $initData, $preferredUserAuth->getAuthDataArray() );
+		$uuid        = Uuid::make( 'user' )->toString();
+		$userIdArray = [ 'user_id' => $uuid ];
+		$data        = array_merge( $userIdArray, $preferredUserAuth->getAuthDataArray()->getArray() );
 
 		$user = $this->factory->create( $data );
 

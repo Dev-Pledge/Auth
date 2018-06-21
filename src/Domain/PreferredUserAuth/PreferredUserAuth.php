@@ -21,8 +21,7 @@ interface PreferredUserAuth {
 	public function updateUserWithAuth( User $user ): void;
 
 	/**
-	 * all vars without username
-	 * @return array
+	 * @return AuthDataArray
 	 */
 	public function getAuthDataArray();
 

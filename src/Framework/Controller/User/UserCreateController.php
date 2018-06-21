@@ -15,6 +15,7 @@ use DevPledge\Framework\ControllerDependencies\AuthControllerDependency;
 use DevPledge\Framework\ServiceProviders\UserServiceProvider;
 use DevPledge\Integrations\Command\Dispatch;
 use DevPledge\Integrations\Security\JWT\JWT;
+use DevPledge\Integrations\Sentry;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -68,13 +69,20 @@ class UserCreateController {
 
 		try {
 			try {
-				$user = Dispatch::command( new CreateUserCommand( $preferredUserAuth, $response ) );
+				try {
+					$user = Dispatch::command( new CreateUserCommand( $preferredUserAuth, $response ) );
+				} catch ( \DomainException $domainException ) {
+					Sentry::get()->captureException( $domainException );
+					throw new PreferredUserAuthValidationException(
+						'Technical Problem - Please try another way to create an account!'
+					);
+				}
 			} catch ( \PDOException $PDoException ) {
 
 				if ( strpos( strtolower( $PDoException->getMessage() ), 'duplicate' ) !== false || $PDoException->getCode() == 23000 ) {
 					if ( $preferredUserAuth instanceof UsernameEmailPassword ) {
 						throw new PreferredUserAuthValidationException(
-							'User with ' . $preferredUserAuth->getEmail() . ' already exist!'
+							'User with ' . $preferredUserAuth->getEmail() . ' may already exist!', 'email'
 						);
 					}
 					if ( $preferredUserAuth instanceof UsernameGitHub ) {
