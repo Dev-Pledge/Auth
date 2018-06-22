@@ -106,7 +106,7 @@ class UserCreateController {
 
 			return $response->withJson(
 				[
-					'user_id'  => $user->getId(),
+					'user_id'  => $user->getId()->toString(),
 					'username' => $user->getUsername(),
 					'token'    => $token->getTokenString()
 				]
