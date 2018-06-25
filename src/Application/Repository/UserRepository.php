@@ -51,6 +51,7 @@ class UserRepository {
 	 * @throws \Exception
 	 */
 	public function create( User $user ): User {
+		$user->setModified( new \DateTime() );
 		$data = $this->mapper->toMap( $user );
 		$this->adapter->create( 'users', $data );
 
@@ -64,6 +65,7 @@ class UserRepository {
 	 * @throws \Exception
 	 */
 	public function update( User $user ): User {
+		$user->setModified( new \DateTime() );
 		$data = $this->mapper->toMap( $user );
 		unset( $data->id );
 		$id = $this->adapter->update( 'users', $user->getId(), $data, 'user_id' );

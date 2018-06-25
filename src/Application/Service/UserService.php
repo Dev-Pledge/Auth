@@ -7,6 +7,7 @@ use DevPledge\Application\Factory\UserFactory;
 use DevPledge\Application\Repository\UserRepository;
 use DevPledge\Domain\PreferredUserAuth\PreferredUserAuth;
 use DevPledge\Uuid\Uuid;
+use Predis\Client;
 
 /**
  * Class UserService
@@ -21,11 +22,23 @@ class UserService {
 	 * @var UserFactory $factory
 	 */
 	private $factory;
+	/**
+	 * @var Client
+	 */
+	private $cacheClient;
 
-	public function __construct( UserRepository $repository, UserFactory $factory ) {
+	/**
+	 * UserService constructor.
+	 *
+	 * @param UserRepository $repository
+	 * @param UserFactory $factory
+	 * @param Client $cacheClient
+	 */
+	public function __construct( UserRepository $repository, UserFactory $factory, Client $cacheClient ) {
 
-		$this->repo    = $repository;
-		$this->factory = $factory;
+		$this->repo        = $repository;
+		$this->factory     = $factory;
+		$this->cacheClient = $cacheClient;
 	}
 
 	/**
@@ -38,10 +51,13 @@ class UserService {
 		$uuid        = Uuid::make( 'user' )->toString();
 		$userIdArray = [ 'user_id' => $uuid ];
 		$data        = array_merge( $userIdArray, $preferredUserAuth->getAuthDataArray()->getArray() );
-
 		$user = $this->factory->create( $data );
 
-		return $this->repo->create( $user );
+		$createdUser =  $this->repo->create( $user );
+		if($createdUser){
+			$this->cacheClient->set( $uuid, $createdUser->getData());
+		}
+		return $createdUser;
 	}
 
 	/**
