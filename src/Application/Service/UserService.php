@@ -51,13 +51,31 @@ class UserService {
 		$uuid        = Uuid::make( 'user' )->toString();
 		$userIdArray = [ 'user_id' => $uuid ];
 		$data        = array_merge( $userIdArray, $preferredUserAuth->getAuthDataArray()->getArray() );
-		$user = $this->factory->create( $data );
+		$user        = $this->factory->create( $data );
 
-		$createdUser =  $this->repo->create( $user );
-		if($createdUser){
-			$this->cacheClient->set( $uuid, $createdUser->getData());
+		$createdUser = $this->repo->create( $user );
+		if ( $createdUser ) {
+			$this->cacheClient->set( $uuid, $createdUser->getData() );
+			$this->cacheClient->set( 'usrn::' . $createdUser->getUsername(), $createdUser->getData() );
 		}
+
 		return $createdUser;
+	}
+
+	/**
+	 * @param User $user
+	 *
+	 * @return \DevPledge\Domain\User
+	 * @throws \Exception
+	 */
+	public function update( User $user ) {
+		$updatedUser = $this->repo->update( $user );
+		if ( $updatedUser ) {
+			$this->cacheClient->set( $updatedUser->getId(), $updatedUser->getData() );
+			$this->cacheClient->set( 'usrn::' . $updatedUser->getUsername(), $updatedUser->getData() );
+		}
+
+		return $updatedUser;
 	}
 
 	/**

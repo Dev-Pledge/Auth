@@ -67,8 +67,7 @@ class UserRepository {
 	public function update( User $user ): User {
 		$user->setModified( new \DateTime() );
 		$data = $this->mapper->toMap( $user );
-		unset( $data->id );
-		$id = $this->adapter->update( 'users', $user->getId(), $data, 'user_id' );
+		$id   = $this->adapter->update( 'users', $user->getId(), $data, 'user_id' );
 
 		return $this->read( $id );
 	}
